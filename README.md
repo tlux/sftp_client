@@ -6,9 +6,7 @@ An Elixir SFTP Client that wraps around Erlang's
 
 ## Prerequisites
 
-* Erlang 20 or greater (at least 21.2 with
-  [ssh 4.7.2](http://erlang.org/doc/apps/ssh/notes.html#ssh-4.7.2) recommended
-  for ed25519 and ed448 key support)
+* Erlang 20 or greater
 * Elixir 1.8 or greater
 
 ## Installation
@@ -29,3 +27,7 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/sftp_client](https://hexdocs.pm/sftp_client).
+
+## TODOs
+
+* Support for ed25519 and ed448 keys

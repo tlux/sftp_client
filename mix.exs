@@ -7,7 +7,43 @@ defmodule SFTPClient.MixProject do
       version: "1.0.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "SFTP Client",
+      docs: [
+        main: "SFTPClient",
+        extras: ["README.md"],
+        groups_for_modules: [
+          "Adapter Behaviors": [
+            SFTPClient.Adapters.SFTP,
+            SFTPClient.Adapters.SSH
+          ],
+          Operations: [
+            SFTPClient.Operation,
+            SFTPClient.Operations.CloseHandle,
+            SFTPClient.Operations.Connect,
+            SFTPClient.Operations.DeleteDir,
+            SFTPClient.Operations.DeleteFile,
+            SFTPClient.Operations.Disconnect,
+            SFTPClient.Operations.DownloadFile,
+            SFTPClient.Operations.FileInfo,
+            SFTPClient.Operations.LinkInfo,
+            SFTPClient.Operations.ListDir,
+            SFTPClient.Operations.MakeDir,
+            SFTPClient.Operations.MakeSymlink,
+            SFTPClient.Operations.OpenDir,
+            SFTPClient.Operations.OpenFile,
+            SFTPClient.Operations.ReadChunk,
+            SFTPClient.Operations.ReadFile,
+            SFTPClient.Operations.ReadLink,
+            SFTPClient.Operations.Rename,
+            SFTPClient.Operations.StreamFile,
+            SFTPClient.Operations.WriteChunk,
+            SFTPClient.Operations.WriteFile
+          ]
+        ]
+      ]
     ]
   end
 

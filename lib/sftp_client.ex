@@ -36,4 +36,8 @@ defmodule SFTPClient do
   def read_file(%Session{} = session, path) do
     adapter().read_file(session, path)
   end
+
+  def file_info(%Session{} = session, path) do
+    adapter().file_info(session, path)
+  end
 end

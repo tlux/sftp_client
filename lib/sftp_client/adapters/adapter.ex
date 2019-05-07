@@ -10,7 +10,10 @@ defmodule SFTPClient.Adapter do
               {:ok, [String.t()]} | {:error, term}
 
   @callback read_file(Session.t(), path :: String.t()) ::
-              {:ok, Stream.t()} | {:error, term}
+              {:ok, String.t()} | {:error, term}
+
+  @callback file_info(Session.t(), path :: String.t()) ::
+              {:ok, File.Stat.t()} | {:error, term}
 
   @callback download_file(
               Session.t(),

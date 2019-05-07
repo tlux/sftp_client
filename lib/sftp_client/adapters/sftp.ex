@@ -106,11 +106,21 @@ defmodule SFTPClient.Adapters.SFTP do
 
   @impl true
   def read_file(session, path) do
-    path = String.to_charlist(path)
+    session.channel_pid
+    |> :ssh_sftp.read_file(String.to_charlist(path))
+    |> case do
+      {:ok, content} -> {:ok, content}
+      {:error, error} -> {:error, handle_error(error)}
+    end
+  end
 
-    with {:ok, handle} <-
-           :ssh_sftp.open(session.channel_pid, path, [:read, :binary]) do
-      handle
+  @impl true
+  def file_info(session, path) do
+    session.channel_pid
+    |> :ssh_sftp.read_file_info(String.to_charlist(path))
+    |> case do
+      {:ok, file_info} -> {:ok, File.Stat.from_record(file_info)}
+      {:error, error} -> {:error, handle_error(error)}
     end
   end
 end

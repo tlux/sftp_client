@@ -25,4 +25,14 @@ defmodule SFTPClient do
   defdelegate read_file!(conn, path), to: Operations.ReadFile
   defdelegate file_info(conn, path), to: Operations.FileInfo
   defdelegate file_info!(conn, path), to: Operations.FileInfo
+  defdelegate open_file(conn, path, modes), to: Operations.OpenFile
+  defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
+  defdelegate read_chunk(handle, length), to: Operations.ReadChunk
+  defdelegate read_chunk!(handle, length), to: Operations.ReadChunk
+  defdelegate write_chunk(handle, data), to: Operations.WriteChunk
+  defdelegate write_chunk!(handle, data), to: Operations.WriteChunk
+  defdelegate close_handle(handle), to: Operations.CloseHandle
+  defdelegate close_handle!(handle), to: Operations.CloseHandle
+  defdelegate stream_file(conn, path), to: Operations.StreamFile
+  defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
 end

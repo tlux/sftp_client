@@ -25,6 +25,8 @@ defmodule SFTPClient.Operations.ConnectTest do
     connect_timeout: 1000
   }
 
+  setup :verify_on_exit!
+
   setup do
     {:ok,
      opts: [

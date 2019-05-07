@@ -47,6 +47,8 @@ defmodule SFTPClient do
   defdelegate make_symlink(conn, symlink_path, target_path),
     to: Operations.MakeSymlink
 
+  defdelegate open_dir!(conn, path), to: Operations.OpenDir
+  defdelegate open_dir(conn, path), to: Operations.OpenDir
   defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
   defdelegate open_file(conn, path, modes), to: Operations.OpenFile
   defdelegate read_chunk!(handle, length), to: Operations.ReadChunk

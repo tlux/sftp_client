@@ -74,13 +74,18 @@ defmodule SFTPClient.Operations.Connect do
     sftp_adapter().start_channel(
       String.to_charlist(config.host),
       config.port,
-      [
-        {:key_cb, {KeyProvider, config: config}},
-        {:quiet_mode, true},
-        {:silently_accept_hosts, true},
-        {:user_interaction, false} | handle_opts(config)
-      ]
+      get_opts(config)
     )
+  end
+
+  defp get_opts(config) do
+    Enum.sort([
+      {:key_cb, {KeyProvider, config: config}},
+      {:quiet_mode, true},
+      {:silently_accept_hosts, true},
+      {:user_interaction, false}
+      | handle_opts(config)
+    ])
   end
 
   defp handle_opts(config) do
@@ -89,6 +94,7 @@ defmodule SFTPClient.Operations.Connect do
       :user,
       :password,
       :user_dir,
+      :system_dir,
       :inet,
       :sftp_vsn,
       :connect_timeout
@@ -108,7 +114,10 @@ defmodule SFTPClient.Operations.Connect do
     |> dump_opt_value()
   end
 
-  defp map_opt_value(:user_dir, value), do: Path.expand(value)
+  defp map_opt_value(key, value) when key in [:user_dir, :system_dir] do
+    Path.expand(value)
+  end
+
   defp map_opt_value(_key, value), do: value
 
   defp dump_opt_value(value) when is_binary(value) do

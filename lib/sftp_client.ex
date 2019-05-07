@@ -27,6 +27,12 @@ defmodule SFTPClient do
     adapter().disconnect(session)
   end
 
+  @spec list_dir(Session.t(), String.t()) ::
+          {:ok, [String.t()]} | {:error, term}
+  def list_dir(%Session{} = session, path) do
+    adapter().list_dir(session, path)
+  end
+
   def read_file(%Session{} = session, path) do
     adapter().read_file(session, path)
   end

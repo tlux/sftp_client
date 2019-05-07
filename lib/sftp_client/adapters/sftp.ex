@@ -88,6 +88,23 @@ defmodule SFTPClient.Adapters.SFTP do
   end
 
   @impl true
+  def list_dir(session, path) do
+    session.channel_pid
+    |> :ssh_sftp.list_dir(String.to_charlist(path))
+    |> case do
+      {:ok, entries} ->
+        {:ok,
+         entries
+         |> Enum.map(&to_string/1)
+         |> Enum.reject(&(&1 in [".", ".."]))
+         |> Enum.sort()}
+
+      {:error, error} ->
+        {:error, handle_error(error)}
+    end
+  end
+
+  @impl true
   def read_file(session, path) do
     path = String.to_charlist(path)
 

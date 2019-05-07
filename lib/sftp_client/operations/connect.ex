@@ -27,7 +27,8 @@ defmodule SFTPClient.Operations.Connect do
   * `:connect_timeout` - The connection timeout in milliseconds (defaults to
     5000 ms), can be set to `:infinity` to disable timeout.
   """
-  @spec connect(Config.t() | Keyword.t()) :: {:ok, Conn.t()} | {:error, term}
+  @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
+          {:ok, Conn.t()} | {:error, term}
   def connect(config_or_opts) do
     config = Config.new(config_or_opts)
 
@@ -65,7 +66,8 @@ defmodule SFTPClient.Operations.Connect do
   * `:connect_timeout` - The connection timeout in milliseconds (defaults to
     5000 ms), can be set to `:infinity` to disable timeout.
   """
-  @spec connect!(Config.t() | Keyword.t()) :: Conn.t() | no_return
+  @spec connect!(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
+          Conn.t() | no_return
   def connect!(config_or_opts) do
     config_or_opts |> connect() |> may_bang!()
   end

@@ -35,4 +35,7 @@ defmodule SFTPClient do
   defdelegate close_handle!(handle), to: Operations.CloseHandle
   defdelegate stream_file(conn, path), to: Operations.StreamFile
   defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
+
+  defdelegate download_file!(conn, remote_path, local_path),
+    to: Operations.DownloadFile
 end

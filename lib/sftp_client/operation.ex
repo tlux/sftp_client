@@ -16,11 +16,11 @@ defmodule SFTPClient.Operation do
   Converts the result of a non-bang function so that the result is returned or
   an exception is raised on error.
   """
-  @spec bangify!(:ok | {:ok | :error, any}) :: any | no_return
-  def bangify!(result)
-  def bangify!(:ok), do: :ok
-  def bangify!({:ok, result}), do: result
-  def bangify!({:error, error}), do: raise(error)
+  @spec may_bang!(:ok | {:ok | :error, any}) :: any | no_return
+  def may_bang!(result)
+  def may_bang!(:ok), do: :ok
+  def may_bang!({:ok, result}), do: result
+  def may_bang!({:error, error}), do: raise(error)
 
   @spec handle_error(any) ::
           ConnError.t() | InvalidOptionError.t() | OperationError.t()

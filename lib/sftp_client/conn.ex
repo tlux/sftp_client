@@ -1,4 +1,4 @@
-defmodule SFTPClient.Session do
+defmodule SFTPClient.Conn do
   alias SFTPClient.Config
 
   defstruct [:config, :channel_pid, :conn_ref]

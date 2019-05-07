@@ -12,7 +12,8 @@ defmodule SFTPClient.KeyProvider do
   @impl true
   def user_key(algorithm, opts) do
     case opts[:key_cb_private][:config] do
-      %Config{private_key_path: path, private_key_passphrase: passphrase} ->
+      %Config{private_key_path: path, private_key_passphrase: passphrase}
+      when not is_nil(path) ->
         decode_private_key(path, passphrase)
 
       _ ->
@@ -21,9 +22,11 @@ defmodule SFTPClient.KeyProvider do
   end
 
   defp decode_private_key(path, passphrase) do
-    pem = path |> Path.expand() |> File.read!()
-
-    case :public_key.pem_decode(pem) do
+    path
+    |> Path.expand()
+    |> File.read!()
+    |> :public_key.pem_decode()
+    |> case do
       [{_type, _key, :not_encrypted} = entry] ->
         {:ok, :public_key.pem_entry_decode(entry)}
 

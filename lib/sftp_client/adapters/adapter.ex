@@ -1,22 +1,22 @@
 defmodule SFTPClient.Adapter do
   alias SFTPClient.Config
-  alias SFTPClient.Session
+  alias SFTPClient.Conn
 
-  @callback connect(Config.t()) :: {:ok, Session.t()} | {:error, term}
+  @callback connect(Config.t()) :: {:ok, Conn.t()} | {:error, term}
 
-  @callback disconnect(Session.t()) :: :ok
+  @callback disconnect(Conn.t()) :: :ok
 
-  @callback list_dir(Session.t(), path :: String.t()) ::
+  @callback list_dir(Conn.t(), path :: String.t()) ::
               {:ok, [String.t()]} | {:error, term}
 
-  @callback read_file(Session.t(), path :: String.t()) ::
+  @callback read_file(Conn.t(), path :: String.t()) ::
               {:ok, String.t()} | {:error, term}
 
-  @callback file_info(Session.t(), path :: String.t()) ::
+  @callback file_info(Conn.t(), path :: String.t()) ::
               {:ok, File.Stat.t()} | {:error, term}
 
   @callback download_file(
-              Session.t(),
+              Conn.t(),
               remote_path :: String.t(),
               local_path :: String.t()
             ) :: {:ok, String.t()} | {:error, term}

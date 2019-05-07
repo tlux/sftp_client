@@ -1,18 +1,18 @@
 defmodule SFTPClient.Adapters.SFTP do
   @behaviour SFTPClient.Adapter
 
-  alias SFTPClient.ConnectionError
+  alias SFTPClient.Conn
+  alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.KeyProvider
   alias SFTPClient.OperationError
-  alias SFTPClient.Session
 
   @impl true
   def connect(config) do
     case do_connect(config) do
       {:ok, channel_pid, conn_ref} ->
         {:ok,
-         %Session{
+         %Conn{
            config: config,
            channel_pid: channel_pid,
            conn_ref: conn_ref
@@ -32,7 +32,7 @@ defmodule SFTPClient.Adapters.SFTP do
   end
 
   defp handle_error(message) do
-    %ConnectionError{message: to_string(message)}
+    %ConnError{message: to_string(message)}
   end
 
   defp do_connect(config) do
@@ -82,14 +82,14 @@ defmodule SFTPClient.Adapters.SFTP do
   defp load_opt_value(value), do: value
 
   @impl true
-  def disconnect(session) do
-    :ok = :ssh_sftp.stop_channel(session.channel_pid)
-    :ok = :ssh.close(session.conn_ref)
+  def disconnect(conn) do
+    :ok = :ssh_sftp.stop_channel(conn.channel_pid)
+    :ok = :ssh.close(conn.conn_ref)
   end
 
   @impl true
-  def list_dir(session, path) do
-    session.channel_pid
+  def list_dir(conn, path) do
+    conn.channel_pid
     |> :ssh_sftp.list_dir(String.to_charlist(path))
     |> case do
       {:ok, entries} ->
@@ -105,8 +105,8 @@ defmodule SFTPClient.Adapters.SFTP do
   end
 
   @impl true
-  def read_file(session, path) do
-    session.channel_pid
+  def read_file(conn, path) do
+    conn.channel_pid
     |> :ssh_sftp.read_file(String.to_charlist(path))
     |> case do
       {:ok, content} -> {:ok, content}
@@ -115,8 +115,8 @@ defmodule SFTPClient.Adapters.SFTP do
   end
 
   @impl true
-  def file_info(session, path) do
-    session.channel_pid
+  def file_info(conn, path) do
+    conn.channel_pid
     |> :ssh_sftp.read_file_info(String.to_charlist(path))
     |> case do
       {:ok, file_info} -> {:ok, File.Stat.from_record(file_info)}

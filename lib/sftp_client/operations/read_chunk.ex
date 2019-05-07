@@ -3,12 +3,22 @@ defmodule SFTPClient.Operations.ReadChunk do
 
   alias SFTPClient.Handle
 
+  @doc """
+  Reads the given number of bytes (length) from the file referenced by handle.
+  If the file is read past eof, only the remaining bytes are read and returned.
+  If no bytes are read, `:eof` is returned.
+  """
   @spec read_chunk(Handle.t(), non_neg_integer) ::
           {:ok, String.t()} | :eof | {:error, any}
   def read_chunk(%Handle{} = handle, length) do
     sftp_adapter().read(handle.conn.channel_pid, handle.id, length)
   end
 
+  @doc """
+  Reads the given number of bytes (length) from the file referenced by handle.
+  If the file is read past eof, only the remaining bytes are read and returned.
+  If no bytes are read, `:eof` is returned. Raises when the operation fails.
+  """
   @spec read_chunk!(Handle.t(), non_neg_integer) ::
           String.t() | :eof | no_return
   def read_chunk!(%Handle{} = handle, length) do

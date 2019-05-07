@@ -1,6 +1,9 @@
 defmodule SFTPClient.Operations.ReadLink do
   use SFTPClient.Operation
 
+  @doc """
+  Reads the link target from the symbolic link specified by path.
+  """
   @spec read_link(Conn.t(), String.t()) :: {:ok, String.t()} | {:error, any}
   def read_link(%Conn{} = conn, path) do
     conn.channel_pid
@@ -11,6 +14,10 @@ defmodule SFTPClient.Operations.ReadLink do
     end
   end
 
+  @doc """
+  Reads the link target from the symbolic link specified by path. Raises when
+  the operation fails.
+  """
   @spec read_link!(Conn.t(), String.t()) :: String.t() | no_return
   def read_link!(%Conn{} = conn, path) do
     conn |> read_link(path) |> may_bang!()

@@ -4,6 +4,9 @@ defmodule SFTPClient.Operations.StreamFile do
   alias SFTPClient.OperationError
   alias SFTPClient.Stream, as: SFTPStream
 
+  @doc """
+  Creates a stream that allows reading from and writing to the server.
+  """
   @spec stream_file(Conn.t(), String.t()) ::
           {:ok, SFTPStream.t()} | {:error, any}
   def stream_file(%Conn{} = conn, path) do
@@ -29,6 +32,10 @@ defmodule SFTPClient.Operations.StreamFile do
     end
   end
 
+  @doc """
+  Creates a stream that allows reading from and writing to the server. May raise
+  lazily as soon as the Stream evaluates.
+  """
   @spec stream_file!(Conn.t(), String.t()) :: SFTPStream.t()
   def stream_file!(%Conn{} = conn, path) do
     %SFTPStream{conn: conn, path: path}

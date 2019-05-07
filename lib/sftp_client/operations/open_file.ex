@@ -5,6 +5,10 @@ defmodule SFTPClient.Operations.OpenFile do
 
   @type mode :: :read | :write | :creat | :trunc | :append | :binary
 
+  @doc """
+  Opens a file on the server and returns a handle, which can be used for reading
+  or writing.
+  """
   @spec open_file(Conn.t(), String.t(), [mode]) ::
           {:ok, Handle.t()} | {:error, any}
   def open_file(%Conn{} = conn, path, modes) do
@@ -16,6 +20,10 @@ defmodule SFTPClient.Operations.OpenFile do
     end
   end
 
+  @doc """
+  Opens a file on the server and returns a handle, which can be used for reading
+  or writing. Raises when the operation fails.
+  """
   @spec open_file!(Conn.t(), String.t(), [mode]) :: Handle.t() | no_return
   def open_file!(%Conn{} = conn, path, modes) do
     conn |> open_file(path, modes) |> may_bang!()

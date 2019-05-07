@@ -5,6 +5,11 @@ defmodule SFTPClient.Operations.DownloadFile do
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
 
+  @doc """
+  Downloads a file from the remote path and stores it in the given local path.
+  When the local path is a directory, the file name of the local file is
+  inferred from the remote path.
+  """
   @spec download_file(Conn.t(), String.t(), String.t()) :: :ok | {:error, any}
   def download_file(%Conn{} = conn, remote_path, local_path) do
     {:ok, download_file!(conn, remote_path, local_path)}
@@ -13,6 +18,11 @@ defmodule SFTPClient.Operations.DownloadFile do
       {:error, error}
   end
 
+  @doc """
+  Downloads a file from the remote path and stores it in the given local path.
+  When the local path is a directory, the file name of the local file is
+  inferred from the remote path. Raises when the operation fails.
+  """
   @spec download_file!(Conn.t(), String.t(), String.t()) :: :ok | no_return
   def download_file!(%Conn{} = conn, remote_path, local_path) do
     local_path = get_local_path(local_path, remote_path)

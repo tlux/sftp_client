@@ -1,11 +1,15 @@
 defmodule SFTPClient.Operations.Connect do
+  @moduledoc """
+  Module containing operations to connect to a SSH/SFTP server.
+  """
+
   use SFTPClient.Operation
 
   alias SFTPClient.Config
   alias SFTPClient.KeyProvider
 
   @doc """
-  Connects to an SFTP server.
+  Connects to an SSH server and opens an SFTP channel.
 
   ## Options
 
@@ -42,7 +46,8 @@ defmodule SFTPClient.Operations.Connect do
   end
 
   @doc """
-  Connects to an SFTP server, raising on errors.
+  Connects to an SSH server and opens an SFTP channel. Raises when the
+  connection fails.
 
   ## Options
 

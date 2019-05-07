@@ -3,6 +3,9 @@ defmodule SFTPClient.Operations.LinkInfo do
 
   alias File.Stat, as: FileStat
 
+  @doc """
+  Returns a `File.Stat` struct from the remote symlink object specified by path.
+  """
   @spec link_info(Conn.t(), String.t()) :: {:ok, FileStat.t()} | {:error, any}
   def link_info(%Conn{} = conn, path) do
     conn.channel_pid
@@ -13,6 +16,10 @@ defmodule SFTPClient.Operations.LinkInfo do
     end
   end
 
+  @doc """
+  Returns a `File.Stat` struct from the remote symlink object specified by path.
+  Raises when the operation fails.
+  """
   @spec link_info!(Conn.t(), String.t()) :: FileStat.t() | no_return
   def link_info!(%Conn{} = conn, path) do
     conn |> link_info(path) |> may_bang!()

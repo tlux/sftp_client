@@ -1,6 +1,9 @@
 defmodule SFTPClient.Operations.ReadFile do
   use SFTPClient.Operation
 
+  @doc """
+  Reads a file from the server, and returns the data as String.
+  """
   @spec read_file(Conn.t(), String.t()) :: {:ok, String.t()} | {:error, any}
   def read_file(%Conn{} = conn, path) do
     conn.channel_pid
@@ -11,6 +14,10 @@ defmodule SFTPClient.Operations.ReadFile do
     end
   end
 
+  @doc """
+  Reads a file from the server, and returns the data as String. Raises when the
+  operation fails.
+  """
   @spec read_file!(Conn.t(), String.t()) :: String.t() | no_return
   def read_file!(%Conn{} = conn, path) do
     conn |> read_file(path) |> may_bang!()

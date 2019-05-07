@@ -1,6 +1,18 @@
 defmodule SFTPClient.Operations.DownloadFile do
   use SFTPClient.Operation
 
+  alias SFTPClient.ConnError
+  alias SFTPClient.InvalidOptionError
+  alias SFTPClient.OperationError
+
+  @spec download_file(Conn.t(), String.t(), String.t()) :: :ok | {:error, any}
+  def download_file(%Conn{} = conn, remote_path, local_path) do
+    {:ok, download_file!(conn, remote_path, local_path)}
+  rescue
+    error in [ConnError, InvalidOptionError, OperationError] ->
+      {:error, error}
+  end
+
   @spec download_file!(Conn.t(), String.t(), String.t()) :: :ok | no_return
   def download_file!(%Conn{} = conn, remote_path, local_path) do
     local_path = get_local_path(local_path, remote_path)
@@ -16,7 +28,14 @@ defmodule SFTPClient.Operations.DownloadFile do
     if File.dir?(local_path) do
       Path.join(local_path, Path.basename(remote_path))
     else
+      ensure_store_path_exists!(local_path)
       local_path
     end
+  end
+
+  defp ensure_store_path_exists!(local_path) do
+    local_path
+    |> Path.dirname()
+    |> File.mkdir_p!()
   end
 end

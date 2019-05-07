@@ -1,4 +1,4 @@
-defmodule SFTPClient.Adapter.SFTP do
+defmodule SFTPClient.Adapters.SFTP do
   @callback start_channel(
               host :: charlist,
               port :: non_neg_integer,

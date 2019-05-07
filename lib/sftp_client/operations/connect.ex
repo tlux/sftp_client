@@ -15,10 +15,13 @@ defmodule SFTPClient.Operations.Connect do
     current user.
   * `:password` - The password for the user.
   * `:user_dir` - The directory to read private keys from.
-  * `:inet` - The IP version to use, either `:inet` (default) or `:inet6`.
   * `:private_key_path` - The path to the private key to use for authentication.
   * `:private_key_passphrase` - The passphrase that is used to decrypt the
     private key.
+  * `:inet` - The IP version to use, either `:inet` (default) or `:inet6`.
+  * `:sftp_vsn` - The SFTP version to be used.
+  * `:connect_timeout` - The connection timeout in milliseconds (defaults to
+    5000 ms), can be set to `:infinity` to disable timeout.
   """
   @spec connect(Config.t() | Keyword.t()) :: {:ok, Conn.t()} | {:error, term}
   def connect(config_or_opts) do
@@ -49,10 +52,13 @@ defmodule SFTPClient.Operations.Connect do
     current user.
   * `:password` - The password for the user.
   * `:user_dir` - The directory to read private keys from.
-  * `:inet` - The IP version to use, either `:inet` (default) or `:inet6`.
   * `:private_key_path` - The path to the private key to use for authentication.
   * `:private_key_passphrase` - The passphrase that is used to decrypt the
     private key.
+  * `:inet` - The IP version to use, either `:inet` (default) or `:inet6`.
+  * `:sftp_vsn` - The SFTP version to be used.
+  * `:connect_timeout` - The connection timeout in milliseconds (defaults to
+    5000 ms), can be set to `:infinity` to disable timeout.
   """
   @spec connect!(Config.t() | Keyword.t()) :: Conn.t() | no_return
   def connect!(config_or_opts) do
@@ -74,7 +80,14 @@ defmodule SFTPClient.Operations.Connect do
 
   defp handle_opts(config) do
     config
-    |> Map.take([:user, :password, :user_dir, :inet])
+    |> Map.take([
+      :user,
+      :password,
+      :user_dir,
+      :inet,
+      :sftp_vsn,
+      :connect_timeout
+    ])
     |> Enum.reduce([], fn
       {_key, nil}, opts ->
         opts

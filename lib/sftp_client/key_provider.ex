@@ -30,14 +30,19 @@ defmodule SFTPClient.KeyProvider do
     |> Path.expand()
     |> File.read!()
     |> :public_key.pem_decode()
+    |> List.first()
     |> case do
-      [{_type, _key, :not_encrypted} = entry] ->
+      nil ->
+        {:error, 'Undecodable key'}
+
+      {_type, _key, :not_encrypted} = entry ->
         {:ok, :public_key.pem_entry_decode(entry)}
 
-      [_entry] when is_nil(passphrase) ->
+      _entry when is_nil(passphrase) ->
         {:error, 'Passphrase required'}
 
-      [entry] ->
+      entry ->
+        passphrase = String.to_charlist(passphrase)
         {:ok, :public_key.pem_entry_decode(entry, passphrase)}
     end
   end

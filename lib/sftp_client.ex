@@ -23,8 +23,12 @@ defmodule SFTPClient do
   defdelegate list_dir!(conn, path), to: Operations.ListDir
   defdelegate read_file(conn, path), to: Operations.ReadFile
   defdelegate read_file!(conn, path), to: Operations.ReadFile
+  defdelegate read_link(conn, path), to: Operations.ReadLink
+  defdelegate read_link!(conn, path), to: Operations.ReadLink
   defdelegate file_info(conn, path), to: Operations.FileInfo
   defdelegate file_info!(conn, path), to: Operations.FileInfo
+  defdelegate link_info(conn, path), to: Operations.LinkInfo
+  defdelegate link_info!(conn, path), to: Operations.LinkInfo
   defdelegate open_file(conn, path, modes), to: Operations.OpenFile
   defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
   defdelegate read_chunk(handle, length), to: Operations.ReadChunk
@@ -35,10 +39,15 @@ defmodule SFTPClient do
   defdelegate close_handle!(handle), to: Operations.CloseHandle
   defdelegate stream_file(conn, path), to: Operations.StreamFile
   defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
+  defdelegate stream_file!(conn, path), to: Operations.StreamFile
+  defdelegate stream_file!(conn, path, chunk_size), to: Operations.StreamFile
 
   defdelegate download_file(conn, remote_path, local_path),
     to: Operations.DownloadFile
 
   defdelegate download_file!(conn, remote_path, local_path),
     to: Operations.DownloadFile
+
+  defdelegate rename(conn, old_name, new_name), to: Operations.Rename
+  defdelegate rename!(conn, old_name, new_name), to: Operations.Rename
 end

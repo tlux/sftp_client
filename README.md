@@ -30,4 +30,5 @@ be found at [https://hexdocs.pm/sftp_client](https://hexdocs.pm/sftp_client).
 
 ## TODOs
 
-* Support for ed25519 and ed448 keys
+* Support for ed25519 and ed448 keys (EdDSA passhrases (Curves 25519 and 448)
+  are not yet implemented by Erlang's ssh_file)

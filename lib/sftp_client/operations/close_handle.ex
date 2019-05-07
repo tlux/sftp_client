@@ -15,6 +15,6 @@ defmodule SFTPClient.Operations.CloseHandle do
 
   @spec close_handle!(Handle.t()) :: :ok | no_return
   def close_handle!(%Handle{} = handle) do
-    handle |> close_handle() |> bangify!()
+    handle |> close_handle() |> may_bang!()
   end
 end

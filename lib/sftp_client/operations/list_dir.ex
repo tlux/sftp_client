@@ -20,6 +20,6 @@ defmodule SFTPClient.Operations.ListDir do
 
   @spec list_dir!(Conn.t(), String.t()) :: [String.t()] | no_return
   def list_dir!(%Conn{} = conn, path) do
-    conn |> list_dir(path) |> bangify!()
+    conn |> list_dir(path) |> may_bang!()
   end
 end

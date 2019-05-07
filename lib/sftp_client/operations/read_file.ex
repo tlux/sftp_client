@@ -13,6 +13,6 @@ defmodule SFTPClient.Operations.ReadFile do
 
   @spec read_file!(Conn.t(), String.t()) :: String.t() | no_return
   def read_file!(%Conn{} = conn, path) do
-    conn |> read_file(path) |> bangify!()
+    conn |> read_file(path) |> may_bang!()
   end
 end

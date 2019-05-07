@@ -15,6 +15,6 @@ defmodule SFTPClient.Operations.FileInfo do
 
   @spec file_info!(Conn.t(), String.t()) :: FileStat.t() | no_return
   def file_info!(%Conn{} = conn, path) do
-    conn |> file_info(path) |> bangify!()
+    conn |> file_info(path) |> may_bang!()
   end
 end

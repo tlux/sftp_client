@@ -14,7 +14,7 @@ defmodule SFTPClient.Operations.ReadChunk do
   def read_chunk!(%Handle{} = handle, length) do
     case read_chunk(handle, length) do
       :eof -> :eof
-      result -> bangify!(result)
+      result -> may_bang!(result)
     end
   end
 end

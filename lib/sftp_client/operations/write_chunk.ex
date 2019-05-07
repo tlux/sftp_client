@@ -10,6 +10,6 @@ defmodule SFTPClient.Operations.WriteChunk do
 
   @spec write_chunk!(Handle.t(), binary) :: :ok | no_return
   def write_chunk!(%Handle{} = handle, data) do
-    handle |> write_chunk(data) |> bangify!()
+    handle |> write_chunk(data) |> may_bang!()
   end
 end

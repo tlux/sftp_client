@@ -62,7 +62,7 @@ defmodule SFTPClient.Operations.Connect do
   """
   @spec connect!(Config.t() | Keyword.t()) :: Conn.t() | no_return
   def connect!(config_or_opts) do
-    config_or_opts |> connect() |> bangify!()
+    config_or_opts |> connect() |> may_bang!()
   end
 
   defp do_connect(config) do

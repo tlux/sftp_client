@@ -18,6 +18,6 @@ defmodule SFTPClient.Operations.OpenFile do
 
   @spec open_file!(Conn.t(), String.t(), [mode]) :: Handle.t() | no_return
   def open_file!(%Conn{} = conn, path, modes) do
-    conn |> open_file(path, modes) |> bangify!()
+    conn |> open_file(path, modes) |> may_bang!()
   end
 end

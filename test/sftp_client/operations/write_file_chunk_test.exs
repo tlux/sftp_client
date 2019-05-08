@@ -18,7 +18,7 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
 
   @data "chunk stub"
 
-  describe "write_file_chunk/1" do
+  describe "write_file_chunk/2" do
     test "success" do
       chunk_content = "chunk stub"
 
@@ -42,7 +42,7 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
     end
   end
 
-  describe "write_file_chunk!/1" do
+  describe "write_file_chunk!/2" do
     test "success" do
       chunk_content = "chunk stub"
 

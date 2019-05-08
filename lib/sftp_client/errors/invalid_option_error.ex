@@ -1,4 +1,8 @@
 defmodule SFTPClient.InvalidOptionError do
+  @moduledoc """
+  An error that is raised when the configuration contains invalid options.
+  """
+
   defexception [:key, :value, :reason]
 
   def message(error) do

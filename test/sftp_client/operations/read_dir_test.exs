@@ -5,7 +5,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
-  alias SFTPClient.DirEntry
+  alias SFTPClient.Entry
   alias SFTPClient.Handle
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.ReadDir
@@ -37,7 +37,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
   setup do
     decoded_entries =
       Enum.map(@encoded_entries, fn {filename, xfer_attr} ->
-        %DirEntry{
+        %Entry{
           filename: to_string(filename),
           path: "my/remote/dir/#{filename}",
           stat: SSHXferAttr.from_record(xfer_attr)

@@ -1,6 +1,7 @@
 defmodule SFTPClient.Stream do
   @moduledoc """
-  A stream pointing to a file on an SFTP server.
+  A stream pointing to a file on an SFTP server. Implements the `Enumerable` and
+  `Collectable` protocols.
   """
 
   defstruct [:conn, :path, chunk_size: 32768]

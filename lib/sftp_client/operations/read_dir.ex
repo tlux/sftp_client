@@ -1,7 +1,7 @@
 defmodule SFTPClient.Operations.ReadDir do
   import SFTPClient.OperationUtil
 
-  alias SFTPClient.DirEntry
+  alias SFTPClient.Entry
   alias SFTPClient.Handle
   alias SFTPClient.SSHXferAttr
 
@@ -33,7 +33,7 @@ defmodule SFTPClient.Operations.ReadDir do
     |> Stream.map(fn {filename, xfer_attr} ->
       filename = to_string(filename)
 
-      %DirEntry{
+      %Entry{
         filename: filename,
         path: Path.join(dir_path, filename),
         stat: SSHXferAttr.from_record(xfer_attr)

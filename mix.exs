@@ -23,11 +23,15 @@ defmodule SFTPClient.MixProject do
         extras: ["README.md"],
         groups_for_modules: [
           "Adapter Behaviors": [
-            SFTPClient.Adapters.SFTP,
-            SFTPClient.Adapters.SSH
+            SFTPClient.Adapter.SFTP,
+            SFTPClient.Adapter.SSH
+          ],
+          Drivers: [
+            SFTPClient.Driver,
+            SFTPClient.Driver.Common
           ],
           Operations: [
-            SFTPClient.Operation,
+            SFTPClient.OperationUtil,
             SFTPClient.Operations.CloseHandle,
             SFTPClient.Operations.Connect,
             SFTPClient.Operations.DeleteDir,
@@ -47,7 +51,10 @@ defmodule SFTPClient.MixProject do
             SFTPClient.Operations.Rename,
             SFTPClient.Operations.StreamFile,
             SFTPClient.Operations.WriteChunk,
-            SFTPClient.Operations.WriteFile
+            SFTPClient.Operations.WriteFile,
+            SFTPClient.Operations.ReadDir,
+            SFTPClient.Operations.ReadFileChunk,
+            SFTPClient.Operations.WriteFileChunk
           ]
         ]
       ]

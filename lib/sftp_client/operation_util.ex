@@ -1,4 +1,8 @@
 defmodule SFTPClient.OperationUtil do
+  @moduledoc """
+  A utility module that intends to be imported by operation modules.
+  """
+
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
@@ -24,8 +28,11 @@ defmodule SFTPClient.OperationUtil do
   """
   @spec may_bang!(:ok | {:ok | :error, any}) :: any | no_return
   def may_bang!(result)
+
   def may_bang!(:ok), do: :ok
+
   def may_bang!({:ok, result}), do: result
+
   def may_bang!({:error, %{__exception__: _} = error}), do: raise(error)
 
   def may_bang!({:error, error}) do
@@ -33,8 +40,8 @@ defmodule SFTPClient.OperationUtil do
   end
 
   @doc """
-  A function that intends to convert all errors that can occur when an SFTP
-  operation fails into an exception struct.
+  A function which converts all errors that can occur when an SFTP operation
+  fails into a matching exception struct.
   """
   @spec handle_error(any) ::
           ConnError.t() | InvalidOptionError.t() | OperationError.t()

@@ -82,7 +82,10 @@ defmodule SFTPClient.Operations.Connect do
 
   defp get_opts(config) do
     Enum.sort([
-      {:key_cb, {KeyProvider, config: config}},
+      {:key_cb,
+       {KeyProvider,
+        private_key_path: config.private_key_path,
+        private_key_passphrase: config.private_key_passphrase}},
       {:quiet_mode, true},
       {:silently_accept_hosts, true},
       {:user_interaction, false}

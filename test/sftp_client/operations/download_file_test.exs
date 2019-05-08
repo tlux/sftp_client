@@ -14,9 +14,10 @@ defmodule SFTPClient.Operations.DownloadFileTest do
   setup :verify_on_exit!
 
   setup do
-    local_path = Temp.path!()
-    on_exit(fn -> File.rm(local_path) end)
-    {:ok, local_path: local_path}
+    local_dir = Temp.mkdir!()
+    local_path = Path.join(local_dir, "download.dat")
+    on_exit(fn -> File.rm_rf(local_dir) end)
+    {:ok, local_dir: local_dir, local_path: local_path}
   end
 
   describe "download_file/3" do
@@ -37,6 +38,31 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       assert DownloadFile.download_file(@conn, "my/remote/path", local_path) ==
                :ok
+
+      assert {:ok, ^file_content} = File.read(local_path)
+    end
+
+    test "success when local path is directory", %{local_dir: local_dir} do
+      file_content = "chunk"
+      local_path = Path.join(local_dir, "path-to-file.json")
+
+      SFTPMock
+      |> expect(:open, fn :channel_pid_stub,
+                          'my/remote/path-to-file.json',
+                          [:read, :binary] ->
+        {:ok, :handle_id_stub}
+      end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ ->
+        {:ok, file_content}
+      end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ -> :eof end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+
+      assert DownloadFile.download_file(
+               @conn,
+               "my/remote/path-to-file.json",
+               local_dir
+             )
 
       assert {:ok, ^file_content} = File.read(local_path)
     end

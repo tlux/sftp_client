@@ -16,13 +16,14 @@ defmodule SFTPClient.KeyProvider do
 
   @impl true
   def user_key(algorithm, opts) do
-    case opts[:key_cb_private][:config] do
-      %Config{private_key_path: path, private_key_passphrase: passphrase}
-      when not is_nil(path) ->
-        decode_private_key(path, passphrase)
+    provider_opts = opts[:key_cb_private]
 
-      _ ->
+    case provider_opts[:private_key_path] do
+      nil ->
         :ssh_file.user_key(algorithm, opts)
+
+      path ->
+        decode_private_key(path, provider_opts[:private_key_passphrase])
     end
   end
 

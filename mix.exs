@@ -8,6 +8,13 @@ defmodule SFTPClient.MixProject do
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
 
       # Docs
       name: "SFTP Client",
@@ -57,6 +64,7 @@ defmodule SFTPClient.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:excoveralls, "~> 0.11.0", only: :test},
       {:ex_doc, "~> 0.20.2", only: :dev},
       {:mox, "~> 0.5.0", only: :test},
       {:temp, "~> 0.4", only: :test}

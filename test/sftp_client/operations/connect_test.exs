@@ -32,7 +32,10 @@ defmodule SFTPClient.Operations.ConnectTest do
      opts: [
        connect_timeout: 1000,
        inet: :inet,
-       key_cb: {KeyProvider, config: @config},
+       key_cb:
+         {KeyProvider,
+          private_key_path: @config.private_key_path,
+          private_key_passphrase: @config.private_key_passphrase},
        password: 'test-password',
        quiet_mode: true,
        sftp_vsn: 2,
@@ -86,6 +89,24 @@ defmodule SFTPClient.Operations.ConnectTest do
                {:ok,
                 %Conn{
                   config: @config,
+                  channel_pid: :channel_pid_stub,
+                  conn_ref: :conn_ref_stub
+                }}
+    end
+
+    test "omit option when nil", %{opts: opts} do
+      opts = Keyword.delete(opts, :user_dir)
+
+      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+        {:ok, :channel_pid_stub, :conn_ref_stub}
+      end)
+
+      config = %{@config | user_dir: nil}
+
+      assert Connect.connect(config) ==
+               {:ok,
+                %Conn{
+                  config: config,
                   channel_pid: :channel_pid_stub,
                   conn_ref: :conn_ref_stub
                 }}

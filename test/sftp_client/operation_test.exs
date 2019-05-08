@@ -38,6 +38,16 @@ defmodule SFTPClient.OperationTest do
              }
     end
 
+    test "invalid option error with non-charlist" do
+      error = {:eoptions, {{:another_key, 1337}, :enoent}}
+
+      assert Operation.handle_error(error) == %InvalidOptionError{
+               key: :another_key,
+               value: 1337,
+               reason: :enoent
+             }
+    end
+
     test "operation error" do
       reason = :enoent
 

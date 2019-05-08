@@ -7,8 +7,7 @@ defmodule SFTPClient.Operations.OpenDir do
   Opens a handle to a directory on the server. The handle can be used for
   reading directory contents.
   """
-  @spec open_dir(Conn.t(), String.t()) ::
-          {:ok, Handle.t()} | {:error, any}
+  @spec open_dir(Conn.t(), String.t()) :: {:ok, Handle.t()} | {:error, any}
   def open_dir(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().opendir(to_charlist(path))

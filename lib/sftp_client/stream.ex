@@ -1,6 +1,8 @@
 defmodule SFTPClient.Stream do
   defstruct [:conn, :path, chunk_size: 32768]
 
+  require Logger
+
   alias SFTPClient.Conn
 
   @type t :: %__MODULE__{
@@ -34,7 +36,8 @@ defmodule SFTPClient.Stream do
         {[chunk], handle}
 
       {:error, error} ->
-        raise IO.StreamError, reason: Exception.message(error)
+        Logger.error(Exception.message(error))
+        raise IO.StreamError, reason: :terminated
     end
   end
 end
@@ -52,6 +55,8 @@ defimpl Enumerable, for: SFTPClient.Stream do
 end
 
 defimpl Collectable, for: SFTPClient.Stream do
+  require Logger
+
   def into(stream) do
     with {:ok, handle} <-
            SFTPClient.open_file(stream.conn, stream.path, [
@@ -66,7 +71,7 @@ defimpl Collectable, for: SFTPClient.Stream do
   defp collect_fun(stream, handle) do
     fn
       :ok, {:cont, data} ->
-        SFTPClient.write_file_chunk(handle, data)
+        SFTPClient.write_file_chunk!(handle, data)
 
       :ok, :done ->
         SFTPClient.close_handle!(handle)

@@ -19,7 +19,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     user_dir: "~/.ssh",
     system_dir: "/etc/ssh",
     private_key_path: "~/key",
-    private_key_passphrase: "t3$t",
+    private_key_pass_phrase: "t3$t",
     inet: :inet,
     sftp_vsn: 2,
     connect_timeout: 1000
@@ -35,7 +35,7 @@ defmodule SFTPClient.Operations.ConnectTest do
        key_cb:
          {KeyProvider,
           private_key_path: @config.private_key_path,
-          private_key_passphrase: @config.private_key_passphrase},
+          private_key_pass_phrase: @config.private_key_pass_phrase},
        password: 'test-password',
        quiet_mode: true,
        sftp_vsn: 2,

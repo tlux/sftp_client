@@ -21,11 +21,11 @@ defmodule SFTPClient.KeyProvider do
         :ssh_file.user_key(algorithm, opts)
 
       path ->
-        decode_private_key(path, provider_opts[:private_key_passphrase])
+        decode_private_key(path, provider_opts[:private_key_pass_phrase])
     end
   end
 
-  defp decode_private_key(path, passphrase) do
+  defp decode_private_key(path, pass_phrase) do
     path
     |> Path.expand()
     |> File.read!()
@@ -38,12 +38,12 @@ defmodule SFTPClient.KeyProvider do
       {_type, _key, :not_encrypted} = entry ->
         {:ok, :public_key.pem_entry_decode(entry)}
 
-      _entry when is_nil(passphrase) ->
+      _entry when is_nil(pass_phrase) ->
         {:error, 'Passphrase required'}
 
       entry ->
-        passphrase = String.to_charlist(passphrase)
-        {:ok, :public_key.pem_entry_decode(entry, passphrase)}
+        pass_phrase = String.to_charlist(pass_phrase)
+        {:ok, :public_key.pem_entry_decode(entry, pass_phrase)}
     end
   end
 end

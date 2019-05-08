@@ -14,10 +14,13 @@ defmodule SFTPClient.ConfigTest do
          user_dir: "~/.ssh",
          system_dir: "/etc/ssh",
          private_key_path: "~/key",
-         private_key_passphrase: "t3$t",
+         private_key_pass_phrase: "t3$t",
          inet: :inet,
          sftp_vsn: 2,
-         connect_timeout: 1000
+         connect_timeout: 1000,
+         dsa_pass_phrase: "dsa_t3$t",
+         rsa_pass_phrase: "rsa_t3$t",
+         ecdsa_pass_phrase: "ecdsa_t3$t"
        }}
     end
 
@@ -31,10 +34,13 @@ defmodule SFTPClient.ConfigTest do
       assert config.user_dir == nil
       assert config.system_dir == nil
       assert config.private_key_path == nil
-      assert config.private_key_passphrase == nil
+      assert config.private_key_pass_phrase == nil
       assert config.inet == :inet
       assert config.sftp_vsn == nil
       assert config.connect_timeout == 5000
+      assert config.dsa_pass_phrase == nil
+      assert config.rsa_pass_phrase == nil
+      assert config.ecdsa_pass_phrase == nil
     end
 
     test "build config with keyword list", %{data: data} do

@@ -3,8 +3,9 @@ defmodule SFTPClient.Operations.Connect do
   Module containing operations to connect to a SSH/SFTP server.
   """
 
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
+  alias SFTPClient.Conn
   alias SFTPClient.Config
   alias SFTPClient.KeyProvider
 

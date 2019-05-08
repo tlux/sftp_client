@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.ReadFile do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Reads a file from the server, and returns the data as String.

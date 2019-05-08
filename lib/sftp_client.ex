@@ -1,8 +1,7 @@
 defmodule SFTPClient do
-  alias SFTPClient.Operations
+  import SFTPClient.Driver, only: [run: 3]
 
-  @sftp_adapter Application.get_env(:sftp_client, :sftp_adapter, :ssh_sftp)
-  @ssh_adapter Application.get_env(:sftp_client, :ssh_adapter, :ssh)
+  alias SFTPClient.Operations
 
   @typedoc """
   File access modes that can be used when opening files directly from the remote
@@ -10,67 +9,175 @@ defmodule SFTPClient do
   """
   @type access_mode :: :read | :write | :creat | :trunc | :append | :binary
 
-  @doc """
-  Gets the configured SFTP adapter. Defaults to the Erlang `:ssh_sftp` module.
-  """
-  @spec sftp_adapter() :: module
-  def sftp_adapter, do: @sftp_adapter
+  def close_handle!(handle) do
+    run(Operations.CloseHandle, :close_handle!, [handle])
+  end
 
-  @doc """
-  Gets the configured SSH adapter. Defaults to the Erlang `:ssh` module.
-  """
-  @spec ssh_adapter() :: module
-  def ssh_adapter, do: @ssh_adapter
+  def close_handle(handle) do
+    run(Operations.CloseHandle, :close_handle, [handle])
+  end
 
-  defdelegate close_handle!(handle), to: Operations.CloseHandle
-  defdelegate close_handle(handle), to: Operations.CloseHandle
-  defdelegate connect!(config_or_opts), to: Operations.Connect
-  defdelegate connect(config_or_opts), to: Operations.Connect
-  defdelegate delete_dir!(conn, path), to: Operations.DeleteDir
-  defdelegate delete_dir(conn, path), to: Operations.DeleteDir
-  defdelegate delete_file!(conn, path), to: Operations.DeleteFile
-  defdelegate delete_file(conn, path), to: Operations.DeleteFile
-  defdelegate disconnect(conn), to: Operations.Disconnect
+  def connect!(config_or_opts) do
+    run(Operations.Connect, :connect!, [config_or_opts])
+  end
 
-  defdelegate download_file!(conn, remote_path, local_path),
-    to: Operations.DownloadFile
+  def connect(config_or_opts) do
+    run(Operations.Connect, :connect, [config_or_opts])
+  end
 
-  defdelegate download_file(conn, remote_path, local_path),
-    to: Operations.DownloadFile
+  def delete_dir!(conn, path) do
+    run(Operations.DeleteDir, :delete_dir!, [conn, path])
+  end
 
-  defdelegate file_info!(conn, path), to: Operations.FileInfo
-  defdelegate file_info(conn, path), to: Operations.FileInfo
-  defdelegate link_info!(conn, path), to: Operations.LinkInfo
-  defdelegate link_info(conn, path), to: Operations.LinkInfo
-  defdelegate list_dir!(conn, path), to: Operations.ListDir
-  defdelegate list_dir(conn, path), to: Operations.ListDir
-  defdelegate make_dir!(conn, path), to: Operations.MakeDir
-  defdelegate make_dir(conn, path), to: Operations.MakeDir
+  def delete_dir(conn, path) do
+    run(Operations.DeleteDir, :delete_dir, [conn, path])
+  end
 
-  defdelegate make_symlink!(conn, symlink_path, target_path),
-    to: Operations.MakeSymlink
+  def delete_file!(conn, path) do
+    run(Operations.DeleteFile, :delete_file!, [conn, path])
+  end
 
-  defdelegate make_symlink(conn, symlink_path, target_path),
-    to: Operations.MakeSymlink
+  def delete_file(conn, path) do
+    run(Operations.DeleteFile, :delete_file, [conn, path])
+  end
 
-  defdelegate open_dir!(conn, path), to: Operations.OpenDir
-  defdelegate open_dir(conn, path), to: Operations.OpenDir
-  defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
-  defdelegate open_file(conn, path, modes), to: Operations.OpenFile
-  defdelegate read_file_chunk!(handle, length), to: Operations.ReadFileChunk
-  defdelegate read_file_chunk(handle, length), to: Operations.ReadFileChunk
-  defdelegate read_file!(conn, path), to: Operations.ReadFile
-  defdelegate read_file(conn, path), to: Operations.ReadFile
-  defdelegate read_link!(conn, path), to: Operations.ReadLink
-  defdelegate read_link(conn, path), to: Operations.ReadLink
-  defdelegate rename!(conn, old_name, new_name), to: Operations.Rename
-  defdelegate rename(conn, old_name, new_name), to: Operations.Rename
-  defdelegate stream_file!(conn, path, chunk_size), to: Operations.StreamFile
-  defdelegate stream_file!(conn, path), to: Operations.StreamFile
-  defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
-  defdelegate stream_file(conn, path), to: Operations.StreamFile
-  defdelegate write_file_chunk!(handle, data), to: Operations.WriteFileChunk
-  defdelegate write_file_chunk(handle, data), to: Operations.WriteFileChunk
-  defdelegate write_file!(conn, path, data), to: Operations.WriteFile
-  defdelegate write_file(conn, path, data), to: Operations.WriteFile
+  def disconnect(conn) do
+    run(Operations.Disconnect, :disconnect, [conn])
+  end
+
+  def download_file!(conn, remote_path, local_path) do
+    run(Operations.DownloadFile, :download_file!, [
+      conn,
+      remote_path,
+      local_path
+    ])
+  end
+
+  def download_file(conn, remote_path, local_path) do
+    run(Operations.DownloadFile, :download_file, [conn, remote_path, local_path])
+  end
+
+  def file_info!(conn, path) do
+    run(Operations.FileInfo, :file_info!, [conn, path])
+  end
+
+  def file_info(conn, path) do
+    run(Operations.FileInfo, :file_info, [conn, path])
+  end
+
+  def link_info!(conn, path) do
+    run(Operations.LinkInfo, :link_info!, [conn, path])
+  end
+
+  def link_info(conn, path) do
+    run(Operations.LinkInfo, :link_info, [conn, path])
+  end
+
+  def list_dir!(conn, path) do
+    run(Operations.ListDir, :list_dir!, [conn, path])
+  end
+
+  def list_dir(conn, path) do
+    run(Operations.ListDir, :list_dir, [conn, path])
+  end
+
+  def make_dir!(conn, path) do
+    run(Operations.MakeDir, :make_dir!, [conn, path])
+  end
+
+  def make_dir(conn, path) do
+    run(Operations.MakeDir, :make_dir, [conn, path])
+  end
+
+  def make_symlink!(conn, symlink_path, target_path) do
+    run(Operations.MakeSymlink, :make_symlink!, [
+      conn,
+      symlink_path,
+      target_path
+    ])
+  end
+
+  def make_symlink(conn, symlink_path, target_path) do
+    run(Operations.MakeSymlink, :make_symlink, [conn, symlink_path, target_path])
+  end
+
+  def open_dir!(conn, path) do
+    run(Operations.OpenDir, :open_dir!, [conn, path])
+  end
+
+  def open_dir(conn, path) do
+    run(Operations.OpenDir, :open_dir, [conn, path])
+  end
+
+  def open_file!(conn, path, modes) do
+    run(Operations.OpenFile, :open_file!, [conn, path, modes])
+  end
+
+  def open_file(conn, path, modes) do
+    run(Operations.OpenFile, :open_file, [conn, path, modes])
+  end
+
+  def read_file_chunk!(handle, length) do
+    run(Operations.ReadFileChunk, :read_file_chunk!, [handle, length])
+  end
+
+  def read_file_chunk(handle, length) do
+    run(Operations.ReadFileChunk, :read_file_chunk, [handle, length])
+  end
+
+  def read_file!(conn, path) do
+    run(Operations.ReadFile, :read_file!, [conn, path])
+  end
+
+  def read_file(conn, path) do
+    run(Operations.ReadFile, :read_file, [conn, path])
+  end
+
+  def read_link!(conn, path) do
+    run(Operations.ReadLink, :read_link!, [conn, path])
+  end
+
+  def read_link(conn, path) do
+    run(Operations.ReadLink, :read_link, [conn, path])
+  end
+
+  def rename!(conn, old_name, new_name) do
+    run(Operations.Rename, :rename!, [conn, old_name, new_name])
+  end
+
+  def rename(conn, old_name, new_name) do
+    run(Operations.Rename, :rename, [conn, old_name, new_name])
+  end
+
+  def stream_file!(conn, path, chunk_size) do
+    run(Operations.StreamFile, :stream_file!, [conn, path, chunk_size])
+  end
+
+  def stream_file!(conn, path) do
+    run(Operations.StreamFile, :stream_file!, [conn, path])
+  end
+
+  def stream_file(conn, path, chunk_size) do
+    run(Operations.StreamFile, :stream_file, [conn, path, chunk_size])
+  end
+
+  def stream_file(conn, path) do
+    run(Operations.StreamFile, :stream_file, [conn, path])
+  end
+
+  def write_file_chunk!(handle, data) do
+    run(Operations.WriteFileChunk, :write_file_chunk!, [handle, data])
+  end
+
+  def write_file_chunk(handle, data) do
+    run(Operations.WriteFileChunk, :write_file_chunk, [handle, data])
+  end
+
+  def write_file!(conn, path, data) do
+    run(Operations.WriteFile, :write_file!, [conn, path, data])
+  end
+
+  def write_file(conn, path, data) do
+    run(Operations.WriteFile, :write_file, [conn, path, data])
+  end
 end

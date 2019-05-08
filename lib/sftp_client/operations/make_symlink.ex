@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.MakeSymlink do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Creates a symbolic link pointing to `target_path` with the name

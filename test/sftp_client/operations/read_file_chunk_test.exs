@@ -3,7 +3,7 @@ defmodule SFTPClient.Operations.ReadFileChunkTest do
 
   import Mox
 
-  alias SFTPClient.Adapters.SFTP.Mock, as: SFTPMock
+  alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
   alias SFTPClient.Handle
   alias SFTPClient.OperationError

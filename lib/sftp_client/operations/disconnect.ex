@@ -3,7 +3,9 @@ defmodule SFTPClient.Operations.Disconnect do
   Module containing operations to disconnect from an SSH/SFTP server.
   """
 
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Stops an SFTP channel and closes the SSH connection.

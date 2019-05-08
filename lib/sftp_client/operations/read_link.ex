@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.ReadLink do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Reads the link target from the symbolic link specified by path.

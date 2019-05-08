@@ -1,16 +1,22 @@
-defmodule SFTPClient.Operation do
+defmodule SFTPClient.OperationUtil do
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
 
-  defmacro __using__(_) do
-    quote do
-      import SFTPClient, only: [sftp_adapter: 0, ssh_adapter: 0]
-      import unquote(__MODULE__)
+  @sftp_adapter Application.get_env(:sftp_client, :sftp_adapter, :ssh_sftp)
+  @ssh_adapter Application.get_env(:sftp_client, :ssh_adapter, :ssh)
 
-      alias SFTPClient.Conn
-    end
-  end
+  @doc """
+  Gets the configured SFTP adapter. Defaults to the Erlang `:ssh_sftp` module.
+  """
+  @spec sftp_adapter() :: module
+  def sftp_adapter, do: @sftp_adapter
+
+  @doc """
+  Gets the configured SSH adapter. Defaults to the Erlang `:ssh` module.
+  """
+  @spec ssh_adapter() :: module
+  def ssh_adapter, do: @ssh_adapter
 
   @doc """
   Converts the result of a non-bang function so that the result is returned or
@@ -20,8 +26,16 @@ defmodule SFTPClient.Operation do
   def may_bang!(result)
   def may_bang!(:ok), do: :ok
   def may_bang!({:ok, result}), do: result
-  def may_bang!({:error, error}), do: raise(error)
+  def may_bang!({:error, %{__exception__: _} = error}), do: raise(error)
 
+  def may_bang!({:error, error}) do
+    raise("Unexpected error: #{inspect(error)}")
+  end
+
+  @doc """
+  A function that intends to convert all errors that can occur when an SFTP
+  operation fails into an exception struct.
+  """
   @spec handle_error(any) ::
           ConnError.t() | InvalidOptionError.t() | OperationError.t()
   def handle_error(error)

@@ -1,6 +1,7 @@
 defmodule SFTPClient.Operations.OpenFile do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
+  alias SFTPClient.Conn
   alias SFTPClient.Handle
 
   @doc """

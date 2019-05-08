@@ -3,8 +3,8 @@ defmodule SFTPClient.Operations.DisconnectTest do
 
   import Mox
 
-  alias SFTPClient.Adapters.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Adapters.SSH.Mock, as: SSHMock
+  alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
+  alias SFTPClient.Adapter.SSH.Mock, as: SSHMock
   alias SFTPClient.Conn
   alias SFTPClient.Operations.Disconnect
 

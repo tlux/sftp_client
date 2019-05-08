@@ -1,6 +1,5 @@
 defmodule SFTPClient.Operations.DownloadFile do
-  use SFTPClient.Operation
-
+  alias SFTPClient.Conn
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError

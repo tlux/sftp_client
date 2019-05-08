@@ -3,7 +3,7 @@ defmodule SFTPClient.Operations.MakeDirTest do
 
   import Mox
 
-  alias SFTPClient.Adapters.SFTP.Mock, as: SFTPMock
+  alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.MakeDir

@@ -1,4 +1,4 @@
-defmodule SFTPClient.Adapters.SFTP do
+defmodule SFTPClient.Adapter.SFTP do
   @moduledoc """
   A behavior that defines required callbacks for a low-level SFTP adapter.
   """

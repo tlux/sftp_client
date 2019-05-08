@@ -6,8 +6,6 @@ defmodule SFTPClient.KeyProvider do
 
   @behaviour :ssh_client_key_api
 
-  alias SFTPClient.Config
-
   @impl true
   defdelegate add_host_key(host, public_key, opts), to: :ssh_file
 

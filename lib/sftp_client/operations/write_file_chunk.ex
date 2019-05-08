@@ -1,5 +1,5 @@
 defmodule SFTPClient.Operations.WriteFileChunk do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
   alias SFTPClient.Handle
 

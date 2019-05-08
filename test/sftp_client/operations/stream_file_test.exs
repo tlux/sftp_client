@@ -4,7 +4,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
   import Mox
 
   alias File.Stat, as: FileStat
-  alias SFTPClient.Adapters.SFTP.Mock, as: SFTPMock
+  alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.StreamFile

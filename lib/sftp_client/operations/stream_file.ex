@@ -1,6 +1,5 @@
 defmodule SFTPClient.Operations.StreamFile do
-  use SFTPClient.Operation
-
+  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Stream, as: SFTPStream
 

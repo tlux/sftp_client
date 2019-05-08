@@ -1,7 +1,8 @@
 defmodule SFTPClient.Operations.FileInfo do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
   alias File.Stat, as: FileStat
+  alias SFTPClient.Conn
 
   @doc """
   Returns a `File.Stat` struct from the remote file system object specified by
@@ -19,7 +20,7 @@ defmodule SFTPClient.Operations.FileInfo do
 
   @doc """
   Returns a `File.Stat` struct from the remote file system object specified by
-  path. Raises when the operation fails. 
+  path. Raises when the operation fails.
   """
   @spec file_info!(Conn.t(), String.t()) :: FileStat.t() | no_return
   def file_info!(%Conn{} = conn, path) do

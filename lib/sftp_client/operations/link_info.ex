@@ -1,7 +1,8 @@
 defmodule SFTPClient.Operations.LinkInfo do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
   alias File.Stat, as: FileStat
+  alias SFTPClient.Conn
 
   @doc """
   Returns a `File.Stat` struct from the remote symlink object specified by path.

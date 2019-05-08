@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.MakeDir do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Creates a directory specified by path. The path must be a full path to a new

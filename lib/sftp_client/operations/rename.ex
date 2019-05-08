@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.Rename do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Renames a file named `old_name` and gives it the name specified by `new_name`.

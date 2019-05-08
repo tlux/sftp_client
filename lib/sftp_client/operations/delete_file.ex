@@ -3,7 +3,9 @@ defmodule SFTPClient.Operations.DeleteFile do
   Module containing operations to delete a file from the remote server.
   """
 
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Deletes the file specified by path.

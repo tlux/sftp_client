@@ -3,7 +3,9 @@ defmodule SFTPClient.Operations.DeleteDir do
   Module containing operations to delete a directory from the remote server.
   """
 
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Deletes the directory specified by path.

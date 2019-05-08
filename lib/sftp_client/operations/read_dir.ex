@@ -1,5 +1,5 @@
 defmodule SFTPClient.Operations.ReadDir do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
 
   alias SFTPClient.DirEntry
   alias SFTPClient.Handle

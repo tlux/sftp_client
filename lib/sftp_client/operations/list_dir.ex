@@ -1,5 +1,7 @@
 defmodule SFTPClient.Operations.ListDir do
-  use SFTPClient.Operation
+  import SFTPClient.OperationUtil
+
+  alias SFTPClient.Conn
 
   @doc """
   Lists the given directory on the server, returning the filenames as a list of

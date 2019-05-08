@@ -26,8 +26,8 @@ defmodule SFTPClient.Operations.ListDir do
 
   defp process_entries(entries) do
     entries
-    |> Enum.map(&to_string/1)
-    |> Enum.reject(&(&1 in [".", ".."]))
+    |> Stream.reject(&(&1 in ['.', '..']))
+    |> Stream.map(&to_string/1)
     |> Enum.sort()
   end
 end

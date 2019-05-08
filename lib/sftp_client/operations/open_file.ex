@@ -13,8 +13,11 @@ defmodule SFTPClient.Operations.OpenFile do
     conn.channel_pid
     |> sftp_adapter().open(to_charlist(path), modes)
     |> case do
-      {:ok, handle} -> {:ok, %Handle{id: handle, conn: conn}}
-      {:error, error} -> {:error, handle_error(error)}
+      {:ok, handle} ->
+        {:ok, %Handle{id: handle, conn: conn, path: to_string(path)}}
+
+      {:error, error} ->
+        {:error, handle_error(error)}
     end
   end
 

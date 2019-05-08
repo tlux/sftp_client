@@ -4,9 +4,9 @@ defmodule SFTPClient.Handle do
   directory on the remote server.
   """
 
-  defstruct [:conn, :id]
+  defstruct [:conn, :id, :path]
 
   alias SFTPClient.Conn
 
-  @type t :: %__MODULE__{conn: Conn.t(), id: term}
+  @type t :: %__MODULE__{conn: Conn.t(), id: term, path: String.t()}
 end

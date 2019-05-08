@@ -23,7 +23,7 @@ defmodule SFTPClient.Stream do
   end
 
   defp read_chunk(stream, handle) do
-    case SFTPClient.read_chunk(handle, stream.chunk_size) do
+    case SFTPClient.read_file_chunk(handle, stream.chunk_size) do
       :eof ->
         {:halt, handle}
 

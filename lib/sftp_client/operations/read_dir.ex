@@ -1,7 +1,9 @@
 defmodule SFTPClient.Operations.ReadDir do
   use SFTPClient.Operation
 
+  alias SFTPClient.DirEntry
   alias SFTPClient.Handle
+  alias SFTPClient.SSHXferAttr
 
   @doc """
   Reads the directory contents from the server, and returns the data as String.
@@ -11,7 +13,7 @@ defmodule SFTPClient.Operations.ReadDir do
     handle.conn.channel_pid
     |> sftp_adapter().readdir(handle.id)
     |> case do
-      {:ok, content} -> {:ok, content}
+      {:ok, entries} -> {:ok, process_entries(entries, handle.path)}
       {:error, error} -> {:error, handle_error(error)}
     end
   end
@@ -23,5 +25,20 @@ defmodule SFTPClient.Operations.ReadDir do
   @spec read_dir!(Handle.t()) :: [any] | no_return
   def read_dir!(%Handle{} = handle) do
     handle |> read_dir() |> may_bang!()
+  end
+
+  defp process_entries(entries, dir_path) do
+    entries
+    |> Stream.reject(fn {filename, _} -> filename in ['.', '..'] end)
+    |> Stream.map(fn {filename, xfer_attr} ->
+      filename = to_string(filename)
+
+      %DirEntry{
+        filename: filename,
+        path: Path.join(dir_path, filename),
+        stat: SSHXferAttr.from_record(xfer_attr)
+      }
+    end)
+    |> Enum.to_list()
   end
 end

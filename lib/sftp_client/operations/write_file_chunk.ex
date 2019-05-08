@@ -9,7 +9,10 @@ defmodule SFTPClient.Operations.WriteFileChunk do
   """
   @spec write_file_chunk(Handle.t(), binary) :: :ok | {:error, any}
   def write_file_chunk(%Handle{} = handle, data) do
-    sftp_adapter().write(handle.conn.channel_pid, handle.id, data)
+    case sftp_adapter().write(handle.conn.channel_pid, handle.id, data) do
+      {:error, error} -> {:error, handle_error(error)}
+      result -> result
+    end
   end
 
   @doc """

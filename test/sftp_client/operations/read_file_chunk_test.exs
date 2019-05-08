@@ -20,16 +20,16 @@ defmodule SFTPClient.Operations.ReadFileChunkTest do
 
   describe "read_file_chunk/1" do
     test "read chunk" do
-      chunk_contents = "chunk stub"
+      chunk_content = "chunk stub"
 
       expect(SFTPMock, :read, fn :channel_pid_stub,
                                  :handle_id_stub,
                                  @chunk_size ->
-        {:ok, chunk_contents}
+        {:ok, chunk_content}
       end)
 
       assert ReadFileChunk.read_file_chunk(@handle, @chunk_size) ==
-               {:ok, chunk_contents}
+               {:ok, chunk_content}
     end
 
     test "eof" do
@@ -58,16 +58,16 @@ defmodule SFTPClient.Operations.ReadFileChunkTest do
 
   describe "read_file_chunk!/1" do
     test "read chunk" do
-      chunk_contents = "chunk stub"
+      chunk_content = "chunk stub"
 
       expect(SFTPMock, :read, fn :channel_pid_stub,
                                  :handle_id_stub,
                                  @chunk_size ->
-        {:ok, chunk_contents}
+        {:ok, chunk_content}
       end)
 
       assert ReadFileChunk.read_file_chunk!(@handle, @chunk_size) ==
-               chunk_contents
+               chunk_content
     end
 
     test "eof" do

@@ -13,9 +13,6 @@ defmodule SFTPClient.Adapters.SFTP do
   @callback list_dir(channel_pid :: pid, path :: charlist) ::
               {:ok, [charlist]} | {:error, any}
 
-  @callback read_dir(channel_pid :: pid, path :: charlist) ::
-              {:ok, binary} | {:error, any}
-
   @callback close(channel_pid :: pid, handle :: term) :: :ok | {:error, any}
 
   @callback del_dir(channel_pid :: pid, path :: charlist) :: :ok | {:error, any}
@@ -51,4 +48,25 @@ defmodule SFTPClient.Adapters.SFTP do
               symlink_path :: charlist,
               target_path :: charlist
             ) :: :ok | {:error, any}
+
+  @callback opendir(channel_pid :: pid, path :: charlist) ::
+              {:ok, term} | {:error, any}
+
+  @callback read_file(channel_pid :: pid, path :: charlist) ::
+              {:ok, binary} | {:error, any}
+
+  @callback read_link(channel_pid :: pid, path :: charlist) ::
+              {:ok, charlist} | {:error, any}
+
+  @callback rename(
+              channel_pid :: pid,
+              old_path :: charlist,
+              new_path :: charlist
+            ) :: :ok | {:error, any}
+
+  @callback write_file(channel_pid :: pid, path :: charlist, data :: [binary]) ::
+              :ok | {:error, any}
+
+  @callback write(channel_pid :: pid, path :: charlist, data :: binary) ::
+              :ok | {:error, any}
 end

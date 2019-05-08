@@ -7,7 +7,7 @@ defmodule SFTPClient.Operations.ReadLink do
   @spec read_link(Conn.t(), String.t()) :: {:ok, String.t()} | {:error, any}
   def read_link(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().read_link(String.to_charlist(path))
+    |> sftp_adapter().read_link(to_charlist(path))
     |> case do
       {:ok, target} -> {:ok, to_string(target)}
       {:error, error} -> {:error, handle_error(error)}

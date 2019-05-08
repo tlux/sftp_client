@@ -31,6 +31,24 @@ defmodule SFTPClient.Adapters.SFTP do
   @callback read(channel_pid :: pid, handle :: term, length :: non_neg_integer) ::
               {:ok, binary} | {:error, any}
 
+  @callback readdir(channel_pid :: pid, handle :: term) ::
+              {:ok, binary} | {:error, any}
+
   @callback read_file_info(channel_pid :: pid, path :: charlist) ::
               {:ok, term} | {:error, any}
+
+  @callback read_link_info(channel_pid :: pid, path :: charlist) ::
+              {:ok, term} | {:error, any}
+
+  @callback list_dir(channel_pid :: pid, path :: charlist) ::
+              {:ok, [charlist]} | {:error, any}
+
+  @callback make_dir(channel_pid :: pid, path :: charlist) ::
+              :ok | {:error, any}
+
+  @callback make_symlink(
+              channel_pid :: pid,
+              symlink_path :: charlist,
+              target_path :: charlist
+            ) :: :ok | {:error, any}
 end

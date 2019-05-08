@@ -11,7 +11,7 @@ defmodule SFTPClient.Operations.DeleteFile do
   @spec delete_file(Conn.t(), String.t()) :: :ok | {:error, any}
   def delete_file(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().delete(String.to_charlist(path))
+    |> sftp_adapter().delete(to_charlist(path))
     |> case do
       :ok -> :ok
       {:error, error} -> {:error, handle_error(error)}

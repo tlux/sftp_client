@@ -8,8 +8,8 @@ defmodule SFTPClient.Operations.Rename do
   def rename(%Conn{} = conn, old_path, new_path) do
     conn.channel_pid
     |> sftp_adapter().rename(
-      String.to_charlist(old_path),
-      String.to_charlist(new_path)
+      to_charlist(old_path),
+      to_charlist(new_path)
     )
     |> case do
       :ok -> :ok

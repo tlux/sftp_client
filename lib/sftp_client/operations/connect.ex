@@ -74,7 +74,7 @@ defmodule SFTPClient.Operations.Connect do
 
   defp do_connect(config) do
     sftp_adapter().start_channel(
-      String.to_charlist(config.host),
+      to_charlist(config.host),
       config.port,
       get_opts(config)
     )
@@ -123,7 +123,7 @@ defmodule SFTPClient.Operations.Connect do
   defp map_opt_value(_key, value), do: value
 
   defp dump_opt_value(value) when is_binary(value) do
-    String.to_charlist(value)
+    to_charlist(value)
   end
 
   defp dump_opt_value(value), do: value

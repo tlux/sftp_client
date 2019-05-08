@@ -8,7 +8,7 @@ defmodule SFTPClient.Operations.MakeDir do
   @spec make_dir(Conn.t(), String.t()) :: :ok | {:error, any}
   def make_dir(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().make_dir(String.to_charlist(path))
+    |> sftp_adapter().make_dir(to_charlist(path))
     |> case do
       :ok -> :ok
       {:error, error} -> {:error, handle_error(error)}

@@ -9,8 +9,8 @@ defmodule SFTPClient.Operations.MakeSymlink do
   def make_symlink(%Conn{} = conn, symlink_path, target_path) do
     conn.channel_pid
     |> sftp_adapter().make_symlink(
-      String.to_charlist(symlink_path),
-      String.to_charlist(target_path)
+      to_charlist(symlink_path),
+      to_charlist(target_path)
     )
     |> case do
       :ok -> :ok

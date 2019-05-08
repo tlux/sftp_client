@@ -1,4 +1,8 @@
 defmodule SFTPClient.Stream do
+  @moduledoc """
+  A stream pointing to a file on an SFTP server.
+  """
+
   defstruct [:conn, :path, chunk_size: 32768]
 
   require Logger

@@ -1,4 +1,8 @@
 defmodule SFTPClient.Adapters.SFTP do
+  @moduledoc """
+  A behavior that defines required callbacks for a low-level SFTP adapter.
+  """
+
   @callback start_channel(
               host :: charlist,
               port :: non_neg_integer,

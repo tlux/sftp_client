@@ -1,4 +1,8 @@
 defmodule SFTPClient.SSHXferAttr do
+  @moduledoc """
+  A struct that contains file and directory meta data.
+  """
+
   require Record
 
   record = Record.extract(:ssh_xfer_attr, from_lib: "ssh/src/ssh_xfer.hrl")
@@ -29,6 +33,9 @@ defmodule SFTPClient.SSHXferAttr do
           type: atom
         }
 
+  @doc """
+  Converts a record of the `:ssh_xfer_attr` type into this struct.
+  """
   @spec from_record(tuple) :: t
   def from_record({:ssh_xfer_attr, unquote_splicing(values)}) do
     opts =

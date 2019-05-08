@@ -17,6 +17,14 @@ defmodule SFTPClient.StreamTest do
     chunk_size: 1337
   }
 
+  describe "struct" do
+    test "default chunk size" do
+      stream = %SFTPStream{conn: @stream.conn, path: @stream.path}
+
+      assert stream.chunk_size == 32768
+    end
+  end
+
   describe "readable_stream/1" do
     test "get stream" do
       setup_success_mocks()

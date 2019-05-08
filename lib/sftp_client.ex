@@ -5,13 +5,13 @@ defmodule SFTPClient do
   @ssh_adapter Application.get_env(:sftp_client, :ssh_adapter, :ssh)
 
   @doc """
-  Gets the configured SFTP adapter. Defaults to the Erlang ssh_sftp module.
+  Gets the configured SFTP adapter. Defaults to the Erlang `:ssh_sftp` module.
   """
   @spec sftp_adapter() :: module
   def sftp_adapter, do: @sftp_adapter
 
   @doc """
-  Gets the configured SSH adapter. Defaults to the Erlang ssh module.
+  Gets the configured SSH adapter. Defaults to the Erlang `:ssh` module.
   """
   @spec ssh_adapter() :: module
   def ssh_adapter, do: @ssh_adapter

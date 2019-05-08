@@ -1,6 +1,7 @@
 defmodule SFTPClient.KeyProvider do
   @moduledoc """
   A provider that loads keys for authentication from the given location.
+  Implements the `:ssh_client_key_api` behavior.
   """
 
   @behaviour :ssh_client_key_api

@@ -57,8 +57,8 @@ defmodule SFTPClient do
   defdelegate open_dir(conn, path), to: Operations.OpenDir
   defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
   defdelegate open_file(conn, path, modes), to: Operations.OpenFile
-  defdelegate read_chunk!(handle, length), to: Operations.ReadChunk
-  defdelegate read_chunk(handle, length), to: Operations.ReadChunk
+  defdelegate read_file_chunk!(handle, length), to: Operations.ReadFileChunk
+  defdelegate read_file_chunk(handle, length), to: Operations.ReadFileChunk
   defdelegate read_file!(conn, path), to: Operations.ReadFile
   defdelegate read_file(conn, path), to: Operations.ReadFile
   defdelegate read_link!(conn, path), to: Operations.ReadLink

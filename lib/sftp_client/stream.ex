@@ -9,6 +9,9 @@ defmodule SFTPClient.Stream do
           chunk_size: non_neg_integer
         }
 
+  @doc """
+  Gets a stream that reads a file from the remote server in chunks.
+  """
   @spec readable_stream(t) :: Enumerable.t()
   def readable_stream(%__MODULE__{} = stream) do
     Stream.resource(
@@ -63,7 +66,7 @@ defimpl Collectable, for: SFTPClient.Stream do
   defp collect_fun(stream, handle) do
     fn
       :ok, {:cont, data} ->
-        SFTPClient.write_chunk(handle, data)
+        SFTPClient.write_file_chunk(handle, data)
 
       :ok, :done ->
         SFTPClient.close_handle!(handle)

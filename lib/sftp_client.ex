@@ -69,8 +69,8 @@ defmodule SFTPClient do
   defdelegate stream_file!(conn, path), to: Operations.StreamFile
   defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
   defdelegate stream_file(conn, path), to: Operations.StreamFile
-  defdelegate write_chunk!(handle, data), to: Operations.WriteChunk
-  defdelegate write_chunk(handle, data), to: Operations.WriteChunk
+  defdelegate write_file_chunk!(handle, data), to: Operations.WriteFileChunk
+  defdelegate write_file_chunk(handle, data), to: Operations.WriteFileChunk
   defdelegate write_file!(conn, path, data), to: Operations.WriteFile
   defdelegate write_file(conn, path, data), to: Operations.WriteFile
 end

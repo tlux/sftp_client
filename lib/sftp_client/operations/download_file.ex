@@ -12,7 +12,7 @@ defmodule SFTPClient.Operations.DownloadFile do
   """
   @spec download_file(Conn.t(), String.t(), String.t()) :: :ok | {:error, any}
   def download_file(%Conn{} = conn, remote_path, local_path) do
-    {:ok, download_file!(conn, remote_path, local_path)}
+    download_file!(conn, remote_path, local_path)
   rescue
     error in [ConnError, InvalidOptionError, OperationError] ->
       {:error, error}
@@ -26,7 +26,7 @@ defmodule SFTPClient.Operations.DownloadFile do
   @spec download_file!(Conn.t(), String.t(), String.t()) :: :ok | no_return
   def download_file!(%Conn{} = conn, remote_path, local_path) do
     local_path = get_local_path(local_path, remote_path)
-    source_stream = SFTPClient.stream_file(conn, remote_path)
+    source_stream = SFTPClient.stream_file!(conn, remote_path)
     target_stream = File.stream!(local_path)
 
     source_stream

@@ -4,6 +4,12 @@ defmodule SFTPClient do
   @sftp_adapter Application.get_env(:sftp_client, :sftp_adapter, :ssh_sftp)
   @ssh_adapter Application.get_env(:sftp_client, :ssh_adapter, :ssh)
 
+  @typedoc """
+  File access modes that can be used when opening files directly from the remote
+  server.
+  """
+  @type access_mode :: :read | :write | :creat | :trunc | :append | :binary
+
   @doc """
   Gets the configured SFTP adapter. Defaults to the Erlang `:ssh_sftp` module.
   """

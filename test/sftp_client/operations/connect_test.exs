@@ -47,21 +47,21 @@ defmodule SFTPClient.Operations.ConnectTest do
   describe "connect/1" do
     test "connect with SFTPClient.Config", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       assert Connect.connect(@config) ==
                {:ok,
                 %Conn{
                   config: @config,
-                  channel_pid: :channel_pid_mock,
-                  conn_ref: :conn_ref_mock
+                  channel_pid: :channel_pid_stub,
+                  conn_ref: :conn_ref_stub
                 }}
     end
 
     test "connect with map options", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       config_opts = Map.from_struct(@config)
@@ -70,14 +70,14 @@ defmodule SFTPClient.Operations.ConnectTest do
                {:ok,
                 %Conn{
                   config: @config,
-                  channel_pid: :channel_pid_mock,
-                  conn_ref: :conn_ref_mock
+                  channel_pid: :channel_pid_stub,
+                  conn_ref: :conn_ref_stub
                 }}
     end
 
     test "connect with keyword options", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       config_opts = @config |> Map.from_struct() |> Keyword.new()
@@ -86,8 +86,8 @@ defmodule SFTPClient.Operations.ConnectTest do
                {:ok,
                 %Conn{
                   config: @config,
-                  channel_pid: :channel_pid_mock,
-                  conn_ref: :conn_ref_mock
+                  channel_pid: :channel_pid_stub,
+                  conn_ref: :conn_ref_stub
                 }}
     end
 
@@ -120,20 +120,20 @@ defmodule SFTPClient.Operations.ConnectTest do
   describe "connect!/1" do
     test "connect with SFTPClient.Config", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       assert Connect.connect!(@config) ==
                %Conn{
                  config: @config,
-                 channel_pid: :channel_pid_mock,
-                 conn_ref: :conn_ref_mock
+                 channel_pid: :channel_pid_stub,
+                 conn_ref: :conn_ref_stub
                }
     end
 
     test "connect with map options", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       config_opts = Map.from_struct(@config)
@@ -141,14 +141,14 @@ defmodule SFTPClient.Operations.ConnectTest do
       assert Connect.connect!(config_opts) ==
                %Conn{
                  config: @config,
-                 channel_pid: :channel_pid_mock,
-                 conn_ref: :conn_ref_mock
+                 channel_pid: :channel_pid_stub,
+                 conn_ref: :conn_ref_stub
                }
     end
 
     test "connect with keyword options", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:ok, :channel_pid_mock, :conn_ref_mock}
+        {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
       config_opts = @config |> Map.from_struct() |> Keyword.new()
@@ -156,8 +156,8 @@ defmodule SFTPClient.Operations.ConnectTest do
       assert Connect.connect!(config_opts) ==
                %Conn{
                  config: @config,
-                 channel_pid: :channel_pid_mock,
-                 conn_ref: :conn_ref_mock
+                 channel_pid: :channel_pid_stub,
+                 conn_ref: :conn_ref_stub
                }
     end
 

@@ -12,14 +12,14 @@ defmodule SFTPClient.Operations.DisconnectTest do
 
   describe "disconnect/1" do
     test "close SFTP channel and close SSH connection" do
-      conn = %Conn{channel_pid: :channel_pid_mock, conn_ref: :conn_ref_mock}
+      conn = %Conn{channel_pid: :channel_pid_stub, conn_ref: :conn_ref_stub}
 
-      expect(SFTPMock, :stop_channel, fn :channel_pid_mock ->
+      expect(SFTPMock, :stop_channel, fn :channel_pid_stub ->
         send(self(), {:stop_sftp_channel, get_timestamp()})
         :ok
       end)
 
-      expect(SSHMock, :close, fn :conn_ref_mock ->
+      expect(SSHMock, :close, fn :conn_ref_stub ->
         send(self(), {:close_ssh, get_timestamp()})
         :ok
       end)

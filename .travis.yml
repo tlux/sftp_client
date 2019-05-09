@@ -1,5 +1,7 @@
 language: elixir
 
+script: mix test --cover
+
 matrix:
   include:
     - elixir: '1.8.1'

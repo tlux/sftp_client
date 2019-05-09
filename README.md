@@ -1,6 +1,6 @@
 # SFTP Client
 
-An Elixir SFTP Client that wraps around Erlang's
+An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and
 [ssh_sftp](http://erlang.org/doc/man/ssh_sftp.html).
 

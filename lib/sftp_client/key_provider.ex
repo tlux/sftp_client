@@ -33,7 +33,7 @@ defmodule SFTPClient.KeyProvider do
     |> List.first()
     |> case do
       nil ->
-        {:error, 'Undecodable key'}
+        {:error, 'Unable to decode key'}
 
       {_type, _key, :not_encrypted} = entry ->
         {:ok, :public_key.pem_entry_decode(entry)}

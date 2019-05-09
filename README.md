@@ -1,5 +1,7 @@
 # SFTP Client
 
+[![Build Status](https://travis-ci.org/i22-digitalagentur/sftp_client.svg?branch=master)](https://travis-ci.org/i22-digitalagentur/sftp_client)
+
 An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and
 [ssh_sftp](http://erlang.org/doc/man/ssh_sftp.html).

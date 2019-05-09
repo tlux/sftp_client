@@ -16,6 +16,7 @@ defmodule SFTPClient.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
+      package: package(),
 
       # Docs
       name: "SFTP Client",
@@ -82,5 +83,15 @@ defmodule SFTPClient.MixProject do
 
   defp description do
     "An Elixir SFTP Client that wraps Erlang's ssh and ssh_sftp."
+  end
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      links: %{
+        "Source" => "https://github.com/i22-digitalagentur/sftp_client",
+        "Docs" => "https://hexdocs.pm/sftp_client"
+      }
+    ]
   end
 end

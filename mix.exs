@@ -89,8 +89,7 @@ defmodule SFTPClient.MixProject do
     [
       licenses: ["MIT"],
       links: %{
-        "Source" => "https://github.com/i22-digitalagentur/sftp_client",
-        "Docs" => "https://hexdocs.pm/sftp_client"
+        "Source" => "https://github.com/i22-digitalagentur/sftp_client"
       }
     ]
   end

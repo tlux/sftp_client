@@ -7,6 +7,7 @@ defmodule SFTPClient.MixProject do
       version: "1.0.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
+      description: description(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
@@ -18,6 +19,7 @@ defmodule SFTPClient.MixProject do
 
       # Docs
       name: "SFTP Client",
+      source_url: "https://github.com/i22-digitalagentur/sftp_client",
       docs: [
         main: "SFTPClient",
         extras: ["README.md"],
@@ -76,5 +78,9 @@ defmodule SFTPClient.MixProject do
       {:mox, "~> 0.5.0", only: :test},
       {:temp, "~> 0.4", only: :test}
     ]
+  end
+
+  defp description do
+    "An Elixir SFTP Client that wraps Erlang's ssh and ssh_sftp."
   end
 end

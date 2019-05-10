@@ -9,9 +9,10 @@ defmodule SFTPClient.Operations.DownloadFile do
   When the local path is a directory, the file name of the local file is
   inferred from the remote path.
   """
-  @spec download_file(Conn.t(), String.t(), String.t()) :: :ok | {:error, any}
+  @spec download_file(Conn.t(), String.t(), String.t()) ::
+          {:ok, String.t()} | {:error, any}
   def download_file(%Conn{} = conn, remote_path, local_path) do
-    download_file!(conn, remote_path, local_path)
+    {:ok, download_file!(conn, remote_path, local_path)}
   rescue
     error in [ConnError, InvalidOptionError, OperationError] ->
       {:error, error}
@@ -22,7 +23,8 @@ defmodule SFTPClient.Operations.DownloadFile do
   When the local path is a directory, the file name of the local file is
   inferred from the remote path. Raises when the operation fails.
   """
-  @spec download_file!(Conn.t(), String.t(), String.t()) :: :ok | no_return
+  @spec download_file!(Conn.t(), String.t(), String.t()) ::
+          String.t() | no_return
   def download_file!(%Conn{} = conn, remote_path, local_path) do
     local_path = get_local_path(local_path, remote_path)
     source_stream = SFTPClient.stream_file!(conn, remote_path)
@@ -31,6 +33,8 @@ defmodule SFTPClient.Operations.DownloadFile do
     source_stream
     |> Stream.into(target_stream)
     |> Stream.run()
+
+    local_path
   end
 
   defp get_local_path(local_path, remote_path) do

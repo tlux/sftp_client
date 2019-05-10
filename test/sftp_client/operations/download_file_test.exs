@@ -37,7 +37,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
 
       assert DownloadFile.download_file(@conn, "my/remote/path", local_path) ==
-               :ok
+               {:ok, local_path}
 
       assert {:ok, ^file_content} = File.read(local_path)
     end
@@ -62,7 +62,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
                @conn,
                "my/remote/path-to-file.json",
                local_dir
-             )
+             ) == {:ok, local_path}
 
       assert {:ok, ^file_content} = File.read(local_path)
     end
@@ -125,7 +125,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
 
       assert DownloadFile.download_file!(@conn, "my/remote/path", local_path) ==
-               :ok
+               local_path
 
       assert {:ok, ^file_content} = File.read(local_path)
     end

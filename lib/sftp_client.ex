@@ -202,6 +202,16 @@ defmodule SFTPClient do
     run(Operations.StreamFile, :stream_file, [conn, path])
   end
 
+  @doc delegate_to: {Operations.UploadFile, :upload_file!, 3}
+  def upload_file!(conn, local_path, remote_path) do
+    run(Operations.UploadFile, :upload_file!, [conn, local_path, remote_path])
+  end
+
+  @doc delegate_to: {Operations.UploadFile, :upload_file, 3}
+  def upload_file(conn, local_path, remote_path) do
+    run(Operations.UploadFile, :upload_file, [conn, local_path, remote_path])
+  end
+
   @doc delegate_to: {Operations.WriteFileChunk, :write_file_chunk!, 2}
   def write_file_chunk!(handle, data) do
     run(Operations.WriteFileChunk, :write_file_chunk!, [handle, data])

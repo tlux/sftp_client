@@ -5,13 +5,16 @@ defmodule SFTPClient do
 
   ## Connect & Disconnect
 
-  Use `connect/1` to open a new connection to an SFTP server. Refer to the docs to
-  find out all available options.
+  To open a new connection to an SFTP server:
 
       iex> {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
       {:ok, %SFTPClient.Conn{}}
 
-  It is recommended to close a connection after your operations have completed:
+  Refer to the docs for `SFTPClient.Operations.Connect.connect/1` to find out
+  all available options.
+
+  It is strongly recommended to close a connection after your operations have
+  completed:
 
       iex> SFTPClient.disconnect(conn)
       :ok

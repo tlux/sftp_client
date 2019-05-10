@@ -37,7 +37,8 @@ find out all available options.
 {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
 ```
 
-It is recommended to close a connection after your operations have completed:
+It is strongly recommended to close a connection after your operations have
+completed:
 
 ```elixir
 SFTPClient.disconnect(conn)

@@ -263,9 +263,19 @@ defmodule SFTPClient do
     run(Operations.OpenDir, :open_dir!, [conn, path])
   end
 
+  @doc delegate_to: {Operations.OpenDir, :open_dir!, 3}
+  def open_dir!(conn, path, fun) do
+    run(Operations.OpenDir, :open_dir!, [conn, path, fun])
+  end
+
   @doc delegate_to: {Operations.OpenDir, :open_dir, 2}
   def open_dir(conn, path) do
     run(Operations.OpenDir, :open_dir, [conn, path])
+  end
+
+  @doc delegate_to: {Operations.OpenDir, :open_dir, 3}
+  def open_dir(conn, path, fun) do
+    run(Operations.OpenDir, :open_dir, [conn, path, fun])
   end
 
   @doc delegate_to: {Operations.OpenFile, :open_file!, 3}

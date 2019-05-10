@@ -232,11 +232,31 @@ defmodule SFTPClientTest do
     end
   end
 
+  describe "open_dir!/3" do
+    test "delegate to Operations.OpenDir" do
+      assert_delegate_to_operation(Operations.OpenDir, :open_dir!, [
+        :conn_stub,
+        :path_stub,
+        :fun_stub
+      ])
+    end
+  end
+
   describe "open_dir/2" do
     test "delegate to Operations.OpenDir" do
       assert_delegate_to_operation(Operations.OpenDir, :open_dir, [
         :conn_stub,
         :path_stub
+      ])
+    end
+  end
+
+  describe "open_dir/3" do
+    test "delegate to Operations.OpenDir" do
+      assert_delegate_to_operation(Operations.OpenDir, :open_dir, [
+        :conn_stub,
+        :path_stub,
+        :fun_stub
       ])
     end
   end

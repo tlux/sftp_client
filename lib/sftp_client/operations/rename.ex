@@ -16,7 +16,8 @@ defmodule SFTPClient.Operations.Rename do
     conn.channel_pid
     |> sftp_adapter().rename(
       to_charlist(old_path),
-      to_charlist(new_path)
+      to_charlist(new_path),
+      conn.config.operation_timeout
     )
     |> case do
       :ok -> :ok

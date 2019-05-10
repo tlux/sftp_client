@@ -16,7 +16,8 @@ defmodule SFTPClient.Operations.MakeLink do
     conn.channel_pid
     |> sftp_adapter().make_link(
       to_charlist(symlink_path),
-      to_charlist(target_path)
+      to_charlist(target_path),
+      conn.config.operation_timeout
     )
     |> case do
       :ok -> :ok

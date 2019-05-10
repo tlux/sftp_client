@@ -16,7 +16,7 @@ defmodule SFTPClient.Operations.OpenDir do
   @spec open_dir(Conn.t(), Path.t()) :: {:ok, Handle.t()} | {:error, any}
   def open_dir(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().opendir(to_charlist(path))
+    |> sftp_adapter().opendir(to_charlist(path), conn.config.operation_timeout)
     |> case do
       {:ok, handle} ->
         {:ok, %Handle{id: handle, conn: conn, path: to_string(path)}}

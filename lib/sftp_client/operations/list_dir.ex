@@ -15,7 +15,7 @@ defmodule SFTPClient.Operations.ListDir do
   @spec list_dir(Conn.t(), Path.t()) :: {:ok, [String.t()]} | {:error, any}
   def list_dir(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().list_dir(to_charlist(path))
+    |> sftp_adapter().list_dir(to_charlist(path), conn.config.operation_timeout)
     |> case do
       {:ok, entries} -> {:ok, process_entries(entries)}
       {:error, error} -> {:error, handle_error(error)}

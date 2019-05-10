@@ -34,6 +34,8 @@ defmodule SFTPClient.Operations.Connect do
   * `:sftp_vsn` - The SFTP version to be used.
   * `:connect_timeout` - The connection timeout in milliseconds (defaults to
     5000 ms), can be set to `:infinity` to disable timeout.
+  * `:operation_timeout` - The operation timeout in milliseconds (defaults to
+    5000 ms), can be set to `:infinity` to disable timeout.
   """
   @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
           {:ok, Conn.t()} | {:error, term}

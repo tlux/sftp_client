@@ -17,7 +17,8 @@ defmodule SFTPClient.Config do
     :private_key_pass_phrase,
     {:inet, :inet},
     :sftp_vsn,
-    {:connect_timeout, 5000}
+    {:connect_timeout, 5000},
+    {:operation_timeout, 5000}
   ]
 
   @type t :: %__MODULE__{
@@ -25,16 +26,17 @@ defmodule SFTPClient.Config do
           port: non_neg_integer,
           user: String.t(),
           password: nil | String.t(),
-          user_dir: nil | String.t(),
-          system_dir: nil | String.t(),
+          user_dir: nil | Path.t(),
+          system_dir: nil | Path.t(),
           dsa_pass_phrase: nil | String.t(),
           rsa_pass_phrase: nil | String.t(),
           ecdsa_pass_phrase: nil | String.t(),
-          private_key_path: nil | String.t(),
+          private_key_path: nil | Path.t(),
           private_key_pass_phrase: nil | String.t(),
           inet: :inet | :inet6,
           sftp_vsn: integer,
-          connect_timeout: :infinity | non_neg_integer
+          connect_timeout: timeout,
+          operation_timeout: timeout
         }
 
   @doc """

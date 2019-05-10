@@ -14,7 +14,7 @@ defmodule SFTPClient.Operations.MakeDir do
   @spec make_dir(Conn.t(), Path.t()) :: :ok | {:error, any}
   def make_dir(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().make_dir(to_charlist(path))
+    |> sftp_adapter().make_dir(to_charlist(path), conn.config.operation_timeout)
     |> case do
       :ok -> :ok
       {:error, error} -> {:error, handle_error(error)}

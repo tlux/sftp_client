@@ -13,7 +13,7 @@ defmodule SFTPClient.Operations.DeleteDir do
   @spec delete_dir(Conn.t(), Path.t()) :: :ok | {:error, any}
   def delete_dir(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().del_dir(to_charlist(path))
+    |> sftp_adapter().del_dir(to_charlist(path), conn.config.operation_timeout)
     |> case do
       :ok -> :ok
       {:error, error} -> {:error, handle_error(error)}

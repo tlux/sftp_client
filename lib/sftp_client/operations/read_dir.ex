@@ -16,7 +16,7 @@ defmodule SFTPClient.Operations.ReadDir do
   @spec read_dir(Handle.t()) :: {:ok, [any]} | {:error, any}
   def read_dir(%Handle{} = handle) do
     handle.conn.channel_pid
-    |> sftp_adapter().readdir(handle.id)
+    |> sftp_adapter().readdir(handle.id, handle.conn.config.operation_timeout)
     |> case do
       {:ok, entries} -> {:ok, process_entries(entries, handle.path)}
       {:error, error} -> {:error, handle_error(error)}

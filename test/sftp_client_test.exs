@@ -2,7 +2,6 @@ defmodule SFTPClientTest do
   use ExUnit.Case, async: false
 
   import Mox
-
   alias SFTPClient.Driver.Mock, as: MockDriver
   alias SFTPClient.Operations
 

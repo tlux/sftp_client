@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.ReadDir do
+  @moduledoc """
+  A module that provides functions to read a list of directories on an SFTP
+  server from a given file handle.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Entry

@@ -1,6 +1,6 @@
 defmodule SFTPClient.Operations.DeleteDir do
   @moduledoc """
-  Module containing operations to delete a directory from the remote server.
+  A module containing operations to delete a directory from the remote server.
   """
 
   import SFTPClient.OperationUtil

@@ -1,6 +1,6 @@
 defmodule SFTPClient.Operations.Disconnect do
   @moduledoc """
-  Module containing operations to disconnect from an SSH/SFTP server.
+  A module containing operations to disconnect from an SSH/SFTP server.
   """
 
   import SFTPClient.OperationUtil

@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.Rename do
+  @moduledoc """
+  A module that provides functions to rename files and directories on an SFTP
+  server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

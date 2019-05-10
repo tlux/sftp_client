@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.MakeLink do
+  @moduledoc """
+  A module that provides functions to create symlinks on an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

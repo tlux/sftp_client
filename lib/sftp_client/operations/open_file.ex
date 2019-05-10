@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.OpenFile do
+  @moduledoc """
+  A module that provides functions to open a file on an SFTP server in  order to
+  read their contents.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

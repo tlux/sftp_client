@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.WriteFile do
+  @moduledoc """
+  A module that provides functions to write file contents to an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

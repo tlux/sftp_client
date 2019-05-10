@@ -1,11 +1,17 @@
 defmodule SFTPClient.Operations.LinkInfo do
+  @moduledoc """
+  A module that provides functions to retrieve information on symbolic links
+  from an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias File.Stat, as: FileStat
   alias SFTPClient.Conn
 
   @doc """
-  Returns a `File.Stat` struct from the remote symlink object specified by path.
+  Returns a `File.Stat` struct from the remote symbolic link object specified by
+  path.
   """
   @spec link_info(Conn.t(), String.t()) :: {:ok, FileStat.t()} | {:error, any}
   def link_info(%Conn{} = conn, path) do
@@ -18,8 +24,8 @@ defmodule SFTPClient.Operations.LinkInfo do
   end
 
   @doc """
-  Returns a `File.Stat` struct from the remote symlink object specified by path.
-  Raises when the operation fails.
+  Returns a `File.Stat` struct from the remote symbolic link object specified by
+  path. Raises when the operation fails.
   """
   @spec link_info!(Conn.t(), String.t()) :: FileStat.t() | no_return
   def link_info!(%Conn{} = conn, path) do

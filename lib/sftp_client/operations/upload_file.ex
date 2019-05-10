@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.UploadFile do
+  @moduledoc """
+  A module that provides functions to upload files to an SFTP server.
+  """
+
   alias SFTPClient.Conn
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError

@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.StreamFile do
+  @moduledoc """
+  A module that provides functions to create streams from and to files on an
+  SFTP server.
+  """
+
   alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Stream, as: SFTPStream

@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.MakeDir do
+  @moduledoc """
+  A module that provides functions to create directories on an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

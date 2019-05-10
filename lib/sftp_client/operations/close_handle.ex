@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.CloseHandle do
+  @moduledoc """
+  A module that provides functions to close an open handle pointing to a file or
+  directory on the SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Handle

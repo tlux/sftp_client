@@ -1,6 +1,6 @@
 defmodule SFTPClient.Operations.Connect do
   @moduledoc """
-  Module containing operations to connect to a SSH/SFTP server.
+  A module containing operations to connect to an SSH/SFTP server.
   """
 
   import SFTPClient.OperationUtil

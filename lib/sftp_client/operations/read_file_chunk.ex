@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.ReadFileChunk do
+  @moduledoc """
+  A module that provides functions to read chunks of data from a file on an SFTP
+  server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Handle

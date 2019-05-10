@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.OpenDir do
+  @moduledoc """
+  A module that provides functions to open a directory on an SFTP server in
+  order to list their contents.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

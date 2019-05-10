@@ -137,14 +137,14 @@ modification time, file permissions, owner and so on.
 
 ```elixir
 SFTPClient.file_info(conn, "my/remote/file.jpg")
-# => {ok, %File.Stat{...}}
+# => {:ok, %File.Stat{...}}
 ```
 
 Refer to the [`File.Stat`](https://hexdocs.pm/elixir/File.Stat.html) docs for a
 list of available file information.
 
 
-### Symlink
+### Symbolic Links
 
 There are also a couple of functions that handle symlinks.
 
@@ -152,14 +152,14 @@ It is possible to get the target of a symlink.
 
 ```elixir
 SFTPClient.read_link(conn, "my/remote/link.jpg")
-# => {ok, "my/remote/file.jpg"}
+# => {:ok, "my/remote/file.jpg"}
 ```
 
 You can retrieve meta data about symlinks, similar to `file_info/2`.
 
 ```elixir
 SFTPClient.link_info(conn, "my/remote/link.jpg")
-# => {ok, %File.Stat{...}}
+# => {:ok, %File.Stat{...}}
 ```
 
 And you are able to create symlinks.

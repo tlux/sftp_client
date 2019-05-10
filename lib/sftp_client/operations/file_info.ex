@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.FileInfo do
+  @moduledoc """
+  A module that provides functions to retrieve information on files and
+  directories from an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias File.Stat, as: FileStat

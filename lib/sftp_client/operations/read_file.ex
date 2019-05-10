@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.ReadFile do
+  @moduledoc """
+  A module that provides functions to read file contents from an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

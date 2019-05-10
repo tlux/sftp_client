@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.ListDir do
+  @moduledoc """
+  A module that provides functions to retrieve a list of files in the given
+  directory from an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

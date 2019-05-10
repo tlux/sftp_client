@@ -1,4 +1,119 @@
 defmodule SFTPClient do
+  @moduledoc """
+  This is an SFTP Client that wraps Erlang's `:ssh` and `:ssh_sftp` libraries
+  for easier usage in Elixir.
+
+  ## Connect & Disconnect
+
+  Use `connect/1` to open a new connection to an SFTP server. Refer to the docs to
+  find out all available options.
+
+      iex> {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
+      {:ok, %SFTPClient.Conn{}}
+
+  It is recommended to close a connection after your operations have completed:
+
+      iex> SFTPClient.disconnect(conn)
+      :ok
+
+  ## Download
+
+  You can download a file from the server you can use the following function.
+
+      iex> SFTPClient.download_file(conn, "my/remote/dir/file.jpg", "my/dir/local-file.jpg")
+      {:ok, "my/dir/local-file.jpg"}
+
+  When the third argument is an existing directory on your file system, the file
+  is downloaded to a file with the same name as the one on the server.
+
+      iex> SFTPClient.download_file(conn, "my/remote/dir/image.png", "my/local/dir")
+      {:ok, "my/local/dir/image.png"}
+
+  It is also possible to use Streams to download data into a file or memory.
+
+      iex> SFTPClient.stream_file!(conn, "my/remote/file.jpg")
+      ...> |> Stream.into(File.stream!("my/local/file.jpg"))
+      ...> |> Stream.run()
+      :ok
+
+  ## Upload
+
+  To upload are file from the file system you can use the following function.
+
+      iex> SFTPClient.upload_file(conn, "my/local/dir/file.jpg", "my/remote/dir/file.jpg")
+      {:ok, "my/remote/dir/file.jpg"}
+
+  You can also use Streams to upload data.
+
+      iex> File.stream!("my/local/file.jpg")
+      ...> |> Stream.into(SFTPClient.stream_file!(conn, "my/remote/file.jpg"))
+      ...> |> Stream.run()
+      :ok
+
+  ## List Directory
+
+      iex> SFTPClient.list_dir(conn, "my/dir")
+      {:ok, ["my/dir/file_1.jpg", "my/dir/file_2.jpg"]}
+
+  ## Create Directory
+
+      iex> SFTPClient.make_dir(conn, "my/new/dir")
+      :ok
+
+  Note that this operation fails unless the parent directory exists.
+
+  ## Delete
+
+  To delete a file:
+
+      iex> SFTPClient.delete_file(conn, "my/remote/file.jpg")
+      :ok
+
+  To delete a directory:
+
+      iex> SFTPClient.delete(conn, "my/remote/dir")
+      :ok
+
+  Note that a directory cannot be deleted as long as it still contains files.
+
+  ## Rename
+
+  To delete a file or directory:
+
+      iex> SFTPClient.rename(conn, "my/remote/file.jpg", "my/remote/new-file.jpg")
+      :ok
+
+  ## File Info
+
+  You can retrieve meta data about a file from the server such as file size,
+  modification time, file permissions, owner and so on.
+
+      iex> SFTPClient.file_info(conn, "my/remote/file.jpg")
+      {:ok, %File.Stat{}}
+
+  Refer to the [`File.Stat`](https://hexdocs.pm/elixir/File.Stat.html) docs for a
+  list of available file information.
+
+  ## Symbolic Links
+
+  There are also a couple of functions that handle symbolic links.
+
+  It is possible to get the target of a symlink.
+
+      iex> SFTPClient.read_link(conn, "my/remote/link.jpg")
+      {:ok, "my/remote/file.jpg"}
+
+  You can retrieve meta data about symlinks, similar to `file_info/2`.
+
+      iex> SFTPClient.link_info(conn, "my/remote/link.jpg")
+      {:ok, %File.Stat{}}
+
+  And you are able to create symlinks.
+
+      iex> SFTPClient.make_link(conn, "my/remote/link.jpg", "my/remote/file.jpg")
+      :ok
+  """
+
   import SFTPClient.Driver, only: [run: 3]
 
   alias SFTPClient.Operations

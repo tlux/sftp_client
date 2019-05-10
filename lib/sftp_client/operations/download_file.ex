@@ -1,4 +1,8 @@
 defmodule SFTPClient.Operations.DownloadFile do
+  @moduledoc """
+  A module that provides functions to download files from an SFTP server.
+  """
+
   alias SFTPClient.Conn
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError

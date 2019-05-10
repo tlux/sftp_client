@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.WriteFileChunk do
+  @moduledoc """
+  A module that provides functions to write chunks of data to a file on an SFTP
+  server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Handle

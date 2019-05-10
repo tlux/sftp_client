@@ -1,4 +1,9 @@
 defmodule SFTPClient.Operations.ReadLink do
+  @moduledoc """
+  A module that provides functions to retrieve the target of a symbolic link on
+  an SFTP server.
+  """
+
   import SFTPClient.OperationUtil
 
   alias SFTPClient.Conn

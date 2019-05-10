@@ -265,9 +265,19 @@ defmodule SFTPClient do
     run(Operations.OpenFile, :open_file!, [conn, path, modes])
   end
 
+  @doc delegate_to: {Operations.OpenFile, :open_file!, 4}
+  def open_file!(conn, path, modes, fun) do
+    run(Operations.OpenFile, :open_file!, [conn, path, modes, fun])
+  end
+
   @doc delegate_to: {Operations.OpenFile, :open_file, 3}
   def open_file(conn, path, modes) do
     run(Operations.OpenFile, :open_file, [conn, path, modes])
+  end
+
+  @doc delegate_to: {Operations.OpenFile, :open_file, 4}
+  def open_file(conn, path, modes, fun) do
+    run(Operations.OpenFile, :open_file, [conn, path, modes, fun])
   end
 
   @doc delegate_to: {Operations.ReadFileChunk, :read_file_chunk!, 2}

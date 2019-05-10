@@ -29,11 +29,50 @@ defmodule SFTPClient.Operations.OpenFile do
 
   @doc """
   Opens a file on the server and returns a handle, which can be used for reading
+  or writing, then runs the function and closes the handle when finished.
+  """
+  @spec open_file(
+          Conn.t(),
+          String.t(),
+          [SFTPClient.access_mode()],
+          (Handle.t() -> any)
+        ) :: any | {:error, any}
+  def open_file(%Conn{} = conn, path, modes, fun) do
+    with {:ok, handle} = open_file(conn, path, modes) do
+      run_callback(handle, fun)
+    end
+  end
+
+  @doc """
+  Opens a file on the server and returns a handle, which can be used for reading
   or writing. Raises when the operation fails.
   """
   @spec open_file!(Conn.t(), String.t(), [SFTPClient.access_mode()]) ::
           Handle.t() | no_return
   def open_file!(%Conn{} = conn, path, modes) do
     conn |> open_file(path, modes) |> may_bang!()
+  end
+
+  @doc """
+  Opens a file on the server and returns a handle, which can be used for reading
+  or writing, then runs the function and closes the handle when finished. Raises
+  when the operation fails.
+  """
+  @spec open_file(
+          Conn.t(),
+          String.t(),
+          [SFTPClient.access_mode()],
+          (Handle.t() -> any)
+        ) :: any | no_return
+  def open_file!(%Conn{} = conn, path, modes, fun) do
+    conn
+    |> open_file!(path, modes)
+    |> run_callback(fun)
+  end
+
+  defp run_callback(handle, fun) do
+    fun.(handle)
+  after
+    SFTPClient.close_handle!(handle)
   end
 end

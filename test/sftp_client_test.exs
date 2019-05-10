@@ -251,12 +251,34 @@ defmodule SFTPClientTest do
     end
   end
 
+  describe "open_file!/4" do
+    test "delegate to Operations.OpenFile" do
+      assert_delegate_to_operation(Operations.OpenFile, :open_file!, [
+        :conn_stub,
+        :path_stub,
+        :modes_stub,
+        :fun_stub
+      ])
+    end
+  end
+
   describe "open_file/3" do
     test "delegate to Operations.OpenFile" do
       assert_delegate_to_operation(Operations.OpenFile, :open_file, [
         :conn_stub,
         :path_stub,
         :modes_stub
+      ])
+    end
+  end
+
+  describe "open_file/4" do
+    test "delegate to Operations.OpenFile" do
+      assert_delegate_to_operation(Operations.OpenFile, :open_file, [
+        :conn_stub,
+        :path_stub,
+        :modes_stub,
+        :fun_stub
       ])
     end
   end

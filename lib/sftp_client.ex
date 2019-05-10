@@ -108,18 +108,18 @@ defmodule SFTPClient do
     run(Operations.MakeDir, :make_dir, [conn, path])
   end
 
-  @doc delegate_to: {Operations.MakeSymlink, :make_symlink!, 3}
-  def make_symlink!(conn, symlink_path, target_path) do
-    run(Operations.MakeSymlink, :make_symlink!, [
+  @doc delegate_to: {Operations.MakeLink, :make_link!, 3}
+  def make_link!(conn, symlink_path, target_path) do
+    run(Operations.MakeLink, :make_link!, [
       conn,
       symlink_path,
       target_path
     ])
   end
 
-  @doc delegate_to: {Operations.MakeSymlink, :make_symlink, 3}
-  def make_symlink(conn, symlink_path, target_path) do
-    run(Operations.MakeSymlink, :make_symlink, [conn, symlink_path, target_path])
+  @doc delegate_to: {Operations.MakeLink, :make_link, 3}
+  def make_link(conn, symlink_path, target_path) do
+    run(Operations.MakeLink, :make_link, [conn, symlink_path, target_path])
   end
 
   @doc delegate_to: {Operations.OpenDir, :open_dir!, 2}

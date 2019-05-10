@@ -4,7 +4,7 @@ defmodule SFTPClient.MixProject do
   def project do
     [
       app: :sftp_client,
-      version: "1.0.0",
+      version: "1.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -45,7 +45,7 @@ defmodule SFTPClient.MixProject do
             SFTPClient.Operations.LinkInfo,
             SFTPClient.Operations.ListDir,
             SFTPClient.Operations.MakeDir,
-            SFTPClient.Operations.MakeSymlink,
+            SFTPClient.Operations.MakeLink,
             SFTPClient.Operations.OpenDir,
             SFTPClient.Operations.OpenFile,
             SFTPClient.Operations.ReadChunk,

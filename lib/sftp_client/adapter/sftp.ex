@@ -47,7 +47,7 @@ defmodule SFTPClient.Adapter.SFTP do
   @callback make_dir(channel_pid :: pid, path :: charlist) ::
               :ok | {:error, any}
 
-  @callback make_symlink(
+  @callback make_link(
               channel_pid :: pid,
               symlink_path :: charlist,
               target_path :: charlist

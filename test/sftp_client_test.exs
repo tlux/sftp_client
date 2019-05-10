@@ -186,9 +186,9 @@ defmodule SFTPClientTest do
     end
   end
 
-  describe "make_symlink!/3" do
-    test "delegate to Operations.MakeSymlink" do
-      assert_delegate_to_operation(Operations.MakeSymlink, :make_symlink!, [
+  describe "make_link!/3" do
+    test "delegate to Operations.MakeLink" do
+      assert_delegate_to_operation(Operations.MakeLink, :make_link!, [
         :conn_stub,
         :symlink_path_stub,
         :target_path_stub
@@ -196,9 +196,9 @@ defmodule SFTPClientTest do
     end
   end
 
-  describe "make_symlink/3" do
-    test "delegate to Operations.MakeSymlink" do
-      assert_delegate_to_operation(Operations.MakeSymlink, :make_symlink, [
+  describe "make_link/3" do
+    test "delegate to Operations.MakeLink" do
+      assert_delegate_to_operation(Operations.MakeLink, :make_link, [
         :conn_stub,
         :symlink_path_stub,
         :target_path_stub

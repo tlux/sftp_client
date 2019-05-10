@@ -18,7 +18,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     password: "test-password",
     user_dir: "~/.ssh",
     system_dir: "/etc/ssh",
-    private_key_path: "~/key",
+    private_key_path: "test/fixtures/id_rsa",
     private_key_pass_phrase: "t3$t",
     inet: :inet,
     sftp_vsn: 2,
@@ -136,6 +136,18 @@ defmodule SFTPClient.Operations.ConnectTest do
                   reason: :enoent
                 }}
     end
+
+    test "error when private key does not exist" do
+      config = %{@config | private_key_path: "some/not/existing/path"}
+
+      assert Connect.connect(config) ==
+               {:error,
+                %InvalidOptionError{
+                  key: :private_key_path,
+                  value: config.private_key_path,
+                  reason: :enoent
+                }}
+    end
   end
 
   describe "connect!/1" do
@@ -202,6 +214,15 @@ defmodule SFTPClient.Operations.ConnectTest do
       assert_raise InvalidOptionError,
                    ~s[Invalid value for option user_dir: "my/key/path" (:enoent)],
                    fn -> Connect.connect!(@config) end
+    end
+
+    test "error when private key does not exist" do
+      config = %{@config | private_key_path: "some/not/existing/path"}
+
+      assert_raise InvalidOptionError,
+                   ~s[Invalid value for option private_key_path: ] <>
+                     ~s["some/not/existing/path" (:enoent)],
+                   fn -> Connect.connect!(config) end
     end
   end
 end

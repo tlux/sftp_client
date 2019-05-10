@@ -30,12 +30,14 @@ There are bang (!) counterparts for almost all available functions.
 
 ### Connect & Disconnect
 
-Use `connect/1` to open a new connection to an SFTP server. Refer to the docs to
-find out all available options.
+To open a new connection to an SFTP server:
 
 ```elixir
 {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
 ```
+
+Refer to the docs for `SFTPClient.Operations.Connect.connect/1` to find out
+all available options.
 
 It is strongly recommended to close a connection after your operations have
 completed:

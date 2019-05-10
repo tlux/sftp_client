@@ -359,6 +359,26 @@ defmodule SFTPClientTest do
     end
   end
 
+  describe "upload_file!/3" do
+    test "delegate to Operations.UploadFile" do
+      assert_delegate_to_operation(Operations.UploadFile, :upload_file!, [
+        :conn_stub,
+        :local_path_stub,
+        :remote_path_stub
+      ])
+    end
+  end
+
+  describe "upload_file/3" do
+    test "delegate to Operations.UploadFile" do
+      assert_delegate_to_operation(Operations.UploadFile, :upload_file, [
+        :conn_stub,
+        :local_path_stub,
+        :remote_path_stub
+      ])
+    end
+  end
+
   describe "write_file_chunk!/2" do
     test "delegate to Operations.WriteFileChunk" do
       assert_delegate_to_operation(

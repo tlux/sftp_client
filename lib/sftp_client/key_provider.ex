@@ -6,6 +6,8 @@ defmodule SFTPClient.KeyProvider do
 
   @behaviour :ssh_client_key_api
 
+  require Logger
+
   @impl true
   defdelegate add_host_key(host, public_key, opts), to: :ssh_file
 
@@ -26,24 +28,33 @@ defmodule SFTPClient.KeyProvider do
   end
 
   defp decode_private_key(path, pass_phrase) do
-    path
-    |> Path.expand()
-    |> File.read!()
-    |> :public_key.pem_decode()
-    |> List.first()
-    |> case do
-      nil ->
-        {:error, 'Unable to decode key'}
+    full_path = Path.expand(path)
 
-      {_type, _key, :not_encrypted} = entry ->
-        {:ok, :public_key.pem_entry_decode(entry)}
+    case File.read(full_path) do
+      {:ok, key_contents} ->
+        key_contents
+        |> :public_key.pem_decode()
+        |> List.first()
+        |> case do
+          nil ->
+            Logger.error("Unable to decode key: #{path}")
+            {:error, 'Unable to decode key'}
 
-      _entry when is_nil(pass_phrase) ->
-        {:error, 'Passphrase required'}
+          {_type, _key, :not_encrypted} = entry ->
+            {:ok, :public_key.pem_entry_decode(entry)}
 
-      entry ->
-        pass_phrase = String.to_charlist(pass_phrase)
-        {:ok, :public_key.pem_entry_decode(entry, pass_phrase)}
+          _entry when is_nil(pass_phrase) ->
+            Logger.error("Passphrase required for key: #{path}")
+            {:error, 'Passphrase required'}
+
+          entry ->
+            pass_phrase = String.to_charlist(pass_phrase)
+            {:ok, :public_key.pem_entry_decode(entry, pass_phrase)}
+        end
+
+      _ ->
+        Logger.error("Specified key not found: #{full_path}")
+        {:error, 'Key not found'}
     end
   end
 end

@@ -7,6 +7,7 @@ defmodule SFTPClient.Operations.Connect do
 
   alias SFTPClient.Conn
   alias SFTPClient.Config
+  alias SFTPClient.InvalidOptionError
   alias SFTPClient.KeyProvider
 
   @doc """
@@ -39,17 +40,14 @@ defmodule SFTPClient.Operations.Connect do
   def connect(config_or_opts) do
     config = Config.new(config_or_opts)
 
-    case do_connect(config) do
-      {:ok, channel_pid, conn_ref} ->
-        {:ok,
-         %Conn{
-           config: config,
-           channel_pid: channel_pid,
-           conn_ref: conn_ref
-         }}
-
-      {:error, error} ->
-        {:error, handle_error(error)}
+    with :ok <- validate_config(config),
+         {:ok, channel_pid, conn_ref} <- do_connect(config) do
+      {:ok,
+       %Conn{
+         config: config,
+         channel_pid: channel_pid,
+         conn_ref: conn_ref
+       }}
     end
   end
 
@@ -85,12 +83,44 @@ defmodule SFTPClient.Operations.Connect do
     config_or_opts |> connect() |> may_bang!()
   end
 
+  defp validate_config(config) do
+    config
+    |> Map.from_struct()
+    |> Enum.find_value(:ok, fn
+      {_key, nil} ->
+        nil
+
+      {key, value} ->
+        case validate_config_value(key, value) do
+          :ok ->
+            nil
+
+          {:error, reason} ->
+            {:error,
+             %InvalidOptionError{key: key, value: value, reason: reason}}
+        end
+    end)
+  end
+
+  defp validate_config_value(:private_key_path, path) do
+    if File.exists?(Path.expand(path)) do
+      :ok
+    else
+      {:error, :enoent}
+    end
+  end
+
+  defp validate_config_value(_key, _value), do: :ok
+
   defp do_connect(config) do
-    sftp_adapter().start_channel(
-      to_charlist(config.host),
-      config.port,
-      get_opts(config)
-    )
+    with {:error, error} <-
+           sftp_adapter().start_channel(
+             to_charlist(config.host),
+             config.port,
+             get_opts(config)
+           ) do
+      {:error, handle_error(error)}
+    end
   end
 
   defp get_opts(config) do

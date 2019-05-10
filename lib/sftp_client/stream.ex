@@ -60,8 +60,6 @@ defimpl Enumerable, for: SFTPClient.Stream do
 end
 
 defimpl Collectable, for: SFTPClient.Stream do
-  require Logger
-
   def into(stream) do
     handle = open_file(stream)
 

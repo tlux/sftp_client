@@ -12,7 +12,7 @@ defmodule SFTPClient.Stream do
 
   @type t :: %__MODULE__{
           conn: Conn.t(),
-          path: String.t(),
+          path: Path.t(),
           chunk_size: non_neg_integer
         }
 

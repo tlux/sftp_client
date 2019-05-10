@@ -13,7 +13,7 @@ defmodule SFTPClient.Operations.LinkInfo do
   Returns a `File.Stat` struct from the remote symbolic link object specified by
   path.
   """
-  @spec link_info(Conn.t(), String.t()) :: {:ok, FileStat.t()} | {:error, any}
+  @spec link_info(Conn.t(), Path.t()) :: {:ok, FileStat.t()} | {:error, any}
   def link_info(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().read_link_info(to_charlist(path))
@@ -27,7 +27,7 @@ defmodule SFTPClient.Operations.LinkInfo do
   Returns a `File.Stat` struct from the remote symbolic link object specified by
   path. Raises when the operation fails.
   """
-  @spec link_info!(Conn.t(), String.t()) :: FileStat.t() | no_return
+  @spec link_info!(Conn.t(), Path.t()) :: FileStat.t() | no_return
   def link_info!(%Conn{} = conn, path) do
     conn |> link_info(path) |> may_bang!()
   end

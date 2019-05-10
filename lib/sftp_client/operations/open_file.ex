@@ -13,7 +13,7 @@ defmodule SFTPClient.Operations.OpenFile do
   Opens a file on the server and returns a handle, which can be used for reading
   or writing.
   """
-  @spec open_file(Conn.t(), String.t(), [SFTPClient.access_mode()]) ::
+  @spec open_file(Conn.t(), Path.t(), [SFTPClient.access_mode()]) ::
           {:ok, Handle.t()} | {:error, any}
   def open_file(%Conn{} = conn, path, modes) do
     conn.channel_pid
@@ -33,7 +33,7 @@ defmodule SFTPClient.Operations.OpenFile do
   """
   @spec open_file(
           Conn.t(),
-          String.t(),
+          Path.t(),
           [SFTPClient.access_mode()],
           (Handle.t() -> res)
         ) :: {:ok, res} | {:error, any} when res: var
@@ -47,7 +47,7 @@ defmodule SFTPClient.Operations.OpenFile do
   Opens a file on the server and returns a handle, which can be used for reading
   or writing. Raises when the operation fails.
   """
-  @spec open_file!(Conn.t(), String.t(), [SFTPClient.access_mode()]) ::
+  @spec open_file!(Conn.t(), Path.t(), [SFTPClient.access_mode()]) ::
           Handle.t() | no_return
   def open_file!(%Conn{} = conn, path, modes) do
     conn |> open_file(path, modes) |> may_bang!()
@@ -60,7 +60,7 @@ defmodule SFTPClient.Operations.OpenFile do
   """
   @spec open_file(
           Conn.t(),
-          String.t(),
+          Path.t(),
           [SFTPClient.access_mode()],
           (Handle.t() -> res)
         ) :: res | no_return when res: var

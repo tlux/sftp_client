@@ -10,7 +10,7 @@ defmodule SFTPClient.Operations.WriteFile do
   @doc """
   Reads a file from the server, and returns the data as String.
   """
-  @spec write_file(Conn.t(), String.t(), String.t() | [String.t()]) ::
+  @spec write_file(Conn.t(), Path.t(), String.t() | [String.t()]) ::
           :ok | {:error, any}
   def write_file(%Conn{} = conn, path, data) when is_binary(data) do
     write_file(conn, path, [data])
@@ -29,7 +29,7 @@ defmodule SFTPClient.Operations.WriteFile do
   Reads a file from the server, and returns the data as String. Raises when the
   operation fails.
   """
-  @spec write_file!(Conn.t(), String.t(), String.t() | [String.t()]) ::
+  @spec write_file!(Conn.t(), Path.t(), String.t() | [String.t()]) ::
           :ok | no_return
   def write_file!(%Conn{} = conn, path, data) do
     conn |> write_file(path, data) |> may_bang!()

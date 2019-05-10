@@ -11,8 +11,8 @@ defmodule SFTPClient.Operations.UploadFile do
   @doc """
   Uploads a file from the file system to the server.
   """
-  @spec upload_file(Conn.t(), String.t(), String.t()) ::
-          {:ok, String.t()} | {:error, any}
+  @spec upload_file(Conn.t(), Path.t(), Path.t()) ::
+          {:ok, Path.t()} | {:error, any}
   def upload_file(%Conn{} = conn, local_path, remote_path) do
     {:ok, upload_file!(conn, local_path, remote_path)}
   rescue
@@ -24,7 +24,7 @@ defmodule SFTPClient.Operations.UploadFile do
   Uploads a file from the file system to the server.Raises when the operation
   fails.
   """
-  @spec upload_file!(Conn.t(), String.t(), String.t()) :: String.t() | no_return
+  @spec upload_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return
   def upload_file!(%Conn{} = conn, local_path, remote_path) do
     source_stream = File.stream!(local_path)
     target_stream = SFTPClient.stream_file!(conn, remote_path)

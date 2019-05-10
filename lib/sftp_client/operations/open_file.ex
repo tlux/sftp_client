@@ -35,11 +35,11 @@ defmodule SFTPClient.Operations.OpenFile do
           Conn.t(),
           String.t(),
           [SFTPClient.access_mode()],
-          (Handle.t() -> any)
-        ) :: any | {:error, any}
+          (Handle.t() -> res)
+        ) :: {:ok, res} | {:error, any} when res: var
   def open_file(%Conn{} = conn, path, modes, fun) do
     with {:ok, handle} = open_file(conn, path, modes) do
-      run_callback(handle, fun)
+      {:ok, run_callback(handle, fun)}
     end
   end
 
@@ -62,8 +62,8 @@ defmodule SFTPClient.Operations.OpenFile do
           Conn.t(),
           String.t(),
           [SFTPClient.access_mode()],
-          (Handle.t() -> any)
-        ) :: any | no_return
+          (Handle.t() -> res)
+        ) :: res | no_return when res: var
   def open_file!(%Conn{} = conn, path, modes, fun) do
     conn
     |> open_file!(path, modes)

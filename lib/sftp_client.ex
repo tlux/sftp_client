@@ -19,6 +19,14 @@ defmodule SFTPClient do
       iex> SFTPClient.disconnect(conn)
       :ok
 
+  For short-lived connections you can also use a function as second argument.
+  After the function body has run or raises, the connection is automatically
+  closed.
+
+      iex> SFTPClient.connect([host: "ftp.myhost.com"], fn conn ->
+      ...>   # Do something with conn
+      ...> end)
+
   ## Download
 
   You can download a file from the server you can use the following function.

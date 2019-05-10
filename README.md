@@ -19,7 +19,7 @@ by adding `sftp_client` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:sftp_client, "~> 1.1.1"}
+    {:sftp_client, "~> 1.2.0"}
   ]
 end
 ```
@@ -44,6 +44,16 @@ completed:
 
 ```elixir
 SFTPClient.disconnect(conn)
+```
+
+For short-lived connections you can also use a function as second argument.
+After the function body has run or raises, the connection is automatically
+closed.
+
+```elixir
+SFTPClient.connect([host: "ftp.myhost.com"], fn conn ->
+  # Do something with conn
+end)
 ```
 
 ### Download

@@ -167,7 +167,7 @@ defmodule SFTPClient.Operations.ConnectTest do
         conn_ref: :conn_ref_stub
       }
 
-      assert Connect.connect(@config, fn ^conn -> :result end) == :result
+      assert Connect.connect(@config, fn ^conn -> :result end) == {:ok, :result}
     end
 
     test "connection error", %{opts: opts} do

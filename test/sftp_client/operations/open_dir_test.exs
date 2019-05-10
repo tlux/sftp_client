@@ -36,6 +36,12 @@ defmodule SFTPClient.Operations.OpenDirTest do
     end
   end
 
+  describe "open_dir/3" do
+    test "success"
+
+    test "error"
+  end
+
   describe "open_dir!/2" do
     test "success" do
       expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path' ->
@@ -57,5 +63,11 @@ defmodule SFTPClient.Operations.OpenDirTest do
         OpenDir.open_dir!(@conn, @path)
       end
     end
+  end
+
+  describe "open_dir!/3" do
+    test "success"
+
+    test "error"
   end
 end

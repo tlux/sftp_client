@@ -100,21 +100,18 @@ defmodule SFTPClient.Operations.Connect do
   defp validate_config(config) do
     config
     |> Map.from_struct()
-    |> Enum.find_value(:ok, fn
-      {_key, nil} ->
-        nil
+    |> Enum.find_value(:ok, fn {key, value} ->
+      case validate_config_value(key, value) do
+        :ok ->
+          nil
 
-      {key, value} ->
-        case validate_config_value(key, value) do
-          :ok ->
-            nil
-
-          {:error, reason} ->
-            {:error,
-             %InvalidOptionError{key: key, value: value, reason: reason}}
-        end
+        {:error, reason} ->
+          {:error, %InvalidOptionError{key: key, value: value, reason: reason}}
+      end
     end)
   end
+
+  defp validate_config_value(_key, nil), do: :ok
 
   defp validate_config_value(:private_key_path, path) do
     if File.exists?(Path.expand(path)) do

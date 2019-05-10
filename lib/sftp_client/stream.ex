@@ -63,12 +63,7 @@ defimpl Collectable, for: SFTPClient.Stream do
   require Logger
 
   def into(stream) do
-    handle =
-      SFTPClient.open_file!(stream.conn, stream.path, [
-        :write,
-        :creat,
-        :binary
-      ])
+    handle = open_file(stream)
 
     collect_fun = fn
       _, {:cont, data} ->
@@ -83,5 +78,9 @@ defimpl Collectable, for: SFTPClient.Stream do
     end
 
     {stream, collect_fun}
+  end
+
+  defp open_file(stream) do
+    SFTPClient.open_file!(stream.conn, stream.path, [:write, :creat, :binary])
   end
 end

@@ -11,9 +11,6 @@ defmodule SFTPClient.Adapter.SFTP do
 
   @callback stop_channel(channel_pid :: pid) :: :ok
 
-  @callback file_info(channel_pid :: pid) ::
-              {:ok, :ssh_sftp.file_info()} | {:error, any}
-
   @callback list_dir(channel_pid :: pid, path :: charlist) ::
               {:ok, [charlist]} | {:error, any}
 

@@ -6,7 +6,6 @@ defmodule SFTPClient.Operations.DisconnectTest do
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Adapter.SSH.Mock, as: SSHMock
-  alias SFTPClient.Conn
   alias SFTPClient.Operations.Disconnect
 
   setup :verify_on_exit!

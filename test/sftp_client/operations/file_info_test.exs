@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.FileInfoTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias File.Stat, as: FileStat
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock

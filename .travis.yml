@@ -1,6 +1,6 @@
 language: elixir
 
-script: mix test --check-formatted --cover
+script: mix test --cover
 
 matrix:
   include:

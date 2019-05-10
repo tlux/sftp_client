@@ -17,6 +17,7 @@ defmodule SFTPClient.MixProject do
         "coveralls.html": :test
       ],
       package: package(),
+      elixirc_paths: elixirc_paths(Mix.env()),
 
       # Docs
       name: "SFTP Client",
@@ -93,4 +94,7 @@ defmodule SFTPClient.MixProject do
       }
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end

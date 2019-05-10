@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.MakeLinkTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -10,13 +11,14 @@ defmodule SFTPClient.Operations.MakeLinkTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
 
   describe "make_link/2" do
     test "success" do
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
                                       'my/symlink/path',
-                                      'my/target/path' ->
+                                      'my/target/path',
+                                      :infinity ->
         :ok
       end)
 
@@ -32,7 +34,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
 
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
                                       'my/symlink/path',
-                                      'my/target/path' ->
+                                      'my/target/path',
+                                      :infinity ->
         {:error, reason}
       end)
 
@@ -49,7 +52,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
     test "success" do
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
                                       'my/symlink/path',
-                                      'my/target/path' ->
+                                      'my/target/path',
+                                      :infinity ->
         :ok
       end)
 
@@ -65,7 +69,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
 
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
                                       'my/symlink/path',
-                                      'my/target/path' ->
+                                      'my/target/path',
+                                      :infinity ->
         {:error, reason}
       end)
 

@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.DisconnectTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Adapter.SSH.Mock, as: SSHMock
@@ -12,7 +13,7 @@ defmodule SFTPClient.Operations.DisconnectTest do
 
   describe "disconnect/1" do
     test "close SFTP channel and close SSH connection" do
-      conn = %Conn{channel_pid: :channel_pid_stub, conn_ref: :conn_ref_stub}
+      conn = build_conn()
 
       expect(SFTPMock, :stop_channel, fn :channel_pid_stub ->
         send(self(), {:stop_sftp_channel, get_timestamp()})

@@ -18,7 +18,7 @@ defmodule SFTPClient.Config do
     {:inet, :inet},
     :sftp_vsn,
     {:connect_timeout, 5000},
-    {:operation_timeout, 5000}
+    {:operation_timeout, :infinity}
   ]
 
   @type t :: %__MODULE__{

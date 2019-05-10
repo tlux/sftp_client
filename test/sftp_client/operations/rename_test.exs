@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.RenameTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -10,13 +11,14 @@ defmodule SFTPClient.Operations.RenameTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
 
   describe "rename/2" do
     test "success" do
       expect(SFTPMock, :rename, fn :channel_pid_stub,
                                    'my/old/path',
-                                   'my/new/path' ->
+                                   'my/new/path',
+                                   :infinity ->
         :ok
       end)
 
@@ -32,7 +34,8 @@ defmodule SFTPClient.Operations.RenameTest do
 
       expect(SFTPMock, :rename, fn :channel_pid_stub,
                                    'my/old/path',
-                                   'my/new/path' ->
+                                   'my/new/path',
+                                   :infinity ->
         {:error, reason}
       end)
 
@@ -49,7 +52,8 @@ defmodule SFTPClient.Operations.RenameTest do
     test "success" do
       expect(SFTPMock, :rename, fn :channel_pid_stub,
                                    'my/old/path',
-                                   'my/new/path' ->
+                                   'my/new/path',
+                                   :infinity ->
         :ok
       end)
 
@@ -65,7 +69,8 @@ defmodule SFTPClient.Operations.RenameTest do
 
       expect(SFTPMock, :rename, fn :channel_pid_stub,
                                    'my/old/path',
-                                   'my/new/path' ->
+                                   'my/new/path',
+                                   :infinity ->
         {:error, reason}
       end)
 

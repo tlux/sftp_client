@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -14,7 +15,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
   setup :verify_on_exit!
 
   @handle %Handle{
-    conn: %Conn{channel_pid: :channel_pid_stub},
+    conn: build_conn(),
     id: :handle_id_stub,
     path: "my/remote/dir"
   }
@@ -49,7 +50,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
 
   describe "read_dir/1" do
     test "success", %{decoded_entries: decoded_entries} do
-      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:ok, @encoded_entries}
       end)
 
@@ -59,7 +60,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:error, reason}
       end)
 
@@ -70,7 +71,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
 
   describe "read_dir!/1" do
     test "success", %{decoded_entries: decoded_entries} do
-      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:ok, @encoded_entries}
       end)
 
@@ -80,7 +81,7 @@ defmodule SFTPClient.Operations.ReadDirTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :readdir, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:error, reason}
       end)
 

@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.CloseHandleTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -11,14 +12,11 @@ defmodule SFTPClient.Operations.CloseHandleTest do
 
   setup :verify_on_exit!
 
-  @handle %Handle{
-    conn: %Conn{channel_pid: :channel_pid_stub},
-    id: :handle_id_stub
-  }
+  @handle %Handle{conn: build_conn(), id: :handle_id_stub}
 
   describe "close_handle/1" do
     test "success" do
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         :ok
       end)
 
@@ -28,7 +26,7 @@ defmodule SFTPClient.Operations.CloseHandleTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:error, reason}
       end)
 
@@ -39,7 +37,7 @@ defmodule SFTPClient.Operations.CloseHandleTest do
 
   describe "close_handle!/1" do
     test "success" do
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         :ok
       end)
 
@@ -49,7 +47,7 @@ defmodule SFTPClient.Operations.CloseHandleTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub ->
+      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
         {:error, reason}
       end)
 

@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -10,14 +11,15 @@ defmodule SFTPClient.Operations.WriteFileTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
   @file_content ["file content"]
 
   describe "write_file/2" do
     test "success with IO list" do
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
                                        'my/remote/path',
-                                       @file_content ->
+                                       @file_content,
+                                       :infinity ->
         :ok
       end)
 
@@ -29,7 +31,8 @@ defmodule SFTPClient.Operations.WriteFileTest do
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
                                        'my/remote/path',
-                                       @file_content ->
+                                       @file_content,
+                                       :infinity ->
         :ok
       end)
 
@@ -41,7 +44,8 @@ defmodule SFTPClient.Operations.WriteFileTest do
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
                                        'my/remote/path',
-                                       @file_content ->
+                                       @file_content,
+                                       :infinity ->
         {:error, reason}
       end)
 
@@ -54,7 +58,8 @@ defmodule SFTPClient.Operations.WriteFileTest do
     test "success" do
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
                                        'my/remote/path',
-                                       @file_content ->
+                                       @file_content,
+                                       :infinity ->
         :ok
       end)
 
@@ -67,7 +72,8 @@ defmodule SFTPClient.Operations.WriteFileTest do
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
                                        'my/remote/path',
-                                       @file_content ->
+                                       @file_content,
+                                       :infinity ->
         {:error, reason}
       end)
 

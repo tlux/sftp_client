@@ -11,7 +11,7 @@ defmodule SFTPClient.Operations.FileInfoTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
 
   @record {:file_info, 930, :regular, :read_write, {{2019, 5, 7}, {23, 32, 42}},
            {{2019, 5, 7}, {22, 46, 58}}, {{2019, 5, 7}, {22, 46, 58}}, 33188, 1,
@@ -20,7 +20,8 @@ defmodule SFTPClient.Operations.FileInfoTest do
   describe "file_info/2" do
     test "success" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/file' ->
+                                           'my/remote/file',
+                                           :infinity ->
         {:ok, @record}
       end)
 
@@ -32,7 +33,8 @@ defmodule SFTPClient.Operations.FileInfoTest do
       reason = :enoent
 
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/file' ->
+                                           'my/remote/file',
+                                           :infinity ->
         {:error, reason}
       end)
 
@@ -44,7 +46,8 @@ defmodule SFTPClient.Operations.FileInfoTest do
   describe "file_info!/2" do
     test "success" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/file' ->
+                                           'my/remote/file',
+                                           :infinity ->
         {:ok, @record}
       end)
 
@@ -56,7 +59,8 @@ defmodule SFTPClient.Operations.FileInfoTest do
       reason = :enoent
 
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/file' ->
+                                           'my/remote/file',
+                                           :infinity ->
         {:error, reason}
       end)
 

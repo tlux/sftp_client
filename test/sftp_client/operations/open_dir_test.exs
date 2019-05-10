@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -11,12 +12,12 @@ defmodule SFTPClient.Operations.OpenDirTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
   @path "my/remote/path"
 
   describe "open_dir/2" do
     test "success" do
-      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path' ->
+      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
         {:ok, :handle_id_stub}
       end)
 
@@ -27,7 +28,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path' ->
+      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
         {:error, reason}
       end)
 
@@ -44,7 +45,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
 
   describe "open_dir!/2" do
     test "success" do
-      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path' ->
+      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
         {:ok, :handle_id_stub}
       end)
 
@@ -55,7 +56,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path' ->
+      expect(SFTPMock, :opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
         {:error, reason}
       end)
 

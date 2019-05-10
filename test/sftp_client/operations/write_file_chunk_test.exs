@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -11,11 +12,7 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
 
   setup :verify_on_exit!
 
-  @handle %Handle{
-    conn: %Conn{channel_pid: :channel_pid_stub},
-    id: :handle_id_stub
-  }
-
+  @handle %Handle{conn: build_conn(), id: :handle_id_stub}
   @data "chunk stub"
 
   describe "write_file_chunk/2" do

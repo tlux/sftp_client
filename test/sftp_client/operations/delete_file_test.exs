@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -10,11 +11,11 @@ defmodule SFTPClient.Operations.DeleteFileTest do
 
   setup :verify_on_exit!
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
 
   describe "delete_file/2" do
     test "success" do
-      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path' ->
+      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path', :infinity ->
         :ok
       end)
 
@@ -24,7 +25,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path' ->
+      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path', :infinity ->
         {:error, reason}
       end)
 
@@ -35,7 +36,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
 
   describe "delete_file!/2" do
     test "success" do
-      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path' ->
+      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path', :infinity ->
         :ok
       end)
 
@@ -45,7 +46,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path' ->
+      expect(SFTPMock, :delete, fn :channel_pid_stub, 'my/test/path', :infinity ->
         {:error, reason}
       end)
 

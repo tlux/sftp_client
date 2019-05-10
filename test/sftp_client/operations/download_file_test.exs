@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -9,7 +10,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.DownloadFile
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
 
   setup :verify_on_exit!
 
@@ -27,14 +28,15 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:read, :binary] ->
+                          [:read, :binary],
+                          :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
 
       assert DownloadFile.download_file(@conn, "my/remote/path", local_path) ==
                {:ok, local_path}
@@ -49,14 +51,15 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path-to-file.json',
-                          [:read, :binary] ->
+                          [:read, :binary],
+                          :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
 
       assert DownloadFile.download_file(
                @conn,
@@ -72,7 +75,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         {:error, message}
       end)
 
@@ -85,7 +89,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         {:error, reason}
       end)
 
@@ -98,7 +103,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         raise RuntimeError, message
       end)
 
@@ -115,14 +121,15 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:read, :binary] ->
+                          [:read, :binary],
+                          :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _ -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
 
       assert DownloadFile.download_file!(@conn, "my/remote/path", local_path) ==
                local_path
@@ -135,7 +142,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         {:error, message}
       end)
 
@@ -149,7 +157,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         {:error, reason}
       end)
 
@@ -163,7 +172,8 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/path',
-                                 [:read, :binary] ->
+                                 [:read, :binary],
+                                 :infinity ->
         raise RuntimeError, message
       end)
 

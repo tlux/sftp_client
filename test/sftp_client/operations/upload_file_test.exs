@@ -2,6 +2,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
   use ExUnit.Case, async: true
 
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
   alias SFTPClient.Conn
@@ -9,7 +10,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.UploadFile
 
-  @conn %Conn{channel_pid: :channel_pid_stub}
+  @conn build_conn()
   @local_path "test/fixtures/lorem_ipsum.txt"
   @remote_path "my/remote/file.txt"
 
@@ -23,7 +24,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/file.txt',
-                          [:write, :creat, :binary] ->
+                          [:write, :creat, :binary],
+                          :infinity ->
         {:ok, :handle_id_stub}
       end)
       |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_a ->

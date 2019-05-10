@@ -4,6 +4,7 @@ defmodule SFTPClient.Operations.ConnectTest do
   import Mox
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
+  alias SFTPClient.Adapter.SSH.Mock, as: SSHMock
   alias SFTPClient.Config
   alias SFTPClient.Conn
   alias SFTPClient.ConnError
@@ -150,6 +151,41 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
   end
 
+  describe "connect/2" do
+    test "success", %{opts: opts} do
+      SFTPMock
+      |> expect(:start_channel, fn 'test-host', 23, ^opts ->
+        {:ok, :channel_pid_stub, :conn_ref_stub}
+      end)
+      |> expect(:stop_channel, fn :channel_pid_stub -> :ok end)
+
+      expect(SSHMock, :close, fn :conn_ref_stub -> :ok end)
+
+      conn = %Conn{
+        config: @config,
+        channel_pid: :channel_pid_stub,
+        conn_ref: :conn_ref_stub
+      }
+
+      assert Connect.connect(@config, fn ^conn -> :result end) == :result
+    end
+
+    test "connection error", %{opts: opts} do
+      message = 'Unable to connect using the available authentication methods'
+
+      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+        {:error, message}
+      end)
+
+      assert Connect.connect(@config, fn _conn ->
+               send(self(), :fun_called)
+               :result
+             end) == {:error, %ConnError{message: to_string(message)}}
+
+      refute_received :fun_called
+    end
+  end
+
   describe "connect!/1" do
     test "connect with SFTPClient.Config", %{opts: opts} do
       expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
@@ -223,6 +259,43 @@ defmodule SFTPClient.Operations.ConnectTest do
                    ~s[Invalid value for option private_key_path: ] <>
                      ~s["some/not/existing/path" (:enoent)],
                    fn -> Connect.connect!(config) end
+    end
+  end
+
+  describe "connect!/2" do
+    test "success", %{opts: opts} do
+      SFTPMock
+      |> expect(:start_channel, fn 'test-host', 23, ^opts ->
+        {:ok, :channel_pid_stub, :conn_ref_stub}
+      end)
+      |> expect(:stop_channel, fn :channel_pid_stub -> :ok end)
+
+      expect(SSHMock, :close, fn :conn_ref_stub -> :ok end)
+
+      conn = %Conn{
+        config: @config,
+        channel_pid: :channel_pid_stub,
+        conn_ref: :conn_ref_stub
+      }
+
+      assert Connect.connect!(@config, fn ^conn -> :result end) == :result
+    end
+
+    test "connection error", %{opts: opts} do
+      message = 'Unable to connect using the available authentication methods'
+
+      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+        {:error, message}
+      end)
+
+      assert_raise ConnError, to_string(message), fn ->
+        Connect.connect!(@config, fn _conn ->
+          send(self(), :fun_called)
+          :result
+        end)
+      end
+
+      refute_received :fun_called
     end
   end
 end

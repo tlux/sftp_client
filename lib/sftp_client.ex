@@ -142,9 +142,19 @@ defmodule SFTPClient do
     run(Operations.Connect, :connect!, [config_or_opts])
   end
 
+  @doc delegate_to: {Operations.Connect, :connect!, 2}
+  def connect!(config_or_opts, fun) do
+    run(Operations.Connect, :connect!, [config_or_opts, fun])
+  end
+
   @doc delegate_to: {Operations.Connect, :connect, 1}
   def connect(config_or_opts) do
     run(Operations.Connect, :connect, [config_or_opts])
+  end
+
+  @doc delegate_to: {Operations.Connect, :connect, 2}
+  def connect(config_or_opts, fun) do
+    run(Operations.Connect, :connect, [config_or_opts, fun])
   end
 
   @doc delegate_to: {Operations.DeleteDir, :delete_dir!, 2}

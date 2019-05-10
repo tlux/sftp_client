@@ -41,10 +41,28 @@ defmodule SFTPClientTest do
     end
   end
 
+  describe "connect!/2" do
+    test "delegate to Operations.Connect" do
+      assert_delegate_to_operation(Operations.Connect, :connect!, [
+        :config_or_opts_stub,
+        :fun_stub
+      ])
+    end
+  end
+
   describe "connect/1" do
     test "delegate to Operations.Connect" do
       assert_delegate_to_operation(Operations.Connect, :connect, [
         :config_or_opts_stub
+      ])
+    end
+  end
+
+  describe "connect/2" do
+    test "delegate to Operations.Connect" do
+      assert_delegate_to_operation(Operations.Connect, :connect, [
+        :config_or_opts_stub,
+        :fun_stub
       ])
     end
   end

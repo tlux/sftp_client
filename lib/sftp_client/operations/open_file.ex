@@ -79,6 +79,6 @@ defmodule SFTPClient.Operations.OpenFile do
   defp run_callback(handle, fun) do
     fun.(handle)
   after
-    SFTPClient.close_handle!(handle)
+    SFTPClient.close_handle(handle)
   end
 end

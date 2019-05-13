@@ -14,7 +14,7 @@ defmodule SFTPClient.Operations.OpenFile do
   or writing.
   """
   @spec open_file(Conn.t(), Path.t(), [SFTPClient.access_mode()]) ::
-          {:ok, Handle.t()} | {:error, any}
+          {:ok, Handle.t()} | {:error, SFTPClient.error()}
   def open_file(%Conn{} = conn, path, modes) do
     conn.channel_pid
     |> sftp_adapter().open(
@@ -40,10 +40,10 @@ defmodule SFTPClient.Operations.OpenFile do
           Path.t(),
           [SFTPClient.access_mode()],
           (Handle.t() -> res)
-        ) :: {:ok, res} | {:error, any}
+        ) :: {:ok, res} | {:error, SFTPClient.error()}
         when res: var
   def open_file(%Conn{} = conn, path, modes, fun) do
-    with {:ok, handle} = open_file(conn, path, modes) do
+    with {:ok, handle} <- open_file(conn, path, modes) do
       {:ok, run_callback(handle, fun)}
     end
   end
@@ -63,7 +63,7 @@ defmodule SFTPClient.Operations.OpenFile do
   or writing, then runs the function and closes the handle when finished. Raises
   when the operation fails.
   """
-  @spec open_file(
+  @spec open_file!(
           Conn.t(),
           Path.t(),
           [SFTPClient.access_mode()],

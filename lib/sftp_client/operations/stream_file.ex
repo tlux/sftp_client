@@ -12,13 +12,13 @@ defmodule SFTPClient.Operations.StreamFile do
   Creates a stream that allows reading from and writing to the server.
   """
   @spec stream_file(Conn.t(), Path.t()) ::
-          {:ok, SFTPStream.t()} | {:error, any}
+          {:ok, SFTPStream.t()} | {:error, SFTPClient.error()}
   def stream_file(%Conn{} = conn, path) do
     stream_file_no_bang(conn, path, [])
   end
 
   @spec stream_file(Conn.t(), Path.t(), non_neg_integer) ::
-          {:ok, SFTPStream.t()} | {:error, any}
+          {:ok, SFTPStream.t()} | {:error, SFTPClient.error()}
   def stream_file(%Conn{} = conn, path, chunk_size) do
     stream_file_no_bang(conn, path, [chunk_size])
   end

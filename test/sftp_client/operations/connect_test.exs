@@ -168,7 +168,8 @@ defmodule SFTPClient.Operations.ConnectTest do
         conn_ref: :conn_ref_stub
       }
 
-      assert Connect.connect(@config, fn ^conn -> :result end) == {:ok, :result}
+      assert Connect.connect(@config, fn ^conn -> :result_stub end) ==
+               {:ok, :result_stub}
     end
 
     test "connection error", %{opts: opts} do
@@ -180,7 +181,7 @@ defmodule SFTPClient.Operations.ConnectTest do
 
       assert Connect.connect(@config, fn _conn ->
                send(self(), :fun_called)
-               :result
+               :result_stub
              end) == {:error, %ConnError{message: to_string(message)}}
 
       refute_received :fun_called
@@ -279,7 +280,8 @@ defmodule SFTPClient.Operations.ConnectTest do
         conn_ref: :conn_ref_stub
       }
 
-      assert Connect.connect!(@config, fn ^conn -> :result end) == :result
+      assert Connect.connect!(@config, fn ^conn -> :result_stub end) ==
+               :result_stub
     end
 
     test "connection error", %{opts: opts} do
@@ -292,7 +294,7 @@ defmodule SFTPClient.Operations.ConnectTest do
       assert_raise ConnError, to_string(message), fn ->
         Connect.connect!(@config, fn _conn ->
           send(self(), :fun_called)
-          :result
+          :result_stub
         end)
       end
 

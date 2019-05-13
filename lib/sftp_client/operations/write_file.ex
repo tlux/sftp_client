@@ -11,7 +11,7 @@ defmodule SFTPClient.Operations.WriteFile do
   Reads a file from the server, and returns the data as String.
   """
   @spec write_file(Conn.t(), Path.t(), String.t() | [String.t()]) ::
-          :ok | {:error, any}
+          :ok | {:error, SFTPClient.error()}
   def write_file(%Conn{} = conn, path, data) when is_binary(data) do
     write_file(conn, path, [data])
   end

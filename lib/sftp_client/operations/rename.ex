@@ -11,7 +11,8 @@ defmodule SFTPClient.Operations.Rename do
   @doc """
   Renames a file named `old_name` and gives it the name specified by `new_name`.
   """
-  @spec rename(Conn.t(), Path.t(), Path.t()) :: :ok | {:error, any}
+  @spec rename(Conn.t(), Path.t(), Path.t()) ::
+          :ok | {:error, SFTPClient.error()}
   def rename(%Conn{} = conn, old_path, new_path) do
     conn.channel_pid
     |> sftp_adapter().rename(

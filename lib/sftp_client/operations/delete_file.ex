@@ -10,7 +10,7 @@ defmodule SFTPClient.Operations.DeleteFile do
   @doc """
   Deletes the file specified by path.
   """
-  @spec delete_file(Conn.t(), Path.t()) :: :ok | {:error, any}
+  @spec delete_file(Conn.t(), Path.t()) :: :ok | {:error, SFTPClient.error()}
   def delete_file(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().delete(to_charlist(path), conn.config.operation_timeout)

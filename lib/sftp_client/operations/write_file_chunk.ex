@@ -12,7 +12,8 @@ defmodule SFTPClient.Operations.WriteFileChunk do
   Writes data to the file referenced by handle. The file is to be opened with
   write or append flag.
   """
-  @spec write_file_chunk(Handle.t(), binary) :: :ok | {:error, any}
+  @spec write_file_chunk(Handle.t(), binary) ::
+          :ok | {:error, SFTPClient.error()}
   def write_file_chunk(%Handle{} = handle, data) do
     case sftp_adapter().write(
            handle.conn.channel_pid,

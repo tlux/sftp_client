@@ -127,6 +127,9 @@ defmodule SFTPClient do
 
   import SFTPClient.Driver, only: [run: 3]
 
+  alias SFTPClient.ConnError
+  alias SFTPClient.InvalidOptionError
+  alias SFTPClient.OperationError
   alias SFTPClient.Operations
 
   @typedoc """
@@ -134,6 +137,11 @@ defmodule SFTPClient do
   server.
   """
   @type access_mode :: :read | :write | :creat | :trunc | :append | :binary
+
+  @typedoc """
+  A type incorporating all error types.
+  """
+  @type error :: ConnError.t() | InvalidOptionError.t() | OperationError.t()
 
   @doc delegate_to: {Operations.CloseHandle, :close_handle!, 1}
   def close_handle!(handle) do

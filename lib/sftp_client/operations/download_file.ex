@@ -14,7 +14,7 @@ defmodule SFTPClient.Operations.DownloadFile do
   inferred from the remote path.
   """
   @spec download_file(Conn.t(), Path.t(), Path.t()) ::
-          {:ok, Path.t()} | {:error, any}
+          {:ok, Path.t()} | {:error, SFTPClient.error()}
   def download_file(%Conn{} = conn, remote_path, local_path) do
     {:ok, download_file!(conn, remote_path, local_path)}
   rescue

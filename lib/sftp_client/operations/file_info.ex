@@ -13,7 +13,8 @@ defmodule SFTPClient.Operations.FileInfo do
   Returns a `File.Stat` struct from the remote file system object specified by
   path.
   """
-  @spec file_info(Conn.t(), Path.t()) :: {:ok, FileStat.t()} | {:error, any}
+  @spec file_info(Conn.t(), Path.t()) ::
+          {:ok, FileStat.t()} | {:error, SFTPClient.error()}
   def file_info(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().read_file_info(

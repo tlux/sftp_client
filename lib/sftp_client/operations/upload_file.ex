@@ -12,7 +12,7 @@ defmodule SFTPClient.Operations.UploadFile do
   Uploads a file from the file system to the server.
   """
   @spec upload_file(Conn.t(), Path.t(), Path.t()) ::
-          {:ok, Path.t()} | {:error, any}
+          {:ok, Path.t()} | {:error, SFTPClient.error()}
   def upload_file(%Conn{} = conn, local_path, remote_path) do
     {:ok, upload_file!(conn, local_path, remote_path)}
   rescue

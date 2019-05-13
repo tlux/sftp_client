@@ -11,7 +11,8 @@ defmodule SFTPClient.Operations.MakeLink do
   Creates a symbolic link pointing to `target_path` with the name
   `symlink_path`.
   """
-  @spec make_link(Conn.t(), Path.t(), Path.t()) :: :ok | {:error, any}
+  @spec make_link(Conn.t(), Path.t(), Path.t()) ::
+          :ok | {:error, SFTPClient.error()}
   def make_link(%Conn{} = conn, symlink_path, target_path) do
     conn.channel_pid
     |> sftp_adapter().make_link(

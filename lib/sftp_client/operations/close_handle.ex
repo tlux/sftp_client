@@ -11,7 +11,7 @@ defmodule SFTPClient.Operations.CloseHandle do
   @doc """
   Closes a handle to an open file or directory on the server.
   """
-  @spec close_handle(Handle.t()) :: :ok | {:error, any}
+  @spec close_handle(Handle.t()) :: :ok | {:error, SFTPClient.error()}
   def close_handle(%Handle{} = handle) do
     handle.conn.channel_pid
     |> sftp_adapter().close(handle.id, handle.conn.config.operation_timeout)

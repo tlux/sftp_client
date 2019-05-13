@@ -11,7 +11,7 @@ defmodule SFTPClient.Operations.MakeDir do
   Creates a directory specified by path. The path must be a full path to a new
   directory. The directory can only be created in an existing directory.
   """
-  @spec make_dir(Conn.t(), Path.t()) :: :ok | {:error, any}
+  @spec make_dir(Conn.t(), Path.t()) :: :ok | {:error, SFTPClient.error()}
   def make_dir(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().make_dir(to_charlist(path), conn.config.operation_timeout)

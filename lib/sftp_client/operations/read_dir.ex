@@ -13,7 +13,7 @@ defmodule SFTPClient.Operations.ReadDir do
   @doc """
   Reads the directory contents from the server, and returns the data as String.
   """
-  @spec read_dir(Handle.t()) :: {:ok, [any]} | {:error, any}
+  @spec read_dir(Handle.t()) :: {:ok, [any]} | {:error, SFTPClient.error()}
   def read_dir(%Handle{} = handle) do
     handle.conn.channel_pid
     |> sftp_adapter().readdir(handle.id, handle.conn.config.operation_timeout)

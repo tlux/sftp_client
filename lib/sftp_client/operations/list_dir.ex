@@ -12,7 +12,8 @@ defmodule SFTPClient.Operations.ListDir do
   Lists the given directory on the server, returning the filenames as a list of
   strings.
   """
-  @spec list_dir(Conn.t(), Path.t()) :: {:ok, [String.t()]} | {:error, any}
+  @spec list_dir(Conn.t(), Path.t()) ::
+          {:ok, [String.t()]} | {:error, SFTPClient.error()}
   def list_dir(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().list_dir(to_charlist(path), conn.config.operation_timeout)

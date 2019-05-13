@@ -10,7 +10,7 @@ defmodule SFTPClient.Operations.DeleteDir do
   @doc """
   Deletes the directory specified by path.
   """
-  @spec delete_dir(Conn.t(), Path.t()) :: :ok | {:error, any}
+  @spec delete_dir(Conn.t(), Path.t()) :: :ok | {:error, SFTPClient.error()}
   def delete_dir(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().del_dir(to_charlist(path), conn.config.operation_timeout)

@@ -11,7 +11,8 @@ defmodule SFTPClient.Operations.ReadLink do
   @doc """
   Reads the link target from the symbolic link specified by path.
   """
-  @spec read_link(Conn.t(), Path.t()) :: {:ok, Path.t()} | {:error, any}
+  @spec read_link(Conn.t(), Path.t()) ::
+          {:ok, Path.t()} | {:error, SFTPClient.error()}
   def read_link(%Conn{} = conn, path) do
     conn.channel_pid
     |> sftp_adapter().read_link(

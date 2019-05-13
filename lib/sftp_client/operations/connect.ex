@@ -61,7 +61,7 @@ defmodule SFTPClient.Operations.Connect do
   @spec connect(
           Config.t() | Keyword.t() | %{optional(atom) => any},
           (Conn.t() -> res)
-        ) :: {:ok, res} | {:error, any}
+        ) :: {:ok, res} | {:error, SFTPClient.error()}
         when res: var
   def connect(config_or_opts, fun) do
     with {:ok, conn} <- connect(config_or_opts) do

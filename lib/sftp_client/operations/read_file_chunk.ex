@@ -14,7 +14,7 @@ defmodule SFTPClient.Operations.ReadFileChunk do
   If no bytes are read, `:eof` is returned.
   """
   @spec read_file_chunk(Handle.t(), non_neg_integer) ::
-          {:ok, String.t()} | :eof | {:error, any}
+          {:ok, String.t()} | :eof | {:error, SFTPClient.error()}
   def read_file_chunk(%Handle{} = handle, length) do
     case sftp_adapter().read(
            handle.conn.channel_pid,

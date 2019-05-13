@@ -9,7 +9,7 @@ defmodule SFTPClient.Operations.Rename do
   alias SFTPClient.Conn
 
   @doc """
-  Renames a file named `old_name` and gives it the name specified by `new_name`.
+  Renames a file named `old_path` and gives it the name specified by `new_path`.
   """
   @spec rename(Conn.t(), Path.t(), Path.t()) ::
           :ok | {:error, SFTPClient.error()}
@@ -27,7 +27,7 @@ defmodule SFTPClient.Operations.Rename do
   end
 
   @doc """
-  Renames a file named `old_name` and gives it the name specified by `new_name`.
+  Renames a file named `old_path` and gives it the name specified by `new_path`.
   Raises when the operation fails.
   """
   @spec rename!(Conn.t(), Path.t(), Path.t()) :: :ok | no_return

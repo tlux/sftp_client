@@ -339,13 +339,13 @@ defmodule SFTPClient do
   end
 
   @doc delegate_to: {Operations.Rename, :rename!, 3}
-  def rename!(conn, old_name, new_name) do
-    run(Operations.Rename, :rename!, [conn, old_name, new_name])
+  def rename!(conn, old_path, new_path) do
+    run(Operations.Rename, :rename!, [conn, old_path, new_path])
   end
 
   @doc delegate_to: {Operations.Rename, :rename, 3}
-  def rename(conn, old_name, new_name) do
-    run(Operations.Rename, :rename, [conn, old_name, new_name])
+  def rename(conn, old_path, new_path) do
+    run(Operations.Rename, :rename, [conn, old_path, new_path])
   end
 
   @doc delegate_to: {Operations.StreamFile, :stream_file!, 3}

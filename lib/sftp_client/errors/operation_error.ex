@@ -5,6 +5,8 @@ defmodule SFTPClient.OperationError do
 
   defexception [:reason]
 
+  @type t :: %__MODULE__{reason: term}
+
   def message(error) do
     "Operation failed: #{error.reason}"
   end

@@ -5,6 +5,8 @@ defmodule SFTPClient.InvalidOptionError do
 
   defexception [:key, :value, :reason]
 
+  @type t :: %__MODULE__{key: atom, value: any, reason: term}
+
   def message(error) do
     "Invalid value for option #{error.key}: " <>
       "#{inspect(error.value)} (#{inspect(error.reason)})"

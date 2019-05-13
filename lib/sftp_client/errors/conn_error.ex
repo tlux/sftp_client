@@ -4,4 +4,6 @@ defmodule SFTPClient.ConnError do
   """
 
   defexception [:message]
+
+  @type t :: %__MODULE__{message: String.t()}
 end

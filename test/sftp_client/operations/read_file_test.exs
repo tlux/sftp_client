@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.ReadFileTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.ReadFile
 
@@ -17,7 +16,9 @@ defmodule SFTPClient.Operations.ReadFileTest do
     test "success" do
       file_content = "file content stub"
 
-      expect(SFTPMock, :read_file, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_file, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:ok, file_content}
       end)
 
@@ -27,7 +28,9 @@ defmodule SFTPClient.Operations.ReadFileTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :read_file, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_file, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:error, reason}
       end)
 
@@ -40,7 +43,9 @@ defmodule SFTPClient.Operations.ReadFileTest do
     test "success" do
       file_content = "file content stub"
 
-      expect(SFTPMock, :read_file, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_file, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:ok, file_content}
       end)
 
@@ -50,7 +55,9 @@ defmodule SFTPClient.Operations.ReadFileTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :read_file, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_file, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:error, reason}
       end)
 

@@ -6,7 +6,6 @@ defmodule SFTPClient.Operations.StreamFileTest do
 
   alias File.Stat, as: FileStat
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.StreamFile
   alias SFTPClient.Stream, as: SFTPStream

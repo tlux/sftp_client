@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.Handle
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.WriteFileChunk
@@ -19,7 +18,10 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
     test "success" do
       chunk_content = "chunk stub"
 
-      expect(SFTPMock, :write, fn :channel_pid_stub, :handle_id_stub, @data ->
+      expect(SFTPMock, :write, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  @data,
+                                  :infinity ->
         {:ok, chunk_content}
       end)
 
@@ -30,7 +32,10 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :write, fn :channel_pid_stub, :handle_id_stub, @data ->
+      expect(SFTPMock, :write, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  @data,
+                                  :infinity ->
         {:error, reason}
       end)
 
@@ -43,7 +48,10 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
     test "success" do
       chunk_content = "chunk stub"
 
-      expect(SFTPMock, :write, fn :channel_pid_stub, :handle_id_stub, @data ->
+      expect(SFTPMock, :write, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  @data,
+                                  :infinity ->
         {:ok, chunk_content}
       end)
 
@@ -54,7 +62,10 @@ defmodule SFTPClient.Operations.WriteFileChunkTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :write, fn :channel_pid_stub, :handle_id_stub, @data ->
+      expect(SFTPMock, :write, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  @data,
+                                  :infinity ->
         {:error, reason}
       end)
 

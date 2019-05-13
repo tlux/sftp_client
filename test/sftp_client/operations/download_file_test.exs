@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.DownloadFileTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.ConnError
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.DownloadFile
@@ -35,8 +34,12 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
+        :eof
+      end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+        :ok
+      end)
 
       assert DownloadFile.download_file(@conn, "my/remote/path", local_path) ==
                {:ok, local_path}
@@ -58,8 +61,12 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
+        :eof
+      end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+        :ok
+      end)
 
       assert DownloadFile.download_file(
                @conn,
@@ -128,8 +135,12 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
         {:ok, file_content}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity -> :eof end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity -> :ok end)
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, _, :infinity ->
+        :eof
+      end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+        :ok
+      end)
 
       assert DownloadFile.download_file!(@conn, "my/remote/path", local_path) ==
                local_path

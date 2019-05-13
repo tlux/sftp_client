@@ -14,11 +14,14 @@ defmodule SFTPClient.Adapter.SFTP do
   @callback list_dir(channel_pid :: pid, path :: charlist, timeout) ::
               {:ok, [charlist]} | {:error, any}
 
-  @callback close(channel_pid :: pid, handle :: term, timeout) :: :ok | {:error, any}
+  @callback close(channel_pid :: pid, handle :: term, timeout) ::
+              :ok | {:error, any}
 
-  @callback del_dir(channel_pid :: pid, path :: charlist, timeout) :: :ok | {:error, any}
+  @callback del_dir(channel_pid :: pid, path :: charlist, timeout) ::
+              :ok | {:error, any}
 
-  @callback delete(channel_pid :: pid, path :: charlist, timeout) :: :ok | {:error, any}
+  @callback delete(channel_pid :: pid, path :: charlist, timeout) ::
+              :ok | {:error, any}
 
   @callback open(
               channel_pid :: pid,
@@ -27,7 +30,12 @@ defmodule SFTPClient.Adapter.SFTP do
               timeout
             ) :: {:ok, term} | {:error, any}
 
-  @callback read(channel_pid :: pid, handle :: term, length :: non_neg_integer, timeout) ::
+  @callback read(
+              channel_pid :: pid,
+              handle :: term,
+              length :: non_neg_integer,
+              timeout
+            ) ::
               {:ok, binary} | :eof | {:error, any}
 
   @callback readdir(channel_pid :: pid, handle :: term, timeout) ::
@@ -68,7 +76,12 @@ defmodule SFTPClient.Adapter.SFTP do
               timeout
             ) :: :ok | {:error, any}
 
-  @callback write_file(channel_pid :: pid, path :: charlist, data :: [binary], timeout) ::
+  @callback write_file(
+              channel_pid :: pid,
+              path :: charlist,
+              data :: [binary],
+              timeout
+            ) ::
               :ok | {:error, any}
 
   @callback write(channel_pid :: pid, path :: charlist, data :: binary, timeout) ::

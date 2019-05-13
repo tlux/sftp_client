@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.ReadLinkTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.ReadLink
 
@@ -15,7 +14,9 @@ defmodule SFTPClient.Operations.ReadLinkTest do
 
   describe "read_link/2" do
     test "success" do
-      expect(SFTPMock, :read_link, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_link, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:ok, 'my/path/to/real/file'}
       end)
 
@@ -26,7 +27,9 @@ defmodule SFTPClient.Operations.ReadLinkTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :read_link, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_link, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:error, reason}
       end)
 
@@ -37,7 +40,9 @@ defmodule SFTPClient.Operations.ReadLinkTest do
 
   describe "read_link!/2" do
     test "success" do
-      expect(SFTPMock, :read_link, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_link, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:ok, 'my/path/to/real/file'}
       end)
 
@@ -48,7 +53,9 @@ defmodule SFTPClient.Operations.ReadLinkTest do
     test "error" do
       reason = :enoent
 
-      expect(SFTPMock, :read_link, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      expect(SFTPMock, :read_link, fn :channel_pid_stub,
+                                      'my/remote/path',
+                                      :infinity ->
         {:error, reason}
       end)
 

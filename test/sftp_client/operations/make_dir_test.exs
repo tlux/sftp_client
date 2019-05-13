@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.MakeDirTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.MakeDir
 
@@ -15,7 +14,9 @@ defmodule SFTPClient.Operations.MakeDirTest do
 
   describe "make_dir/2" do
     test "success" do
-      expect(SFTPMock, :make_dir, fn :channel_pid_stub, 'my/test/path', :infinity ->
+      expect(SFTPMock, :make_dir, fn :channel_pid_stub,
+                                     'my/test/path',
+                                     :infinity ->
         :ok
       end)
 
@@ -25,7 +26,9 @@ defmodule SFTPClient.Operations.MakeDirTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :make_dir, fn :channel_pid_stub, 'my/test/path', :infinity ->
+      expect(SFTPMock, :make_dir, fn :channel_pid_stub,
+                                     'my/test/path',
+                                     :infinity ->
         {:error, reason}
       end)
 
@@ -36,7 +39,9 @@ defmodule SFTPClient.Operations.MakeDirTest do
 
   describe "make_dir!/2" do
     test "success" do
-      expect(SFTPMock, :make_dir, fn :channel_pid_stub, 'my/test/path', :infinity ->
+      expect(SFTPMock, :make_dir, fn :channel_pid_stub,
+                                     'my/test/path',
+                                     :infinity ->
         :ok
       end)
 
@@ -46,7 +51,9 @@ defmodule SFTPClient.Operations.MakeDirTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :make_dir, fn :channel_pid_stub, 'my/test/path', :infinity ->
+      expect(SFTPMock, :make_dir, fn :channel_pid_stub,
+                                     'my/test/path',
+                                     :infinity ->
         {:error, reason}
       end)
 

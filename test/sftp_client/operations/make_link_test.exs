@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.MakeLinkTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.MakeLink
 

@@ -18,7 +18,11 @@ defmodule SFTPClient.Operations.WriteFile do
 
   def write_file(%Conn{} = conn, path, iolist) do
     conn.channel_pid
-    |> sftp_adapter().write_file(to_charlist(path), Enum.to_list(iolist), conn.config.operation_timeout)
+    |> sftp_adapter().write_file(
+      to_charlist(path),
+      Enum.to_list(iolist),
+      conn.config.operation_timeout
+    )
     |> case do
       :ok -> :ok
       {:error, error} -> {:error, handle_error(error)}

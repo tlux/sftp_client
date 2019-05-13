@@ -32,7 +32,8 @@ defmodule SFTPClient.Operations.OpenDir do
   finished.
   """
   @spec open_dir(Conn.t(), Path.t(), (Handle.t() -> res)) ::
-          {:ok, res} | {:error, any} when res: var
+          {:ok, res} | {:error, any}
+        when res: var
   def open_dir(%Conn{} = conn, path, fun) do
     with {:ok, handle} = open_dir(conn, path) do
       {:ok, run_callback(handle, fun)}
@@ -54,7 +55,8 @@ defmodule SFTPClient.Operations.OpenDir do
   finished. Raises when the operation fails.
   """
   @spec open_dir(Conn.t(), Path.t(), (Handle.t() -> res)) ::
-          res | no_return when res: var
+          res | no_return
+        when res: var
   def open_dir!(%Conn{} = conn, path, fun) do
     conn
     |> open_dir!(path)

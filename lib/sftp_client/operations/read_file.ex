@@ -13,7 +13,10 @@ defmodule SFTPClient.Operations.ReadFile do
   @spec read_file(Conn.t(), Path.t()) :: {:ok, binary} | {:error, any}
   def read_file(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().read_file(to_charlist(path), conn.config.operation_timeout)
+    |> sftp_adapter().read_file(
+      to_charlist(path),
+      conn.config.operation_timeout
+    )
     |> case do
       {:ok, content} -> {:ok, content}
       {:error, error} -> {:error, handle_error(error)}

@@ -3,16 +3,16 @@ defmodule SFTPClient.StreamTest do
 
   import ExUnit.CaptureLog
   import Mox
+  import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.OperationError
   alias SFTPClient.Stream, as: SFTPStream
 
   setup :verify_on_exit!
 
   @stream %SFTPStream{
-    conn: %Conn{channel_pid: :channel_pid_stub},
+    conn: build_conn(),
     path: "my/remote/path",
     chunk_size: 1337
   }
@@ -39,13 +39,16 @@ defmodule SFTPClient.StreamTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:read, :binary] ->
+                          [:read, :binary],
+                          _ ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
         {:error, :enoent}
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+        :ok
+      end)
 
       assert capture_log(fn ->
                assert_raise IO.StreamError,
@@ -79,16 +82,19 @@ defmodule SFTPClient.StreamTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:read, :binary] ->
+                          [:read, :binary],
+                          _ ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
         {:ok, "chunk 1"}
       end)
-      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+      |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
         {:ok, "chunk 2"}
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+        :ok
+      end)
 
       assert Enum.member?(@stream, "chunk 2") == true
     end
@@ -112,16 +118,19 @@ defmodule SFTPClient.StreamTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:write, :creat, :binary] ->
+                          [:write, :creat, :binary],
+                          _ ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1", _ ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2", _ ->
         :ok
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+        :ok
+      end)
 
       assert Enum.into(["chunk 1", "chunk 2"], @stream) == @stream
     end
@@ -130,16 +139,19 @@ defmodule SFTPClient.StreamTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:write, :creat, :binary] ->
+                          [:write, :creat, :binary],
+                          _ ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1", _ ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2", _ ->
         {:error, :generic_error}
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+        :ok
+      end)
 
       assert_raise OperationError, "Operation failed: generic_error", fn ->
         Enum.into(["chunk 1", "chunk 2"], @stream)
@@ -150,16 +162,19 @@ defmodule SFTPClient.StreamTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/path',
-                          [:write, :creat, :binary] ->
+                          [:write, :creat, :binary],
+                          _ ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 1", _ ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2" ->
+      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, "chunk 2", _ ->
         raise "Unexpected error"
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+        :ok
+      end)
 
       assert_raise RuntimeError, "Unexpected error", fn ->
         assert Enum.into(["chunk 1", "chunk 2"], @stream)
@@ -169,18 +184,23 @@ defmodule SFTPClient.StreamTest do
 
   defp setup_success_mocks do
     SFTPMock
-    |> expect(:open, fn :channel_pid_stub, 'my/remote/path', [:read, :binary] ->
+    |> expect(:open, fn :channel_pid_stub,
+                        'my/remote/path',
+                        [:read, :binary],
+                        _ ->
       {:ok, :handle_id_stub}
     end)
-    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
       {:ok, "chunk 1"}
     end)
-    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
       {:ok, "chunk 2"}
     end)
-    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337 ->
+    |> expect(:read, fn :channel_pid_stub, :handle_id_stub, 1337, _ ->
       :eof
     end)
-    |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+    |> expect(:close, fn :channel_pid_stub, :handle_id_stub, _ ->
+      :ok
+    end)
   end
 end

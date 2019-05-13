@@ -16,7 +16,10 @@ defmodule SFTPClient.Operations.FileInfo do
   @spec file_info(Conn.t(), Path.t()) :: {:ok, FileStat.t()} | {:error, any}
   def file_info(%Conn{} = conn, path) do
     conn.channel_pid
-    |> sftp_adapter().read_file_info(to_charlist(path), conn.config.operation_timeout)
+    |> sftp_adapter().read_file_info(
+      to_charlist(path),
+      conn.config.operation_timeout
+    )
     |> case do
       {:ok, file_info} -> {:ok, FileStat.from_record(file_info)}
       {:error, error} -> {:error, handle_error(error)}

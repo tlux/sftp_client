@@ -5,7 +5,6 @@ defmodule SFTPClient.Operations.UploadFileTest do
   import SFTPClient.ConnHelper
 
   alias SFTPClient.Adapter.SFTP.Mock, as: SFTPMock
-  alias SFTPClient.Conn
   alias SFTPClient.ConnError
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.UploadFile
@@ -28,16 +27,27 @@ defmodule SFTPClient.Operations.UploadFileTest do
                           :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_a ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_a,
+                           :infinity ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_b ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_b,
+                           :infinity ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_c ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_c,
+                           :infinity ->
         :ok
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+        :ok
+      end)
 
       assert UploadFile.upload_file(@conn, @local_path, @remote_path) ==
                {:ok, @remote_path}
@@ -48,7 +58,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:error, message}
       end)
 
@@ -61,7 +72,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:error, reason}
       end)
 
@@ -74,7 +86,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         raise RuntimeError, message
       end)
 
@@ -92,19 +105,31 @@ defmodule SFTPClient.Operations.UploadFileTest do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
                           'my/remote/file.txt',
-                          [:write, :creat, :binary] ->
+                          [:write, :creat, :binary],
+                          :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_a ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_a,
+                           :infinity ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_b ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_b,
+                           :infinity ->
         :ok
       end)
-      |> expect(:write, fn :channel_pid_stub, :handle_id_stub, ^line_c ->
+      |> expect(:write, fn :channel_pid_stub,
+                           :handle_id_stub,
+                           ^line_c,
+                           :infinity ->
         :ok
       end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub -> :ok end)
+      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+        :ok
+      end)
 
       assert UploadFile.upload_file!(@conn, @local_path, @remote_path) ==
                @remote_path
@@ -115,7 +140,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:error, message}
       end)
 
@@ -129,7 +155,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:error, reason}
       end)
 
@@ -143,7 +170,8 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
                                  'my/remote/file.txt',
-                                 [:write, :creat, :binary] ->
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         raise RuntimeError, message
       end)
 

@@ -17,7 +17,11 @@ defmodule SFTPClient.Operations.OpenFile do
           {:ok, Handle.t()} | {:error, any}
   def open_file(%Conn{} = conn, path, modes) do
     conn.channel_pid
-    |> sftp_adapter().open(to_charlist(path), modes, conn.config.operation_timeout)
+    |> sftp_adapter().open(
+      to_charlist(path),
+      modes,
+      conn.config.operation_timeout
+    )
     |> case do
       {:ok, handle} ->
         {:ok, %Handle{id: handle, conn: conn, path: to_string(path)}}
@@ -36,7 +40,8 @@ defmodule SFTPClient.Operations.OpenFile do
           Path.t(),
           [SFTPClient.access_mode()],
           (Handle.t() -> res)
-        ) :: {:ok, res} | {:error, any} when res: var
+        ) :: {:ok, res} | {:error, any}
+        when res: var
   def open_file(%Conn{} = conn, path, modes, fun) do
     with {:ok, handle} = open_file(conn, path, modes) do
       {:ok, run_callback(handle, fun)}
@@ -63,7 +68,8 @@ defmodule SFTPClient.Operations.OpenFile do
           Path.t(),
           [SFTPClient.access_mode()],
           (Handle.t() -> res)
-        ) :: res | no_return when res: var
+        ) :: res | no_return
+        when res: var
   def open_file!(%Conn{} = conn, path, modes, fun) do
     conn
     |> open_file!(path, modes)

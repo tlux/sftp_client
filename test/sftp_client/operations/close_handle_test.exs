@@ -15,7 +15,9 @@ defmodule SFTPClient.Operations.CloseHandleTest do
 
   describe "close_handle/1" do
     test "success" do
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         :ok
       end)
 
@@ -25,7 +27,9 @@ defmodule SFTPClient.Operations.CloseHandleTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         {:error, reason}
       end)
 
@@ -36,7 +40,9 @@ defmodule SFTPClient.Operations.CloseHandleTest do
 
   describe "close_handle!/1" do
     test "success" do
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         :ok
       end)
 
@@ -46,7 +52,9 @@ defmodule SFTPClient.Operations.CloseHandleTest do
     test "error" do
       reason = :error_stub
 
-      expect(SFTPMock, :close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         {:error, reason}
       end)
 

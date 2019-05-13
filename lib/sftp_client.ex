@@ -25,7 +25,9 @@ defmodule SFTPClient do
 
       iex> SFTPClient.connect([host: "ftp.myhost.com"], fn conn ->
       ...>   # Do something with conn
+      ...>   "my result"
       ...> end)
+      {:ok, "my result"}
 
   ## Download
 

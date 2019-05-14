@@ -487,7 +487,7 @@ defmodule SFTPClientTest do
   end
 
   defp assert_delegate_to_operation(module, fun, args) do
-    expect(MockDriver, :run, fn ^module, ^fun, ^args ->
+    expect(MockDriver, fun, fn ^module, ^fun, ^args ->
       :result_stub
     end)
 

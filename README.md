@@ -20,7 +20,7 @@ by adding `sftp_client` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:sftp_client, "~> 1.2.0"}
+    {:sftp_client, "~> 1.3.0"}
   ]
 end
 ```

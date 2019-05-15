@@ -150,9 +150,9 @@ defmodule SFTPClient.Driver do
 
   @callback write_file_chunk!(Handle.t(), binary) :: :ok | no_return
 
-  @callback write_file(Conn.t(), Path.t(), String.t() | [String.t()]) ::
+  @callback write_file(Conn.t(), Path.t(), binary | [binary]) ::
               :ok | {:error, SFTPClient.error()}
 
-  @callback write_file!(Conn.t(), Path.t(), String.t() | [String.t()]) ::
+  @callback write_file!(Conn.t(), Path.t(), binary | [binary]) ::
               :ok | no_return
 end

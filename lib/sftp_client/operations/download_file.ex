@@ -7,6 +7,7 @@ defmodule SFTPClient.Operations.DownloadFile do
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
+  alias SFTPClient.Operations.StreamFile
 
   @doc """
   Downloads a file from the remote path and stores it in the given local path.
@@ -30,7 +31,7 @@ defmodule SFTPClient.Operations.DownloadFile do
   @spec download_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return
   def download_file!(%Conn{} = conn, remote_path, local_path) do
     local_path = get_local_path(local_path, remote_path)
-    source_stream = SFTPClient.stream_file!(conn, remote_path)
+    source_stream = StreamFile.stream_file!(conn, remote_path)
     target_stream = File.stream!(local_path)
 
     source_stream

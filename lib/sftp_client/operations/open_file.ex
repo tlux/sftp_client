@@ -8,6 +8,7 @@ defmodule SFTPClient.Operations.OpenFile do
 
   alias SFTPClient.Conn
   alias SFTPClient.Handle
+  alias SFTPClient.Operations.CloseHandle
 
   @doc """
   Opens a file on the server and returns a handle, which can be used for reading
@@ -79,6 +80,6 @@ defmodule SFTPClient.Operations.OpenFile do
   defp run_callback(handle, fun) do
     fun.(handle)
   after
-    SFTPClient.close_handle(handle)
+    CloseHandle.close_handle(handle)
   end
 end

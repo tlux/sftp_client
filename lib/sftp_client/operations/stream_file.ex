@@ -6,6 +6,7 @@ defmodule SFTPClient.Operations.StreamFile do
 
   alias SFTPClient.Conn
   alias SFTPClient.OperationError
+  alias SFTPClient.Operations.FileInfo
   alias SFTPClient.Stream, as: SFTPStream
 
   @doc """
@@ -24,7 +25,7 @@ defmodule SFTPClient.Operations.StreamFile do
   end
 
   defp stream_file_no_bang(conn, path, args) do
-    case SFTPClient.file_info(conn, path) do
+    case FileInfo.file_info(conn, path) do
       {:ok, %{type: :regular}} ->
         {:ok, apply(__MODULE__, :stream_file!, [conn, path | args])}
 

@@ -9,6 +9,9 @@ defmodule SFTPClient.Stream do
   require Logger
 
   alias SFTPClient.Conn
+  alias SFTPClient.Operations.CloseHandle
+  alias SFTPClient.Operations.OpenFile
+  alias SFTPClient.Operations.ReadFileChunk
 
   @type t :: %__MODULE__{
           conn: Conn.t(),
@@ -24,16 +27,16 @@ defmodule SFTPClient.Stream do
     Stream.resource(
       fn -> open_file(stream) end,
       fn handle -> read_chunk(stream, handle) end,
-      &SFTPClient.close_handle!/1
+      &CloseHandle.close_handle!/1
     )
   end
 
   defp open_file(stream) do
-    SFTPClient.open_file!(stream.conn, stream.path, [:read, :binary])
+    OpenFile.open_file!(stream.conn, stream.path, [:read, :binary])
   end
 
   defp read_chunk(stream, handle) do
-    case SFTPClient.read_file_chunk(handle, stream.chunk_size) do
+    case ReadFileChunk.read_file_chunk(handle, stream.chunk_size) do
       :eof ->
         {:halt, handle}
 
@@ -60,25 +63,29 @@ defimpl Enumerable, for: SFTPClient.Stream do
 end
 
 defimpl Collectable, for: SFTPClient.Stream do
+  alias SFTPClient.Operations.CloseHandle
+  alias SFTPClient.Operations.OpenFile
+  alias SFTPClient.Operations.WriteFileChunk
+
   def into(stream) do
     handle = open_file(stream)
 
     collect_fun = fn
       _, {:cont, data} ->
-        SFTPClient.write_file_chunk!(handle, data)
+        WriteFileChunk.write_file_chunk!(handle, data)
 
       _, :done ->
-        SFTPClient.close_handle!(handle)
+        CloseHandle.close_handle!(handle)
         stream
 
       _, :halt ->
-        SFTPClient.close_handle!(handle)
+        CloseHandle.close_handle!(handle)
     end
 
     {stream, collect_fun}
   end
 
   defp open_file(stream) do
-    SFTPClient.open_file!(stream.conn, stream.path, [:write, :creat, :binary])
+    OpenFile.open_file!(stream.conn, stream.path, [:write, :creat, :binary])
   end
 end

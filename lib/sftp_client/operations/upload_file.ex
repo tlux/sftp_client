@@ -7,6 +7,7 @@ defmodule SFTPClient.Operations.UploadFile do
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
+  alias SFTPClient.Operations.StreamFile
 
   @doc """
   Uploads a file from the file system to the server.
@@ -27,7 +28,7 @@ defmodule SFTPClient.Operations.UploadFile do
   @spec upload_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return
   def upload_file!(%Conn{} = conn, local_path, remote_path) do
     source_stream = File.stream!(local_path)
-    target_stream = SFTPClient.stream_file!(conn, remote_path)
+    target_stream = StreamFile.stream_file!(conn, remote_path)
 
     source_stream
     |> Stream.into(target_stream)

@@ -9,6 +9,7 @@ defmodule SFTPClient.Operations.Connect do
   alias SFTPClient.Config
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.KeyProvider
+  alias SFTPClient.Operations.Disconnect
 
   @doc """
   Connects to an SSH server and opens an SFTP channel.
@@ -98,7 +99,7 @@ defmodule SFTPClient.Operations.Connect do
   defp run_callback(conn, fun) do
     fun.(conn)
   after
-    SFTPClient.disconnect(conn)
+    Disconnect.disconnect(conn)
   end
 
   defp validate_config(config) do

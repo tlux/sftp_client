@@ -8,6 +8,7 @@ defmodule SFTPClient.Operations.OpenDir do
 
   alias SFTPClient.Conn
   alias SFTPClient.Handle
+  alias SFTPClient.Operations.CloseHandle
 
   @doc """
   Opens a handle to a directory on the server. The handle can be used for
@@ -67,6 +68,6 @@ defmodule SFTPClient.Operations.OpenDir do
   defp run_callback(handle, fun) do
     fun.(handle)
   after
-    SFTPClient.close_handle(handle)
+    CloseHandle.close_handle(handle)
   end
 end

@@ -127,7 +127,7 @@ defmodule SFTPClient do
       :ok
   """
 
-  @behaviour SFTPClient.Driver
+  use Delx, otp_app: :sftp_client
 
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
@@ -145,256 +145,74 @@ defmodule SFTPClient do
   """
   @type error :: ConnError.t() | InvalidOptionError.t() | OperationError.t()
 
-  @doc """
-  Gets the configured driver.
-  """
-  @spec driver() :: module
-  def driver do
-    Application.get_env(:sftp_client, :driver, SFTPClient.Driver.Common)
-  end
+  defdel(close_handle!(handle), to: Operations.CloseHandle)
+  defdel(close_handle(handle), to: Operations.CloseHandle)
+  defdel(connect!(config_or_opts), to: Operations.Connect)
+  defdel(connect!(config_or_opts, fun), to: Operations.Connect)
+  defdel(connect(config_or_opts), to: Operations.Connect)
+  defdel(connect(config_or_opts, fun), to: Operations.Connect)
+  defdel(delete_dir!(conn, path), to: Operations.DeleteDir)
+  defdel(delete_dir(conn, path), to: Operations.DeleteDir)
+  defdel(delete_file!(conn, path), to: Operations.DeleteFile)
+  defdel(delete_file(conn, path), to: Operations.DeleteFile)
+  defdel(disconnect(conn), to: Operations.Disconnect)
 
-  @doc delegate_to: {Operations.CloseHandle, :close_handle!, 1}
-  def close_handle!(handle) do
-    driver().close_handle!(handle)
-  end
+  defdel(download_file!(conn, remote_path, local_path),
+    to: Operations.DownloadFile
+  )
 
-  @doc delegate_to: {Operations.CloseHandle, :close_handle, 1}
-  def close_handle(handle) do
-    driver().close_handle(handle)
-  end
+  defdel(download_file(conn, remote_path, local_path),
+    to: Operations.DownloadFile
+  )
 
-  @doc delegate_to: {Operations.Connect, :connect!, 1}
-  def connect!(config_or_opts) do
-    driver().connect!(config_or_opts)
-  end
+  defdel(file_info!(conn, path), to: Operations.FileInfo)
+  defdel(file_info(conn, path), to: Operations.FileInfo)
+  defdel(link_info!(conn, path), to: Operations.LinkInfo)
+  defdel(link_info(conn, path), to: Operations.LinkInfo)
+  defdel(list_dir!(conn, path), to: Operations.ListDir)
+  defdel(list_dir(conn, path), to: Operations.ListDir)
+  defdel(make_dir!(conn, path), to: Operations.MakeDir)
+  defdel(make_dir(conn, path), to: Operations.MakeDir)
 
-  @doc delegate_to: {Operations.Connect, :connect!, 2}
-  def connect!(config_or_opts, fun) do
-    driver().connect!(config_or_opts, fun)
-  end
+  defdel(make_link!(conn, symlink_path, target_path),
+    to: Operations.MakeLink
+  )
 
-  @doc delegate_to: {Operations.Connect, :connect, 1}
-  def connect(config_or_opts) do
-    driver().connect(config_or_opts)
-  end
+  defdel(make_link(conn, symlink_path, target_path),
+    to: Operations.MakeLink
+  )
 
-  @doc delegate_to: {Operations.Connect, :connect, 2}
-  def connect(config_or_opts, fun) do
-    driver().connect(config_or_opts, fun)
-  end
+  defdel(open_dir!(conn, path), to: Operations.OpenDir)
+  defdel(open_dir!(conn, path, fun), to: Operations.OpenDir)
+  defdel(open_dir(conn, path), to: Operations.OpenDir)
+  defdel(open_dir(conn, path, fun), to: Operations.OpenDir)
+  defdel(open_file!(conn, path, modes), to: Operations.OpenFile)
+  defdel(open_file!(conn, path, modes, fun), to: Operations.OpenFile)
+  defdel(open_file(conn, path, modes), to: Operations.OpenFile)
+  defdel(open_file(conn, path, modes, fun), to: Operations.OpenFile)
+  defdel(read_file_chunk!(handle, length), to: Operations.ReadFileChunk)
+  defdel(read_file_chunk(handle, length), to: Operations.ReadFileChunk)
+  defdel(read_file!(conn, path), to: Operations.ReadFile)
+  defdel(read_file(conn, path), to: Operations.ReadFile)
+  defdel(read_link!(conn, path), to: Operations.ReadLink)
+  defdel(read_link(conn, path), to: Operations.ReadLink)
+  defdel(rename!(conn, old_path, new_path), to: Operations.Rename)
+  defdel(rename(conn, old_path, new_path), to: Operations.Rename)
+  defdel(stream_file!(conn, path, chunk_size), to: Operations.StreamFile)
+  defdel(stream_file!(conn, path), to: Operations.StreamFile)
+  defdel(stream_file(conn, path, chunk_size), to: Operations.StreamFile)
+  defdel(stream_file(conn, path), to: Operations.StreamFile)
 
-  @doc delegate_to: {Operations.DeleteDir, :delete_dir!, 2}
-  def delete_dir!(conn, path) do
-    driver().delete_dir!(conn, path)
-  end
+  defdel(upload_file!(conn, local_path, remote_path),
+    to: Operations.UploadFile
+  )
 
-  @doc delegate_to: {Operations.DeleteDir, :delete_dir, 2}
-  def delete_dir(conn, path) do
-    driver().delete_dir(conn, path)
-  end
+  defdel(upload_file(conn, local_path, remote_path),
+    to: Operations.UploadFile
+  )
 
-  @doc delegate_to: {Operations.DeleteFile, :delete_file!, 2}
-  def delete_file!(conn, path) do
-    driver().delete_file!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.DeleteFile, :delete_file, 2}
-  def delete_file(conn, path) do
-    driver().delete_file(conn, path)
-  end
-
-  @doc delegate_to: {Operations.Disconnect, :disconnect, 1}
-  def disconnect(conn) do
-    driver().disconnect(conn)
-  end
-
-  @doc delegate_to: {Operations.DownloadFile, :download_file!, 3}
-  def download_file!(conn, remote_path, local_path) do
-    driver().download_file!(conn, remote_path, local_path)
-  end
-
-  @doc delegate_to: {Operations.DownloadFile, :download_file, 3}
-  def download_file(conn, remote_path, local_path) do
-    driver().download_file(conn, remote_path, local_path)
-  end
-
-  @doc delegate_to: {Operations.FileInfo, :file_info!, 2}
-  def file_info!(conn, path) do
-    driver().file_info!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.FileInfo, :file_info, 2}
-  def file_info(conn, path) do
-    driver().file_info(conn, path)
-  end
-
-  @doc delegate_to: {Operations.LinkInfo, :link_info!, 2}
-  def link_info!(conn, path) do
-    driver().link_info!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.LinkInfo, :link_info, 2}
-  def link_info(conn, path) do
-    driver().link_info(conn, path)
-  end
-
-  @doc delegate_to: {Operations.ListDir, :list_dir!, 2}
-  def list_dir!(conn, path) do
-    driver().list_dir!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.ListDir, :list_dir, 2}
-  def list_dir(conn, path) do
-    driver().list_dir(conn, path)
-  end
-
-  @doc delegate_to: {Operations.MakeDir, :make_dir!, 2}
-  def make_dir!(conn, path) do
-    driver().make_dir!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.MakeDir, :make_dir, 2}
-  def make_dir(conn, path) do
-    driver().make_dir(conn, path)
-  end
-
-  @doc delegate_to: {Operations.MakeLink, :make_link!, 3}
-  def make_link!(conn, symlink_path, target_path) do
-    driver().make_link!(conn, symlink_path, target_path)
-  end
-
-  @doc delegate_to: {Operations.MakeLink, :make_link, 3}
-  def make_link(conn, symlink_path, target_path) do
-    driver().make_link(conn, symlink_path, target_path)
-  end
-
-  @doc delegate_to: {Operations.OpenDir, :open_dir!, 2}
-  def open_dir!(conn, path) do
-    driver().open_dir!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.OpenDir, :open_dir!, 3}
-  def open_dir!(conn, path, fun) do
-    driver().open_dir!(conn, path, fun)
-  end
-
-  @doc delegate_to: {Operations.OpenDir, :open_dir, 2}
-  def open_dir(conn, path) do
-    driver().open_dir(conn, path)
-  end
-
-  @doc delegate_to: {Operations.OpenDir, :open_dir, 3}
-  def open_dir(conn, path, fun) do
-    driver().open_dir(conn, path, fun)
-  end
-
-  @doc delegate_to: {Operations.OpenFile, :open_file!, 3}
-  def open_file!(conn, path, modes) do
-    driver().open_file!(conn, path, modes)
-  end
-
-  @doc delegate_to: {Operations.OpenFile, :open_file!, 4}
-  def open_file!(conn, path, modes, fun) do
-    driver().open_file!(conn, path, modes, fun)
-  end
-
-  @doc delegate_to: {Operations.OpenFile, :open_file, 3}
-  def open_file(conn, path, modes) do
-    driver().open_file(conn, path, modes)
-  end
-
-  @doc delegate_to: {Operations.OpenFile, :open_file, 4}
-  def open_file(conn, path, modes, fun) do
-    driver().open_file(conn, path, modes, fun)
-  end
-
-  @doc delegate_to: {Operations.ReadFileChunk, :read_file_chunk!, 2}
-  def read_file_chunk!(handle, length) do
-    driver().read_file_chunk!(handle, length)
-  end
-
-  @doc delegate_to: {Operations.ReadFileChunk, :read_file_chunk, 2}
-  def read_file_chunk(handle, length) do
-    driver().read_file_chunk(handle, length)
-  end
-
-  @doc delegate_to: {Operations.ReadFile, :read_file!, 2}
-  def read_file!(conn, path) do
-    driver().read_file!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.ReadFile, :read_file, 2}
-  def read_file(conn, path) do
-    driver().read_file(conn, path)
-  end
-
-  @doc delegate_to: {Operations.ReadLink, :read_link!, 2}
-  def read_link!(conn, path) do
-    driver().read_link!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.ReadLink, :read_link, 2}
-  def read_link(conn, path) do
-    driver().read_link(conn, path)
-  end
-
-  @doc delegate_to: {Operations.Rename, :rename!, 3}
-  def rename!(conn, old_path, new_path) do
-    driver().rename!(conn, old_path, new_path)
-  end
-
-  @doc delegate_to: {Operations.Rename, :rename, 3}
-  def rename(conn, old_path, new_path) do
-    driver().rename(conn, old_path, new_path)
-  end
-
-  @doc delegate_to: {Operations.StreamFile, :stream_file!, 3}
-  def stream_file!(conn, path, chunk_size) do
-    driver().stream_file!(conn, path, chunk_size)
-  end
-
-  @doc delegate_to: {Operations.StreamFile, :stream_file!, 2}
-  def stream_file!(conn, path) do
-    driver().stream_file!(conn, path)
-  end
-
-  @doc delegate_to: {Operations.StreamFile, :stream_file, 3}
-  def stream_file(conn, path, chunk_size) do
-    driver().stream_file(conn, path, chunk_size)
-  end
-
-  @doc delegate_to: {Operations.StreamFile, :stream_file, 2}
-  def stream_file(conn, path) do
-    driver().stream_file(conn, path)
-  end
-
-  @doc delegate_to: {Operations.UploadFile, :upload_file!, 3}
-  def upload_file!(conn, local_path, remote_path) do
-    driver().upload_file!(conn, local_path, remote_path)
-  end
-
-  @doc delegate_to: {Operations.UploadFile, :upload_file, 3}
-  def upload_file(conn, local_path, remote_path) do
-    driver().upload_file(conn, local_path, remote_path)
-  end
-
-  @doc delegate_to: {Operations.WriteFileChunk, :write_file_chunk!, 2}
-  def write_file_chunk!(handle, data) do
-    driver().write_file_chunk!(handle, data)
-  end
-
-  @doc delegate_to: {Operations.WriteFileChunk, :write_file_chunk, 2}
-  def write_file_chunk(handle, data) do
-    driver().write_file_chunk(handle, data)
-  end
-
-  @doc delegate_to: {Operations.WriteFile, :write_file!, 3}
-  def write_file!(conn, path, data) do
-    driver().write_file!(conn, path, data)
-  end
-
-  @doc delegate_to: {Operations.WriteFile, :write_file, 3}
-  def write_file(conn, path, data) do
-    driver().write_file(conn, path, data)
-  end
+  defdel(write_file_chunk!(handle, data), to: Operations.WriteFileChunk)
+  defdel(write_file_chunk(handle, data), to: Operations.WriteFileChunk)
+  defdel(write_file!(conn, path, data), to: Operations.WriteFile)
+  defdel(write_file(conn, path, data), to: Operations.WriteFile)
 end

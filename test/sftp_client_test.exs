@@ -1,590 +1,325 @@
 defmodule SFTPClientTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
 
-  import Mox
+  import Delx.TestAssertions
 
-  alias SFTPClient.Driver.Mock, as: MockDriver
-
-  setup :verify_on_exit!
-
-  setup do
-    Application.put_env(:sftp_client, :driver, MockDriver)
-
-    on_exit(fn ->
-      Application.delete_env(:sftp_client, :driver)
-    end)
-
-    :ok
-  end
+  alias SFTPClient.Operations
 
   describe "close_handle!/1" do
     test "delegate to driver" do
-      expect(MockDriver, :close_handle!, fn :handle_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.close_handle!(:handle_stub) == :result_stub
+      assert_delegate({SFTPClient, :close_handle!, 1},
+        to: Operations.CloseHandle
+      )
     end
   end
 
   describe "close_handle/1" do
     test "delegate to driver" do
-      expect(MockDriver, :close_handle, fn :handle_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.close_handle(:handle_stub) == :result_stub
+      assert_delegate({SFTPClient, :close_handle, 1},
+        to: Operations.CloseHandle
+      )
     end
   end
 
   describe "connect!/1" do
     test "delegate to driver" do
-      expect(MockDriver, :connect!, fn :config_or_opts_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.connect!(:config_or_opts_stub) == :result_stub
+      assert_delegate({SFTPClient, :connect!, 1}, to: Operations.Connect)
     end
   end
 
   describe "connect!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :connect!, fn :config_or_opts_stub, :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.connect!(:config_or_opts_stub, :fun_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :connect!, 2}, to: Operations.Connect)
     end
   end
 
   describe "connect/1" do
     test "delegate to driver" do
-      expect(MockDriver, :connect, fn :config_or_opts_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.connect(:config_or_opts_stub) == :result_stub
+      assert_delegate({SFTPClient, :connect, 1}, to: Operations.Connect)
     end
   end
 
   describe "connect/2" do
     test "delegate to driver" do
-      expect(MockDriver, :connect, fn :config_or_opts_stub, :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.connect(:config_or_opts_stub, :fun_stub) == :result_stub
+      assert_delegate({SFTPClient, :connect, 2}, to: Operations.Connect)
     end
   end
 
   describe "delete_dir!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :delete_dir!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.delete_dir!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :delete_dir!, 2}, to: Operations.DeleteDir)
     end
   end
 
   describe "delete_dir/2" do
     test "delegate to driver" do
-      expect(MockDriver, :delete_dir, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.delete_dir(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :delete_dir, 2}, to: Operations.DeleteDir)
     end
   end
 
   describe "delete_file!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :delete_file!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.delete_file!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :delete_file!, 2},
+        to: Operations.DeleteFile
+      )
     end
   end
 
   describe "delete_file/2" do
     test "delegate to driver" do
-      expect(MockDriver, :delete_file, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.delete_file(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :delete_file, 2}, to: Operations.DeleteFile)
     end
   end
 
   describe "disconnect/1" do
     test "delegate to driver" do
-      expect(MockDriver, :disconnect, fn :conn_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.disconnect(:conn_stub) == :result_stub
+      assert_delegate({SFTPClient, :disconnect, 1}, to: Operations.Disconnect)
     end
   end
 
   describe "download_file!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :download_file!, fn :conn_stub,
-                                             :remote_path_stub,
-                                             :local_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.download_file!(
-               :conn_stub,
-               :remote_path_stub,
-               :local_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :download_file!, 3},
+        to: Operations.DownloadFile
+      )
     end
   end
 
   describe "download_file/3" do
     test "delegate to driver" do
-      expect(MockDriver, :download_file, fn :conn_stub,
-                                            :remote_path_stub,
-                                            :local_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.download_file(
-               :conn_stub,
-               :remote_path_stub,
-               :local_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :download_file, 3},
+        to: Operations.DownloadFile
+      )
     end
   end
 
   describe "file_info!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :file_info!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.file_info!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :file_info!, 2}, to: Operations.FileInfo)
     end
   end
 
   describe "file_info/2" do
     test "delegate to driver" do
-      expect(MockDriver, :file_info, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.file_info(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :file_info, 2}, to: Operations.FileInfo)
     end
   end
 
   describe "link_info!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :link_info!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.link_info!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :link_info!, 2}, to: Operations.LinkInfo)
     end
   end
 
   describe "link_info/2" do
     test "delegate to driver" do
-      expect(MockDriver, :link_info, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.link_info(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :link_info, 2}, to: Operations.LinkInfo)
     end
   end
 
   describe "list_dir!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :list_dir!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.list_dir!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :list_dir!, 2}, to: Operations.ListDir)
     end
   end
 
   describe "list_dir/2" do
     test "delegate to driver" do
-      expect(MockDriver, :list_dir, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.list_dir(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :list_dir, 2}, to: Operations.ListDir)
     end
   end
 
   describe "make_dir!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :make_dir!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.make_dir!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :make_dir!, 2}, to: Operations.MakeDir)
     end
   end
 
   describe "make_dir/2" do
     test "delegate to driver" do
-      expect(MockDriver, :make_dir, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.make_dir(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :make_dir, 2}, to: Operations.MakeDir)
     end
   end
 
   describe "make_link!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :make_link!, fn :conn_stub,
-                                         :symlink_path_stub,
-                                         :target_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.make_link!(
-               :conn_stub,
-               :symlink_path_stub,
-               :target_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :make_link!, 3}, to: Operations.MakeLink)
     end
   end
 
   describe "make_link/3" do
     test "delegate to driver" do
-      expect(MockDriver, :make_link, fn :conn_stub,
-                                        :symlink_path_stub,
-                                        :target_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.make_link(
-               :conn_stub,
-               :symlink_path_stub,
-               :target_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :make_link, 3}, to: Operations.MakeLink)
     end
   end
 
   describe "open_dir!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :open_dir!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_dir!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :open_dir!, 2}, to: Operations.OpenDir)
     end
   end
 
   describe "open_dir!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :open_dir!, fn :conn_stub, :path_stub, :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_dir!(:conn_stub, :path_stub, :fun_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :open_dir!, 3}, to: Operations.OpenDir)
     end
   end
 
   describe "open_dir/2" do
     test "delegate to driver" do
-      expect(MockDriver, :open_dir, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_dir(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :open_dir, 2}, to: Operations.OpenDir)
     end
   end
 
   describe "open_dir/3" do
     test "delegate to driver" do
-      expect(MockDriver, :open_dir, fn :conn_stub, :path_stub, :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_dir(:conn_stub, :path_stub, :fun_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :open_dir, 3}, to: Operations.OpenDir)
     end
   end
 
   describe "open_file!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :open_file!, fn :conn_stub, :path_stub, :modes_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_file!(:conn_stub, :path_stub, :modes_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :open_file!, 3}, to: Operations.OpenFile)
     end
   end
 
   describe "open_file!/4" do
     test "delegate to driver" do
-      expect(MockDriver, :open_file!, fn :conn_stub,
-                                         :path_stub,
-                                         :modes_stub,
-                                         :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_file!(
-               :conn_stub,
-               :path_stub,
-               :modes_stub,
-               :fun_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :open_file!, 4}, to: Operations.OpenFile)
     end
   end
 
   describe "open_file/3" do
     test "delegate to driver" do
-      expect(MockDriver, :open_file, fn :conn_stub, :path_stub, :modes_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_file(:conn_stub, :path_stub, :modes_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :open_file, 3}, to: Operations.OpenFile)
     end
   end
 
   describe "open_file/4" do
     test "delegate to driver" do
-      expect(MockDriver, :open_file!, fn :conn_stub,
-                                         :path_stub,
-                                         :modes_stub,
-                                         :fun_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.open_file!(
-               :conn_stub,
-               :path_stub,
-               :modes_stub,
-               :fun_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :open_file, 4}, to: Operations.OpenFile)
     end
   end
 
   describe "read_file_chunk!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_file_chunk!, fn :conn_stub, :length_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_file_chunk!(:conn_stub, :length_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_file_chunk!, 2},
+        to: Operations.ReadFileChunk
+      )
     end
   end
 
   describe "read_file_chunk/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_file_chunk, fn :conn_stub, :length_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_file_chunk(:conn_stub, :length_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_file_chunk, 2},
+        to: Operations.ReadFileChunk
+      )
     end
   end
 
   describe "read_file!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_file!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_file!(:conn_stub, :path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_file!, 2}, to: Operations.ReadFile)
     end
   end
 
   describe "read_file/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_file, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_file(:conn_stub, :path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_file, 2}, to: Operations.ReadFile)
     end
   end
 
   describe "read_link!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_link!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_link!(:conn_stub, :path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_link!, 2}, to: Operations.ReadLink)
     end
   end
 
   describe "read_link/2" do
     test "delegate to driver" do
-      expect(MockDriver, :read_link, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.read_link(:conn_stub, :path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :read_link!, 2}, to: Operations.ReadLink)
     end
   end
 
   describe "rename!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :rename!, fn :conn_stub,
-                                      :old_path_stub,
-                                      :new_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.rename!(:conn_stub, :old_path_stub, :new_path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :rename!, 3}, to: Operations.Rename)
     end
   end
 
   describe "rename/3" do
     test "delegate to driver" do
-      expect(MockDriver, :rename, fn :conn_stub,
-                                     :old_path_stub,
-                                     :new_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.rename(:conn_stub, :old_path_stub, :new_path_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :rename, 3}, to: Operations.Rename)
     end
   end
 
   describe "stream_file!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :stream_file!, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.stream_file!(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :stream_file!, 2},
+        to: Operations.StreamFile
+      )
     end
   end
 
   describe "stream_file/2" do
     test "delegate to driver" do
-      expect(MockDriver, :stream_file, fn :conn_stub, :path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.stream_file(:conn_stub, :path_stub) == :result_stub
+      assert_delegate({SFTPClient, :stream_file, 2}, to: Operations.StreamFile)
     end
   end
 
   describe "stream_file!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :stream_file!, fn :conn_stub,
-                                           :path_stub,
-                                           :chunk_size_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.stream_file!(:conn_stub, :path_stub, :chunk_size_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :stream_file!, 3},
+        to: Operations.StreamFile
+      )
     end
   end
 
   describe "stream_file/3" do
     test "delegate to driver" do
-      expect(MockDriver, :stream_file, fn :conn_stub,
-                                          :path_stub,
-                                          :chunk_size_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.stream_file(:conn_stub, :path_stub, :chunk_size_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :stream_file, 3}, to: Operations.StreamFile)
     end
   end
 
   describe "upload_file!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :upload_file!, fn :conn_stub,
-                                           :local_path_stub,
-                                           :remote_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.upload_file!(
-               :conn_stub,
-               :local_path_stub,
-               :remote_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :upload_file!, 3},
+        to: Operations.UploadFile
+      )
     end
   end
 
   describe "upload_file/3" do
     test "delegate to driver" do
-      expect(MockDriver, :upload_file, fn :conn_stub,
-                                          :local_path_stub,
-                                          :remote_path_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.upload_file(
-               :conn_stub,
-               :local_path_stub,
-               :remote_path_stub
-             ) == :result_stub
+      assert_delegate({SFTPClient, :upload_file, 3}, to: Operations.UploadFile)
     end
   end
 
   describe "write_file_chunk!/2" do
     test "delegate to driver" do
-      expect(MockDriver, :write_file_chunk!, fn :handle_stub, :binary_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.write_file_chunk!(:handle_stub, :binary_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :write_file_chunk!, 2},
+        to: Operations.WriteFileChunk
+      )
     end
   end
 
   describe "write_file_chunk/2" do
     test "delegate to driver" do
-      expect(MockDriver, :write_file_chunk, fn :handle_stub, :binary_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.write_file_chunk(:handle_stub, :binary_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :write_file_chunk, 2},
+        to: Operations.WriteFileChunk
+      )
     end
   end
 
   describe "write_file!/3" do
     test "delegate to driver" do
-      expect(MockDriver, :write_file!, fn :conn_stub,
-                                          :path_stub,
-                                          :binary_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.write_file!(:conn_stub, :path_stub, :binary_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :write_file!, 3}, to: Operations.WriteFile)
     end
   end
 
   describe "write_file/3" do
     test "delegate to driver" do
-      expect(MockDriver, :write_file, fn :conn_stub, :path_stub, :binary_stub ->
-        :result_stub
-      end)
-
-      assert SFTPClient.write_file(:conn_stub, :path_stub, :binary_stub) ==
-               :result_stub
+      assert_delegate({SFTPClient, :write_file, 3}, to: Operations.WriteFile)
     end
   end
 end

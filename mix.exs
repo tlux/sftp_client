@@ -30,10 +30,6 @@ defmodule SFTPClient.MixProject do
             SFTPClient.Adapter.SFTP,
             SFTPClient.Adapter.SSH
           ],
-          Drivers: [
-            SFTPClient.Driver,
-            SFTPClient.Driver.Common
-          ],
           Operations: [
             SFTPClient.OperationUtil,
             SFTPClient.Operations.CloseHandle,

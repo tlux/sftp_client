@@ -6,7 +6,7 @@ defmodule SFTPClient.Driver.Common do
 
   @behaviour SFTPClient.Driver
 
-  import Delx
+  use Delx, otp_app: :sftp_client
 
   alias SFTPClient.Operations
 

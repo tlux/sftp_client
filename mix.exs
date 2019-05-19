@@ -4,7 +4,7 @@ defmodule SFTPClient.MixProject do
   def project do
     [
       app: :sftp_client,
-      version: "1.3.0",
+      version: "1.3.1",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -71,7 +71,7 @@ defmodule SFTPClient.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:delx, "~> 2.0.1"},
+      {:delx, "~> 2.1.0"},
       {:excoveralls, "~> 0.11.0", only: :test},
       {:ex_doc, "~> 0.20.2", only: :dev},
       {:mox, "~> 0.5.0", only: :test},
@@ -87,7 +87,7 @@ defmodule SFTPClient.MixProject do
     [
       licenses: ["MIT"],
       links: %{
-        "Source" => "https://github.com/i22-digitalagentur/sftp_client"
+        "GitHub" => "https://github.com/i22-digitalagentur/sftp_client"
       }
     ]
   end

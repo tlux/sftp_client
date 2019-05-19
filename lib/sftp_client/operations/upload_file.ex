@@ -22,7 +22,7 @@ defmodule SFTPClient.Operations.UploadFile do
   end
 
   @doc """
-  Uploads a file from the file system to the server.Raises when the operation
+  Uploads a file from the file system to the server. Raises when the operation
   fails.
   """
   @spec upload_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return

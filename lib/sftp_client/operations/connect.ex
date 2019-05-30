@@ -5,8 +5,8 @@ defmodule SFTPClient.Operations.Connect do
 
   import SFTPClient.OperationUtil
 
-  alias SFTPClient.Conn
   alias SFTPClient.Config
+  alias SFTPClient.Conn
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.KeyProvider
   alias SFTPClient.Operations.Disconnect

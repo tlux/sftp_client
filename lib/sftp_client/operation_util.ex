@@ -7,20 +7,17 @@ defmodule SFTPClient.OperationUtil do
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError
 
-  @sftp_adapter Application.get_env(:sftp_client, :sftp_adapter, :ssh_sftp)
-  @ssh_adapter Application.get_env(:sftp_client, :ssh_adapter, :ssh)
-
   @doc """
   Gets the configured SFTP adapter. Defaults to the Erlang `:ssh_sftp` module.
   """
   @spec sftp_adapter() :: module
-  def sftp_adapter, do: @sftp_adapter
+  def sftp_adapter, do: Application.get_env(:sftp_client, :sftp_adapter, :ssh_sftp)
 
   @doc """
   Gets the configured SSH adapter. Defaults to the Erlang `:ssh` module.
   """
   @spec ssh_adapter() :: module
-  def ssh_adapter, do: @ssh_adapter
+  def ssh_adapter, do: Application.get_env(:sftp_client, :ssh_adapter, :ssh)
 
   @doc """
   Converts the result of a non-bang function so that the result is returned or

@@ -20,7 +20,7 @@ by adding `sftp_client` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:sftp_client, "~> 1.3.1"}
+    {:sftp_client, "~> 1.3"}
   ]
 end
 ```
@@ -74,7 +74,7 @@ SFTPClient.download_file(conn, "my/remote/dir/image.png", "my/local/dir")
 # => {:ok, "my/local/dir/image.png"}
 ```
 
-It is also possible to use Streams to download data into a file or memory.  
+It is also possible to use Streams to download data into a file or memory.
 
 ```elixir
 source_stream = SFTPClient.stream_file!(conn, "my/remote/file.jpg")

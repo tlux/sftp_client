@@ -1,10 +1,12 @@
 defmodule SFTPClient.MixProject do
+  @moduledoc false
+
   use Mix.Project
 
   def project do
     [
       app: :sftp_client,
-      version: "1.3.2",
+      version: "1.3.3",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -72,7 +74,7 @@ defmodule SFTPClient.MixProject do
   defp deps do
     [
       {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
-      {:delx, "~> 2.1"},
+      {:delx, "~> 3.0"},
       {:excoveralls, "~> 0.11.0", only: :test},
       {:ex_doc, "~> 0.20.2", only: :dev},
       {:mox, "~> 0.5.0", only: :test},

@@ -145,74 +145,68 @@ defmodule SFTPClient do
   """
   @type error :: ConnError.t() | InvalidOptionError.t() | OperationError.t()
 
-  defdel(close_handle!(handle), to: Operations.CloseHandle)
-  defdel(close_handle(handle), to: Operations.CloseHandle)
-  defdel(connect!(config_or_opts), to: Operations.Connect)
-  defdel(connect!(config_or_opts, fun), to: Operations.Connect)
-  defdel(connect(config_or_opts), to: Operations.Connect)
-  defdel(connect(config_or_opts, fun), to: Operations.Connect)
-  defdel(delete_dir!(conn, path), to: Operations.DeleteDir)
-  defdel(delete_dir(conn, path), to: Operations.DeleteDir)
-  defdel(delete_file!(conn, path), to: Operations.DeleteFile)
-  defdel(delete_file(conn, path), to: Operations.DeleteFile)
-  defdel(disconnect(conn), to: Operations.Disconnect)
+  defdelegate close_handle!(handle), to: Operations.CloseHandle
+  defdelegate close_handle(handle), to: Operations.CloseHandle
+  defdelegate connect!(config_or_opts), to: Operations.Connect
+  defdelegate connect!(config_or_opts, fun), to: Operations.Connect
+  defdelegate connect(config_or_opts), to: Operations.Connect
+  defdelegate connect(config_or_opts, fun), to: Operations.Connect
+  defdelegate delete_dir!(conn, path), to: Operations.DeleteDir
+  defdelegate delete_dir(conn, path), to: Operations.DeleteDir
+  defdelegate delete_file!(conn, path), to: Operations.DeleteFile
+  defdelegate delete_file(conn, path), to: Operations.DeleteFile
+  defdelegate disconnect(conn), to: Operations.Disconnect
 
-  defdel(download_file!(conn, remote_path, local_path),
+  defdelegate download_file!(conn, remote_path, local_path),
     to: Operations.DownloadFile
-  )
 
-  defdel(download_file(conn, remote_path, local_path),
+  defdelegate download_file(conn, remote_path, local_path),
     to: Operations.DownloadFile
-  )
 
-  defdel(file_info!(conn, path), to: Operations.FileInfo)
-  defdel(file_info(conn, path), to: Operations.FileInfo)
-  defdel(link_info!(conn, path), to: Operations.LinkInfo)
-  defdel(link_info(conn, path), to: Operations.LinkInfo)
-  defdel(list_dir!(conn, path), to: Operations.ListDir)
-  defdel(list_dir(conn, path), to: Operations.ListDir)
-  defdel(make_dir!(conn, path), to: Operations.MakeDir)
-  defdel(make_dir(conn, path), to: Operations.MakeDir)
+  defdelegate file_info!(conn, path), to: Operations.FileInfo
+  defdelegate file_info(conn, path), to: Operations.FileInfo
+  defdelegate link_info!(conn, path), to: Operations.LinkInfo
+  defdelegate link_info(conn, path), to: Operations.LinkInfo
+  defdelegate list_dir!(conn, path), to: Operations.ListDir
+  defdelegate list_dir(conn, path), to: Operations.ListDir
+  defdelegate make_dir!(conn, path), to: Operations.MakeDir
+  defdelegate make_dir(conn, path), to: Operations.MakeDir
 
-  defdel(make_link!(conn, symlink_path, target_path),
+  defdelegate make_link!(conn, symlink_path, target_path),
     to: Operations.MakeLink
-  )
 
-  defdel(make_link(conn, symlink_path, target_path),
+  defdelegate make_link(conn, symlink_path, target_path),
     to: Operations.MakeLink
-  )
 
-  defdel(open_dir!(conn, path), to: Operations.OpenDir)
-  defdel(open_dir!(conn, path, fun), to: Operations.OpenDir)
-  defdel(open_dir(conn, path), to: Operations.OpenDir)
-  defdel(open_dir(conn, path, fun), to: Operations.OpenDir)
-  defdel(open_file!(conn, path, modes), to: Operations.OpenFile)
-  defdel(open_file!(conn, path, modes, fun), to: Operations.OpenFile)
-  defdel(open_file(conn, path, modes), to: Operations.OpenFile)
-  defdel(open_file(conn, path, modes, fun), to: Operations.OpenFile)
-  defdel(read_file_chunk!(handle, length), to: Operations.ReadFileChunk)
-  defdel(read_file_chunk(handle, length), to: Operations.ReadFileChunk)
-  defdel(read_file!(conn, path), to: Operations.ReadFile)
-  defdel(read_file(conn, path), to: Operations.ReadFile)
-  defdel(read_link!(conn, path), to: Operations.ReadLink)
-  defdel(read_link(conn, path), to: Operations.ReadLink)
-  defdel(rename!(conn, old_path, new_path), to: Operations.Rename)
-  defdel(rename(conn, old_path, new_path), to: Operations.Rename)
-  defdel(stream_file!(conn, path, chunk_size), to: Operations.StreamFile)
-  defdel(stream_file!(conn, path), to: Operations.StreamFile)
-  defdel(stream_file(conn, path, chunk_size), to: Operations.StreamFile)
-  defdel(stream_file(conn, path), to: Operations.StreamFile)
+  defdelegate open_dir!(conn, path), to: Operations.OpenDir
+  defdelegate open_dir!(conn, path, fun), to: Operations.OpenDir
+  defdelegate open_dir(conn, path), to: Operations.OpenDir
+  defdelegate open_dir(conn, path, fun), to: Operations.OpenDir
+  defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
+  defdelegate open_file!(conn, path, modes, fun), to: Operations.OpenFile
+  defdelegate open_file(conn, path, modes), to: Operations.OpenFile
+  defdelegate open_file(conn, path, modes, fun), to: Operations.OpenFile
+  defdelegate read_file_chunk!(handle, length), to: Operations.ReadFileChunk
+  defdelegate read_file_chunk(handle, length), to: Operations.ReadFileChunk
+  defdelegate read_file!(conn, path), to: Operations.ReadFile
+  defdelegate read_file(conn, path), to: Operations.ReadFile
+  defdelegate read_link!(conn, path), to: Operations.ReadLink
+  defdelegate read_link(conn, path), to: Operations.ReadLink
+  defdelegate rename!(conn, old_path, new_path), to: Operations.Rename
+  defdelegate rename(conn, old_path, new_path), to: Operations.Rename
+  defdelegate stream_file!(conn, path, chunk_size), to: Operations.StreamFile
+  defdelegate stream_file!(conn, path), to: Operations.StreamFile
+  defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
+  defdelegate stream_file(conn, path), to: Operations.StreamFile
 
-  defdel(upload_file!(conn, local_path, remote_path),
+  defdelegate upload_file!(conn, local_path, remote_path),
     to: Operations.UploadFile
-  )
 
-  defdel(upload_file(conn, local_path, remote_path),
+  defdelegate upload_file(conn, local_path, remote_path),
     to: Operations.UploadFile
-  )
 
-  defdel(write_file_chunk!(handle, data), to: Operations.WriteFileChunk)
-  defdel(write_file_chunk(handle, data), to: Operations.WriteFileChunk)
-  defdel(write_file!(conn, path, data), to: Operations.WriteFile)
-  defdel(write_file(conn, path, data), to: Operations.WriteFile)
+  defdelegate write_file_chunk!(handle, data), to: Operations.WriteFileChunk
+  defdelegate write_file_chunk(handle, data), to: Operations.WriteFileChunk
+  defdelegate write_file!(conn, path, data), to: Operations.WriteFile
+  defdelegate write_file(conn, path, data), to: Operations.WriteFile
 end

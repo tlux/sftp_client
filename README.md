@@ -59,7 +59,7 @@ end)
 
 ### Download
 
-You can download a file from the server you can use the following function.
+To download a file from the server you can use the following function.
 
 ```elixir
 SFTPClient.download_file(conn, "my/remote/dir/file.jpg", "my/dir/local-file.jpg")

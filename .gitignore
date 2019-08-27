@@ -24,3 +24,6 @@ sftp_client-*.tar
 
 # Ignore all ElixirLS stuff.
 /.elixir_ls
+
+# Ignore Mac OS stuff.
+.DS_Store

@@ -9,6 +9,8 @@ defmodule SFTPClient.Operations.UploadFile do
   alias SFTPClient.OperationError
   alias SFTPClient.Operations.StreamFile
 
+  @chunk_size 32_768
+
   @doc """
   Uploads a file from the file system to the server.
   """
@@ -27,7 +29,7 @@ defmodule SFTPClient.Operations.UploadFile do
   """
   @spec upload_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return
   def upload_file!(%Conn{} = conn, local_path, remote_path) do
-    source_stream = File.stream!(local_path)
+    source_stream = File.stream!(local_path, [], @chunk_size)
     target_stream = StreamFile.stream_file!(conn, remote_path)
 
     source_stream

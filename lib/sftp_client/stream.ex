@@ -4,7 +4,7 @@ defmodule SFTPClient.Stream do
   `Collectable` protocols.
   """
 
-  defstruct [:conn, :path, chunk_size: 32768]
+  defstruct [:conn, :path, chunk_size: 32_768]
 
   require Logger
 

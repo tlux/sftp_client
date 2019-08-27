@@ -17,35 +17,27 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
   describe "upload_file/3" do
     test "success" do
-      [line_a, line_b, line_c] =
-        @local_path |> File.stream!([], :line) |> Enum.to_list()
+      chunks = @local_path |> File.stream!([], 32_768) |> Enum.to_list()
 
-      SFTPMock
-      |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/file.txt',
-                          [:write, :creat, :binary],
-                          :infinity ->
+      expect(SFTPMock, :open, fn :channel_pid_stub,
+                                 'my/remote/file.txt',
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_a,
-                           :infinity ->
-        :ok
+
+      Enum.each(chunks, fn chunk ->
+        expect(SFTPMock, :write, fn :channel_pid_stub,
+                                    :handle_id_stub,
+                                    ^chunk,
+                                    :infinity ->
+          :ok
+        end)
       end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_b,
-                           :infinity ->
-        :ok
-      end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_c,
-                           :infinity ->
-        :ok
-      end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         :ok
       end)
 
@@ -99,35 +91,27 @@ defmodule SFTPClient.Operations.UploadFileTest do
 
   describe "upload_file!/3" do
     test "success" do
-      [line_a, line_b, line_c] =
-        @local_path |> File.stream!([], :line) |> Enum.to_list()
+      chunks = @local_path |> File.stream!([], 32_768) |> Enum.to_list()
 
-      SFTPMock
-      |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/file.txt',
-                          [:write, :creat, :binary],
-                          :infinity ->
+      expect(SFTPMock, :open, fn :channel_pid_stub,
+                                 'my/remote/file.txt',
+                                 [:write, :creat, :binary],
+                                 :infinity ->
         {:ok, :handle_id_stub}
       end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_a,
-                           :infinity ->
-        :ok
+
+      Enum.each(chunks, fn chunk ->
+        expect(SFTPMock, :write, fn :channel_pid_stub,
+                                    :handle_id_stub,
+                                    ^chunk,
+                                    :infinity ->
+          :ok
+        end)
       end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_b,
-                           :infinity ->
-        :ok
-      end)
-      |> expect(:write, fn :channel_pid_stub,
-                           :handle_id_stub,
-                           ^line_c,
-                           :infinity ->
-        :ok
-      end)
-      |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
+
+      expect(SFTPMock, :close, fn :channel_pid_stub,
+                                  :handle_id_stub,
+                                  :infinity ->
         :ok
       end)
 

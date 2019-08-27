@@ -138,7 +138,7 @@ Note that a directory cannot be deleted as long as it still contains files.
 
 ### Rename
 
-To delete a file or directory:
+To move/rename a file or directory:
 
 ```elixir
 SFTPClient.rename(conn, "my/remote/file.jpg", "my/remote/new-file.jpg")

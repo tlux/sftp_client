@@ -91,7 +91,7 @@ defmodule SFTPClient do
 
   ## Rename
 
-  To delete a file or directory:
+  To move/rename a file or directory:
 
       iex> SFTPClient.rename(conn, "my/remote/file.jpg", "my/remote/new-file.jpg")
       :ok

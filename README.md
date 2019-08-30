@@ -94,10 +94,11 @@ SFTPClient.upload_file(conn, "my/local/dir/file.jpg", "my/remote/dir/file.jpg")
 # => {:ok, "my/remote/dir/file.jpg"}
 ```
 
-You can also use Streams to upload data.
+You can also use Streams to upload data. Please make sure to set a proper chunk 
+size or the upload may be very slow.
 
 ```elixir
-source_stream = File.stream!("my/local/file.jpg")
+source_stream = File.stream!("my/local/file.jpg", [], 32_768)
 target_stream = SFTPClient.stream_file!(conn, "my/remote/file.jpg")
 
 source_stream
@@ -131,7 +132,7 @@ SFTPClient.delete_file(conn, "my/remote/file.jpg")
 To delete a directory:
 
 ```elixir
-SFTPClient.delete(conn, "my/remote/dir")
+SFTPClient.delete_dir(conn, "my/remote/dir")
 ```
 
 Note that a directory cannot be deleted as long as it still contains files.

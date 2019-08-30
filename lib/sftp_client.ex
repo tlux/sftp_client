@@ -56,7 +56,8 @@ defmodule SFTPClient do
       iex> SFTPClient.upload_file(conn, "my/local/dir/file.jpg", "my/remote/dir/file.jpg")
       {:ok, "my/remote/dir/file.jpg"}
 
-  You can also use Streams to upload data.
+  You can also use Streams to upload data. Please make sure to set a proper
+  chunk size or the upload may be slow.
 
       iex> File.stream!("my/local/file.jpg")
       ...> |> Stream.into(SFTPClient.stream_file!(conn, "my/remote/file.jpg"))
@@ -84,7 +85,7 @@ defmodule SFTPClient do
 
   To delete a directory:
 
-      iex> SFTPClient.delete(conn, "my/remote/dir")
+      iex> SFTPClient.delete_dir(conn, "my/remote/dir")
       :ok
 
   Note that a directory cannot be deleted as long as it still contains files.

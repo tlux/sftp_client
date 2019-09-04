@@ -19,7 +19,7 @@ defmodule SFTPClient.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
-      dialyzer: [plt_add_apps: [:mix]],
+      dialyzer: [plt_add_apps: [:ex_unit, :mix]],
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: aliases(),

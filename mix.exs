@@ -18,6 +18,7 @@ defmodule SFTPClient.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
+      dialyzer: [plt_add_apps: [:mix]],
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
 
@@ -75,6 +76,7 @@ defmodule SFTPClient.MixProject do
     [
       {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
       {:delx, "~> 3.0"},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.11.0", only: :test},
       {:ex_doc, "~> 0.20.2", only: :dev},
       {:mox, "~> 0.5.0", only: :test},

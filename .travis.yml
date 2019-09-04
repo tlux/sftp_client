@@ -1,10 +1,6 @@
 language: elixir
 
-script:
-  - mix format --check-formatted
-  - mix credo --strict
-  - mix dialyzer --halt-exit-status
-  - mix test --cover
+script: mix ci
 
 matrix:
   include:
@@ -12,3 +8,8 @@ matrix:
       otp_release: '21.3.8'
     - elixir: '1.9.0'
       otp_release: '22.0.1'
+
+cache:
+  directories:
+    - _build
+    - deps

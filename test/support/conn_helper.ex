@@ -4,8 +4,6 @@ defmodule SFTPClient.ConnHelper do
   alias SFTPClient.Config
   alias SFTPClient.Conn
 
-  @spec build_conn(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
-          Conn.t()
   def build_conn(config_or_opts \\ []) do
     %Conn{
       config: Config.new(config_or_opts),

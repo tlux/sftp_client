@@ -43,7 +43,7 @@ defmodule SFTPClient.Config do
   Builds a config from the given `SFTPClient.Config` struct, keyword list or
   map.
   """
-  @spec new(t | Keyword.t()) :: t
+  @spec new(t | Keyword.t() | %{optional(atom) => any}) :: t
   def new(config_or_opts)
   def new(%__MODULE__{} = config), do: config
   def new(opts), do: struct!(__MODULE__, opts)

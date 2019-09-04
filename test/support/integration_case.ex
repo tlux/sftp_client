@@ -8,13 +8,15 @@ defmodule SFTPClient.IntegrationCase do
   end
 
   setup do
-    prev_config = Application.get_all_env(:sftp_client)
+    prev_sftp_adapter = Application.get_env(:sftp_client, :sftp_adapter)
+    prev_ssh_adapter = Application.get_env(:sftp_client, :ssh_adapter)
 
     Application.delete_env(:sftp_client, :sftp_adapter)
     Application.delete_env(:sftp_client, :ssh_adapter)
 
     on_exit(fn ->
-      Application.put_all_env(sftp_client: prev_config)
+      Application.put_env(:sftp_client, :sftp_adapter, prev_sftp_adapter)
+      Application.put_env(:sftp_client, :ssh_adapter, prev_ssh_adapter)
     end)
 
     :ok

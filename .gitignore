@@ -27,3 +27,6 @@ sftp_client-*.tar
 
 # Ignore Mac OS stuff.
 .DS_Store
+
+# Files for integration tests
+/sftp_files

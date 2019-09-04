@@ -128,8 +128,6 @@ defmodule SFTPClient do
       :ok
   """
 
-  use Delx, otp_app: :sftp_client
-
   alias SFTPClient.ConnError
   alias SFTPClient.InvalidOptionError
   alias SFTPClient.OperationError

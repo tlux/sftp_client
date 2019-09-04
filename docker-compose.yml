@@ -4,7 +4,7 @@ sftp_password:
       - ./sftp_files:/home/foo/files
   ports:
       - "2222:22"
-  command: foo:pass:1001
+  command: foo:s3cret:1001
 
 sftp_keys:
   image: atmoz/sftp

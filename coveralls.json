@@ -1,4 +1,9 @@
 {
+  "skip_files": [
+    "deps",
+    "lib/sftp_client.ex",
+    "test"
+  ],
   "terminal_options": {
     "file_column_width": 80
   }

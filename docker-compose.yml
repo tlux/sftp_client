@@ -1,7 +1,7 @@
 sftp_password:
   image: atmoz/sftp
   volumes:
-      - ./sftp_files:/home/foo/files
+      - ./test/sftp_files:/home/foo/files
   ports:
       - "2222:22"
   command: foo:s3cret:1001

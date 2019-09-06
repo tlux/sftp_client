@@ -22,7 +22,6 @@ defmodule SFTPClient.MixProject do
       dialyzer: [plt_add_apps: [:ex_unit, :mix]],
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
-      aliases: aliases(),
 
       # Docs
       name: "SFTP Client",
@@ -100,15 +99,4 @@ defmodule SFTPClient.MixProject do
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
-
-  defp aliases do
-    [
-      ci: [
-        "format --check-formatted",
-        "credo --strict",
-        "dialyzer --halt-exit-status",
-        "test --cover"
-      ]
-    ]
-  end
 end

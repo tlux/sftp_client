@@ -1,6 +1,10 @@
 language: elixir
 
-script: mix ci
+script:
+  - mix format --check-formatted
+  - mix credo --strict
+  - mix dialyzer --halt-exit-status
+  - mix test --cover
 
 matrix:
   include:

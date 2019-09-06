@@ -19,7 +19,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     password: "test-password",
     user_dir: "~/.ssh",
     system_dir: "/etc/ssh",
-    private_key_path: "test/fixtures/id_rsa",
+    private_key_path: "test/fixtures/ssh_keys/id_rsa",
     private_key_pass_phrase: "t3$t",
     inet: :inet,
     sftp_vsn: 2,

@@ -29,4 +29,4 @@ sftp_client-*.tar
 .DS_Store
 
 # Files for integration tests
-/sftp_files
+/test/sftp_files

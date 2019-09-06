@@ -9,9 +9,9 @@ sftp_password:
 sftp_keys:
   image: atmoz/sftp
   volumes:
-      - ./sftp_files:/home/foo/files
-      - ./ssh_keys/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro
-      - ./ssh_keys/id_ed25519.pub:/home/foo/.ssh/keys/id_ed25519.pub:ro
+      - ./test/sftp_files:/home/foo/files
+      - ./test/fixtures/ssh_keys/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro
+      - ./test/fixtures/ssh_keys/id_ed25519.pub:/home/foo/.ssh/keys/id_ed25519.pub:ro
   ports:
       - "2223:22"
   command: foo::1001

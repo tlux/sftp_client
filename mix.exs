@@ -16,7 +16,8 @@ defmodule SFTPClient.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        "coveralls.travis": :test
       ],
       dialyzer: [plt_add_apps: [:ex_unit, :mix]],
       package: package(),

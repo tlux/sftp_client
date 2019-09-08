@@ -4,7 +4,7 @@ script:
   - mix format --check-formatted
   - mix credo --strict
   - travis_wait 30 mix dialyzer --halt-exit-status
-  - mix test --cover
+  - mix coveralls.travis
 
 matrix:
   include:

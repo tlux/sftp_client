@@ -1,6 +1,7 @@
 # SFTP Client
 
 [![Build Status](https://travis-ci.org/i22-digitalagentur/sftp_client.svg?branch=master)](https://travis-ci.org/i22-digitalagentur/sftp_client)
+[![Coverage Status](https://coveralls.io/repos/github/i22-digitalagentur/sftp_client/badge.svg?branch=master)](https://coveralls.io/github/i22-digitalagentur/sftp_client?branch=master)
 [![Hex.pm](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
 
 An Elixir SFTP Client that wraps Erlang's
@@ -94,7 +95,7 @@ SFTPClient.upload_file(conn, "my/local/dir/file.jpg", "my/remote/dir/file.jpg")
 # => {:ok, "my/remote/dir/file.jpg"}
 ```
 
-You can also use Streams to upload data. Please make sure to set a proper chunk 
+You can also use Streams to upload data. Please make sure to set a proper chunk
 size or the upload may be very slow.
 
 ```elixir

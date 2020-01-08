@@ -48,7 +48,7 @@ defmodule SFTPClient.Config do
   @spec new(t | Keyword.t() | %{optional(atom) => any}) :: t
   def new(config_or_opts)
   def new(%__MODULE__{} = config), do: config |> set_key_cb()
-  def new(opts), do: struct!(__MODULE__, opts) |> set_key_cb()
+  def new(opts), do: __MODULE__ |> struct!(opts) |> set_key_cb()
 
   defp set_key_cb(%__MODULE__{key_cb: nil} = config) do
     %__MODULE__{

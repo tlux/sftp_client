@@ -141,10 +141,6 @@ defmodule SFTPClient.Operations.Connect do
 
   defp get_opts(config) do
     Enum.sort([
-      {:key_cb,
-       {KeyProvider,
-        private_key_path: config.private_key_path,
-        private_key_pass_phrase: config.private_key_pass_phrase}},
       {:quiet_mode, true},
       {:silently_accept_hosts, true},
       {:user_interaction, false}
@@ -164,7 +160,8 @@ defmodule SFTPClient.Operations.Connect do
       :connect_timeout,
       :dsa_pass_phrase,
       :rsa_pass_phrase,
-      :ecdsa_pass_phrase
+      :ecdsa_pass_phrase,
+      :key_cb
     ])
     |> Enum.reduce([], fn
       {_key, nil}, opts ->

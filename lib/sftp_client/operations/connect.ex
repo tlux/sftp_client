@@ -37,6 +37,9 @@ defmodule SFTPClient.Operations.Connect do
     5000 ms), can be set to `:infinity` to disable timeout.
   * `:operation_timeout` - The operation timeout in milliseconds (defaults to
     5000 ms), can be set to `:infinity` to disable timeout.
+  * `:key_cb` - A 2-item tuple containing:
+     - A module that implements `:ssh_client_key_api` behaviour.
+     - `:ssh_client_key_api` behaviour opts.
   """
   @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
           {:ok, Conn.t()} | {:error, term}

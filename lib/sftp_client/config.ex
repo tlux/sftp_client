@@ -38,7 +38,7 @@ defmodule SFTPClient.Config do
           sftp_vsn: integer,
           connect_timeout: timeout,
           operation_timeout: timeout,
-          key_cb: tuple
+          key_cb: {module, Keyword.t()}
         }
 
   @doc """

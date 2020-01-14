@@ -20,7 +20,10 @@ defmodule SFTPClient.ConfigTest do
          connect_timeout: 1000,
          dsa_pass_phrase: "dsa_t3$t",
          rsa_pass_phrase: "rsa_t3$t",
-         ecdsa_pass_phrase: "ecdsa_t3$t"
+         ecdsa_pass_phrase: "ecdsa_t3$t",
+         key_cb:
+           {RandomProvider,
+            private_key_path: :path, private_key_pass_phrase: :phrase}
        }}
     end
 
@@ -41,6 +44,25 @@ defmodule SFTPClient.ConfigTest do
       assert config.dsa_pass_phrase == nil
       assert config.rsa_pass_phrase == nil
       assert config.ecdsa_pass_phrase == nil
+    end
+
+    test "ensures key_cb is set to the expected default" do
+      private_key_path = "whatever_path"
+      private_key_pass_phrase = "whatever_pass_phrase"
+
+      config =
+        Config.new(
+          private_key_path: private_key_path,
+          private_key_pass_phrase: private_key_pass_phrase
+        )
+
+      assert config.private_key_path == private_key_path
+      assert config.private_key_pass_phrase == private_key_pass_phrase
+
+      assert config.key_cb ==
+               {SFTPClient.KeyProvider,
+                private_key_path: config.private_key_path,
+                private_key_pass_phrase: config.private_key_pass_phrase}
     end
 
     test "build config with keyword list", %{data: data} do

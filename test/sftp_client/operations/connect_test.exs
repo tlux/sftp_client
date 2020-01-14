@@ -24,7 +24,11 @@ defmodule SFTPClient.Operations.ConnectTest do
     inet: :inet,
     sftp_vsn: 2,
     connect_timeout: 1000,
-    operation_timeout: 500
+    operation_timeout: 500,
+    key_cb:
+      {SFTPClient.KeyProvider,
+       private_key_path: "test/fixtures/ssh_keys/id_rsa",
+       private_key_pass_phrase: "t3$t"}
   }
 
   setup :verify_on_exit!

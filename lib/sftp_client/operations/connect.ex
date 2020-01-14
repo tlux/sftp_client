@@ -37,6 +37,9 @@ defmodule SFTPClient.Operations.Connect do
     5000 ms), can be set to `:infinity` to disable timeout.
   * `:operation_timeout` - The operation timeout in milliseconds (defaults to
     5000 ms), can be set to `:infinity` to disable timeout.
+  * `:key_cb` - A 2-item tuple containing:
+     - A module that implements `:ssh_client_key_api` behaviour.
+     - `:ssh_client_key_api` behaviour opts.
   """
   @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
           {:ok, Conn.t()} | {:error, term}
@@ -141,10 +144,6 @@ defmodule SFTPClient.Operations.Connect do
 
   defp get_opts(config) do
     Enum.sort([
-      {:key_cb,
-       {KeyProvider,
-        private_key_path: config.private_key_path,
-        private_key_pass_phrase: config.private_key_pass_phrase}},
       {:quiet_mode, true},
       {:silently_accept_hosts, true},
       {:user_interaction, false}
@@ -164,7 +163,8 @@ defmodule SFTPClient.Operations.Connect do
       :connect_timeout,
       :dsa_pass_phrase,
       :rsa_pass_phrase,
-      :ecdsa_pass_phrase
+      :ecdsa_pass_phrase,
+      :key_cb
     ])
     |> Enum.reduce([], fn
       {_key, nil}, opts ->

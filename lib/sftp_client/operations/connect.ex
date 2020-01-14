@@ -8,7 +8,6 @@ defmodule SFTPClient.Operations.Connect do
   alias SFTPClient.Config
   alias SFTPClient.Conn
   alias SFTPClient.InvalidOptionError
-  alias SFTPClient.KeyProvider
   alias SFTPClient.Operations.Disconnect
 
   @doc """

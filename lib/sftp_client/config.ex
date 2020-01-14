@@ -38,7 +38,7 @@ defmodule SFTPClient.Config do
           sftp_vsn: integer,
           connect_timeout: timeout,
           operation_timeout: timeout,
-          key_cb: {module, Keyword.t()}
+          key_cb: {module, term}
         }
 
   @doc """
@@ -48,17 +48,15 @@ defmodule SFTPClient.Config do
   @spec new(t | Keyword.t() | %{optional(atom) => any}) :: t
   def new(config_or_opts)
 
-  def new(%__MODULE__{} = config) do
-    put_key_cb(config)
-  end
+  def new(%__MODULE__{} = config), do: config
 
   def new(opts) do
     __MODULE__
     |> struct!(opts)
-    |> new()
+    |> maybe_put_key_cb()
   end
 
-  defp put_key_cb(%{key_cb: nil} = config) do
+  defp maybe_put_key_cb(%{key_cb: nil} = config) do
     %{
       config
       | key_cb:
@@ -68,5 +66,5 @@ defmodule SFTPClient.Config do
     }
   end
 
-  defp put_key_cb(config), do: config
+  defp maybe_put_key_cb(config), do: config
 end

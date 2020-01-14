@@ -6,7 +6,7 @@ defmodule SFTPClient.MixProject do
   def project do
     [
       app: :sftp_client,
-      version: "1.3.5",
+      version: "1.4.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),

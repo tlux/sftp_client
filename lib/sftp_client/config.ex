@@ -47,11 +47,19 @@ defmodule SFTPClient.Config do
   """
   @spec new(t | Keyword.t() | %{optional(atom) => any}) :: t
   def new(config_or_opts)
-  def new(%__MODULE__{} = config), do: config |> set_key_cb()
-  def new(opts), do: __MODULE__ |> struct!(opts) |> set_key_cb()
 
-  defp set_key_cb(%__MODULE__{key_cb: nil} = config) do
-    %__MODULE__{
+  def new(%__MODULE__{} = config) do
+    put_key_cb(config)
+  end
+
+  def new(opts) do
+    __MODULE__
+    |> struct!(opts)
+    |> new()
+  end
+
+  defp put_key_cb(%{key_cb: nil} = config) do
+    %{
       config
       | key_cb:
           {SFTPClient.KeyProvider,
@@ -60,5 +68,5 @@ defmodule SFTPClient.Config do
     }
   end
 
-  defp set_key_cb(config), do: config
+  defp put_key_cb(config), do: config
 end

@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/i22-digitalagentur/sftp_client.svg?branch=master)](https://travis-ci.org/i22-digitalagentur/sftp_client)
 [![Coverage Status](https://coveralls.io/repos/github/i22-digitalagentur/sftp_client/badge.svg?branch=master)](https://coveralls.io/github/i22-digitalagentur/sftp_client?branch=master)
 [![Hex.pm](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
+![Hex.pm](https://img.shields.io/hexpm/dt/sftp_client)
 
 An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and

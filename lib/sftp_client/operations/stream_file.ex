@@ -18,6 +18,10 @@ defmodule SFTPClient.Operations.StreamFile do
     stream_file_no_bang(conn, path, [])
   end
 
+  @doc """
+  Creates a stream that allows reading from and writing to the server using the
+  specified chunk size.
+  """
   @spec stream_file(Conn.t(), Path.t(), non_neg_integer) ::
           {:ok, SFTPStream.t()} | {:error, SFTPClient.error()}
   def stream_file(%Conn{} = conn, path, chunk_size) do
@@ -38,14 +42,17 @@ defmodule SFTPClient.Operations.StreamFile do
   end
 
   @doc """
-  Creates a stream that allows reading from and writing to the server. May raise
-  lazily as soon as the Stream evaluates.
+  Creates a stream that allows reading from and writing to the server.
   """
   @spec stream_file!(Conn.t(), Path.t()) :: SFTPStream.t()
   def stream_file!(%Conn{} = conn, path) do
     %SFTPStream{conn: conn, path: path}
   end
 
+  @doc """
+  Creates a stream that allows reading from and writing to the server using the
+  specified chunk size.
+  """
   @spec stream_file!(Conn.t(), Path.t(), non_neg_integer) :: SFTPStream.t()
   def stream_file!(%Conn{} = conn, path, chunk_size) do
     %SFTPStream{conn: conn, path: path, chunk_size: chunk_size}

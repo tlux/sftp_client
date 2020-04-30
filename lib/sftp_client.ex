@@ -196,10 +196,10 @@ defmodule SFTPClient do
   defdelegate stream_file!(conn, path, chunk_size), to: Operations.StreamFile
   defdelegate stream_file!(conn, path), to: Operations.StreamFile
 
-  @deprecated "Use stream_file!/2 instead"
+  @deprecated "Use stream_file!/3 instead"
   defdelegate stream_file(conn, path, chunk_size), to: Operations.StreamFile
 
-  @deprecated "Use stream_file!/3 instead"
+  @deprecated "Use stream_file!/2 instead"
   defdelegate stream_file(conn, path), to: Operations.StreamFile
 
   defdelegate upload_file!(conn, local_path, remote_path),

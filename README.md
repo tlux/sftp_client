@@ -190,9 +190,3 @@ SFTPClient.make_link(conn, "my/remote/link.jpg", "my/remote/file.jpg")
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/sftp_client](https://hexdocs.pm/sftp_client).
-
-## Missing Features
-
-* Support for ed25519 and ed448 keys
-* Remote TAR creation and extraction
-* `:ssh_sftp.write_file_info/3`

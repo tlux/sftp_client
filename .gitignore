@@ -30,3 +30,6 @@ sftp_client-*.tar
 
 # Files for integration tests
 /test/sftp_files
+
+# Visual Studio Code
+/.vscode/

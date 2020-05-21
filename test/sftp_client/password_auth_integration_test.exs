@@ -5,12 +5,13 @@ defmodule SFTPClient.PasswordAuthIntegrationTest do
   alias SFTPClient.OperationError
 
   test "upload" do
-    config = %Config{
-      host: "localhost",
-      port: 2222,
-      user: "foo",
-      password: "s3cret"
-    }
+    config =
+      Config.new(
+        host: "localhost",
+        port: 2222,
+        user: "foo",
+        password: "s3cret"
+      )
 
     store_dir = "files/#{:os.system_time(:millisecond)}"
 
@@ -31,13 +32,14 @@ defmodule SFTPClient.PasswordAuthIntegrationTest do
   end
 
   test "connect error" do
-    config = %Config{
-      host: "localhost",
-      port: 2224,
-      user: "foo",
-      password: "s3cret",
-      connect_timeout: 500
-    }
+    config =
+      Config.new(
+        host: "localhost",
+        port: 2224,
+        user: "foo",
+        password: "s3cret",
+        connect_timeout: 500
+      )
 
     assert SFTPClient.connect(config) ==
              {:error, %OperationError{reason: :econnrefused}}

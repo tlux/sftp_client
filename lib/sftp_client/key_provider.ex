@@ -8,6 +8,8 @@ defmodule SFTPClient.KeyProvider do
 
   require Logger
 
+  alias SFTPClient.SSHKey
+
   @impl true
   defdelegate add_host_key(host, public_key, opts), to: :ssh_file
 
@@ -41,7 +43,7 @@ defmodule SFTPClient.KeyProvider do
             {:error, 'Unable to decode key'}
 
           {_type, _key, :not_encrypted} = entry ->
-            {:ok, :public_key.pem_entry_decode(entry)}
+            {:ok, SSHKey.pem_entry_decode(entry)}
 
           _entry when is_nil(pass_phrase) ->
             Logger.error("Passphrase required for key: #{path}")

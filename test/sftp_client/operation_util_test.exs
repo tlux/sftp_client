@@ -70,5 +70,13 @@ defmodule SFTPClient.OperationUtilTest do
                message: to_string(message)
              }
     end
+
+    test "tuple conn error" do
+      error = {:error, :closed}
+
+      assert OperationUtil.handle_error(error) == %ConnError{
+               message: to_string(:closed)
+             }
+    end
   end
 end

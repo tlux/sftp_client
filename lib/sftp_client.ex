@@ -181,6 +181,8 @@ defmodule SFTPClient do
   defdelegate open_dir!(conn, path, fun), to: Operations.OpenDir
   defdelegate open_dir(conn, path), to: Operations.OpenDir
   defdelegate open_dir(conn, path, fun), to: Operations.OpenDir
+  defdelegate read_dir(handle), to: Operations.ReadDir
+  defdelegate read_dir!(handle), to: Operations.ReadDir
   defdelegate open_file!(conn, path, modes), to: Operations.OpenFile
   defdelegate open_file!(conn, path, modes, fun), to: Operations.OpenFile
   defdelegate open_file(conn, path, modes), to: Operations.OpenFile

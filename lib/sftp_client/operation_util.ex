@@ -32,6 +32,8 @@ defmodule SFTPClient.OperationUtil do
 
   def may_bang!(:ok), do: :ok
 
+  def may_bang!(:eof), do: :eof
+
   def may_bang!({:ok, result}), do: result
 
   def may_bang!({:error, %{__exception__: _} = error}), do: raise(error)

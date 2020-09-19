@@ -58,6 +58,16 @@ defmodule SFTPClient.Operations.ReadDirTest do
       assert ReadDir.read_dir(@handle) == {:ok, decoded_entries}
     end
 
+    test "success eof" do
+      expect(SFTPMock, :readdir, fn :channel_pid_stub,
+                                    :handle_id_stub,
+                                    :infinity ->
+        :eof
+      end)
+
+      assert ReadDir.read_dir(@handle) == :eof
+    end
+
     test "error" do
       reason = :enoent
 

@@ -20,6 +20,7 @@ defmodule SFTPClient.Operations.ReadDir do
     |> case do
       {:ok, entries} -> {:ok, process_entries(entries, handle.path)}
       {:error, error} -> {:error, handle_error(error)}
+      :eof -> :eof
     end
   end
 

@@ -9,10 +9,14 @@ defmodule SFTPClient.KeyProvider do
   require Logger
 
   @impl true
-  defdelegate add_host_key(host, public_key, opts), to: :ssh_file
+  def add_host_key(host, port \\ 22, public_key, opts) do
+    :ssh_file.add_host_key(host, port, public_key, opts)
+  end
 
   @impl true
-  defdelegate is_host_key(key, host, algorithm, opts), to: :ssh_file
+  def is_host_key(key, host, port \\ 22, algorithm, opts) do
+    :ssh_file.is_host_key(key, host, port, algorithm, opts)
+  end
 
   @impl true
   def user_key(algorithm, opts) do

@@ -76,11 +76,11 @@ defmodule SFTPClient.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.11", only: :test},
-      {:ex_doc, "~> 0.20", only: :dev},
-      {:mox, "~> 0.5", only: :test},
+      {:excoveralls, "~> 0.13", only: :test},
+      {:ex_doc, "~> 0.22", only: :dev},
+      {:mox, "~> 1.0", only: :test},
       {:temp, "~> 0.4", only: :test}
     ]
   end

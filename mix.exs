@@ -35,7 +35,6 @@ defmodule SFTPClient.MixProject do
             SFTPClient.Adapter.SSH
           ],
           Operations: [
-            SFTPClient.OperationUtil,
             SFTPClient.Operations.CloseHandle,
             SFTPClient.Operations.Connect,
             SFTPClient.Operations.DeleteDir,

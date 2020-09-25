@@ -11,10 +11,6 @@ defmodule SFTPClient.OperationUtilTest do
       assert OperationUtil.may_bang!(:ok) == :ok
     end
 
-    test "return eof on eof" do
-      assert OperationUtil.may_bang!(:eof) == :eof
-    end
-
     test "return result on ok tuple" do
       result = "result double"
 

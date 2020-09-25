@@ -11,7 +11,11 @@
         ]
       },
       strict: true,
-      color: true
+      color: true,
+      checks: [
+        {Credo.Check.Refactor.MapInto, false},
+        {Credo.Check.Warning.LazyLogging, false}
+      ]
     }
   ]
 }

@@ -52,8 +52,8 @@ defmodule SFTPClient.OperationUtil do
     %InvalidOptionError{key: key, value: load_opt_value(value), reason: reason}
   end
 
-  def handle_error({:error, reason}) do
-    %ConnError{message: to_string(reason)}
+  def handle_error(reason) when is_tuple(reason) do
+    %ConnError{message: inspect(reason)}
   end
 
   def handle_error(reason) when is_atom(reason) do

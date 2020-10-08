@@ -40,6 +40,10 @@ defmodule SFTPClient.OperationUtil do
     %OperationError{reason: reason}
   end
 
+  def handle_error(reason) when is_tuple(reason) do
+    %ConnError{message: inspect(reason)}
+  end
+
   def handle_error(message) do
     %ConnError{message: to_string(message)}
   end

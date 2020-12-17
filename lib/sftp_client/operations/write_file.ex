@@ -8,9 +8,9 @@ defmodule SFTPClient.Operations.WriteFile do
   alias SFTPClient.Conn
 
   @doc """
-  Reads a file from the server, and returns the data as String.
+  Writes a file to the given path on the connected server.
   """
-  @spec write_file(Conn.t(), Path.t(), String.t() | [String.t()]) ::
+  @spec write_file(Conn.t(), Path.t(), binary | [binary]) ::
           :ok | {:error, SFTPClient.error()}
   def write_file(%Conn{} = conn, path, data) when is_binary(data) do
     write_file(conn, path, [data])
@@ -30,7 +30,7 @@ defmodule SFTPClient.Operations.WriteFile do
   end
 
   @doc """
-  Reads a file from the server, and returns the data as String. Raises when the
+  Writes a file to the given path on the connected server. Raises when the
   operation fails.
   """
   @spec write_file!(Conn.t(), Path.t(), String.t() | [String.t()]) ::

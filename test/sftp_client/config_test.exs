@@ -23,7 +23,8 @@ defmodule SFTPClient.ConfigTest do
          ecdsa_pass_phrase: "ecdsa_t3$t",
          key_cb:
            {RandomProvider,
-            private_key_path: :path, private_key_pass_phrase: :phrase}
+            private_key_path: :path, private_key_pass_phrase: :phrase},
+         modify_algorithms: [prepend: [kex: ['diffie-hellman-group1-sha1']]]
        }}
     end
 

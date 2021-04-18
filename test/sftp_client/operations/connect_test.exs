@@ -28,7 +28,8 @@ defmodule SFTPClient.Operations.ConnectTest do
     key_cb:
       {SFTPClient.KeyProvider,
        private_key_path: "test/fixtures/ssh_keys/id_rsa",
-       private_key_pass_phrase: "t3$t"}
+       private_key_pass_phrase: "t3$t"},
+    modify_algorithms: [prepend: [kex: ['diffie-hellman-group1-sha1']]]
   }
 
   setup :verify_on_exit!
@@ -42,6 +43,7 @@ defmodule SFTPClient.Operations.ConnectTest do
          {KeyProvider,
           private_key_path: @config.private_key_path,
           private_key_pass_phrase: @config.private_key_pass_phrase},
+       modify_algorithms: [prepend: [kex: ['diffie-hellman-group1-sha1']]],
        password: 'test-password',
        quiet_mode: true,
        sftp_vsn: 2,

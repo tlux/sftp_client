@@ -45,6 +45,7 @@ defmodule SFTPClient.ConfigTest do
       assert config.dsa_pass_phrase == nil
       assert config.rsa_pass_phrase == nil
       assert config.ecdsa_pass_phrase == nil
+      assert config.modify_algorithms == []
     end
 
     test "ensures key_cb is set to the expected default" do

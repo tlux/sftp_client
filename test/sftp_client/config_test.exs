@@ -23,7 +23,10 @@ defmodule SFTPClient.ConfigTest do
          ecdsa_pass_phrase: "ecdsa_t3$t",
          key_cb:
            {RandomProvider,
-            private_key_path: :path, private_key_pass_phrase: :phrase}
+            private_key_path: :path, private_key_pass_phrase: :phrase},
+         modify_algorithms: [
+           {:append, [{:kex, [:"diffie-hellman-group1-sha1"]}]}
+         ]
        }}
     end
 
@@ -44,6 +47,7 @@ defmodule SFTPClient.ConfigTest do
       assert config.dsa_pass_phrase == nil
       assert config.rsa_pass_phrase == nil
       assert config.ecdsa_pass_phrase == nil
+      assert config.modify_algorithms == nil
     end
 
     test "ensures key_cb is set to the expected default" do

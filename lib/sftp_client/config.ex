@@ -19,7 +19,8 @@ defmodule SFTPClient.Config do
     :sftp_vsn,
     {:connect_timeout, 5000},
     {:operation_timeout, :infinity},
-    :key_cb
+    :key_cb,
+    :modify_algorithms
   ]
 
   @type t :: %__MODULE__{
@@ -38,7 +39,8 @@ defmodule SFTPClient.Config do
           sftp_vsn: integer,
           connect_timeout: timeout,
           operation_timeout: timeout,
-          key_cb: {module, term}
+          key_cb: {module, term},
+          modify_algorithms: nil | Keyword.t()
         }
 
   @doc """

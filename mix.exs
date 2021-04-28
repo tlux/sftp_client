@@ -6,7 +6,7 @@ defmodule SFTPClient.MixProject do
   def project do
     [
       app: :sftp_client,
-      version: "1.4.4",
+      version: "1.4.5",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -25,7 +25,7 @@ defmodule SFTPClient.MixProject do
 
       # Docs
       name: "SFTP Client",
-      source_url: "https://github.com/i22-digitalagentur/sftp_client",
+      source_url: "https://github.com/tlux/sftp_client",
       docs: [
         main: "SFTPClient",
         extras: ["README.md"],
@@ -92,7 +92,7 @@ defmodule SFTPClient.MixProject do
     [
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/i22-digitalagentur/sftp_client"
+        "GitHub" => "https://github.com/tlux/sftp_client"
       }
     ]
   end

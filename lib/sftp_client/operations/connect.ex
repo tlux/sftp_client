@@ -39,6 +39,10 @@ defmodule SFTPClient.Operations.Connect do
   * `:key_cb` - A 2-item tuple containing:
      - A module that implements `:ssh_client_key_api` behaviour.
      - `:ssh_client_key_api` behaviour opts.
+  * `::modify_algorithms` - An option passed to the underlying erlang SSH
+    implementation to support non-OTP default encryption algorithms.
+     - Example - to re-enable `diffie-hellman-group1-sha1`, removed in OTP 23,
+       pass: `modify_algorithms: [{:append, [{:kex, [:"diffie-hellman-group1-sha1"]}]}]`
   """
   @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
           {:ok, Conn.t()} | {:error, term}

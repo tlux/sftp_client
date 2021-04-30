@@ -163,7 +163,8 @@ defmodule SFTPClient.Operations.Connect do
       :dsa_pass_phrase,
       :rsa_pass_phrase,
       :ecdsa_pass_phrase,
-      :key_cb
+      :key_cb,
+      :modify_algorithms
     ])
     |> Enum.reduce([], fn
       {_key, nil}, opts ->

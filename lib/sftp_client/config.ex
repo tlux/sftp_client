@@ -39,7 +39,7 @@ defmodule SFTPClient.Config do
           sftp_vsn: integer,
           connect_timeout: timeout,
           operation_timeout: timeout,
-          key_cb: {module, term},
+          key_cb: nil | {module, term},
           modify_algorithms: nil | Keyword.t()
         }
 

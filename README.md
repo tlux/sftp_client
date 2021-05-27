@@ -2,8 +2,12 @@
 
 [![Build Status](https://travis-ci.org/tlux/sftp_client.svg?branch=master)](https://travis-ci.org/tlux/sftp_client)
 [![Coverage Status](https://coveralls.io/repos/github/tlux/sftp_client/badge.svg?branch=master)](https://coveralls.io/github/tlux/sftp_client?branch=master)
-[![Hex.pm](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
-[![Hex.pm](https://img.shields.io/hexpm/dt/sftp_client)](https://hex.pm/packages/sftp_client)
+[![Module Version](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/sftp_client/)
+[![Total Download](https://img.shields.io/hexpm/dt/sftp_client.svg)](https://hex.pm/packages/sftp_client)
+[![License](https://img.shields.io/hexpm/l/sftp_client.svg)](https://github.com/tlux/sftp_client/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/tlux/sftp_client.svg)](https://github.com/tlux/sftp_client/commits/master)
+
 
 An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and
@@ -16,8 +20,8 @@ An Elixir SFTP Client that wraps Erlang's
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `sftp_client` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:sftp_client` to your list of
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -184,8 +188,9 @@ And you are able to create symlinks.
 SFTPClient.make_link(conn, "my/remote/link.jpg", "my/remote/file.jpg")
 ```
 
-## Docs
+## Copyright and License
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/sftp_client](https://hexdocs.pm/sftp_client).
+Copyright (c) 2019 i22 Digitalagentur GmbH
+
+This library is released under the MIT License. See the [LICENSE.md](./LICENSE.md) file
+for further details.

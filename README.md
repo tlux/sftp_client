@@ -1,6 +1,6 @@
 # SFTP Client
 
-[![Build Status](https://travis-ci.org/tlux/sftp_client.svg?branch=master)](https://travis-ci.org/tlux/sftp_client)
+[![Build Status](https://travis-ci.com/tlux/sftp_client.svg?branch=master)](https://travis-ci.com/tlux/sftp_client)
 [![Coverage Status](https://coveralls.io/repos/github/tlux/sftp_client/badge.svg?branch=master)](https://coveralls.io/github/tlux/sftp_client?branch=master)
 [![Module Version](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/sftp_client/)

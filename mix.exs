@@ -48,7 +48,8 @@ defmodule SFTPClient.MixProject do
 
   defp package do
     [
-      description: "An Elixir SFTP Client that wraps Erlang's ssh and ssh_sftp.",
+      description:
+        "An Elixir SFTP Client that wraps Erlang's ssh and ssh_sftp.",
       maintainers: ["Tobias Casper"],
       licenses: ["MIT"],
       links: %{

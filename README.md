@@ -8,7 +8,6 @@
 [![License](https://img.shields.io/hexpm/l/sftp_client.svg)](https://github.com/tlux/sftp_client/blob/master/LICENSE.md)
 [![Last Updated](https://img.shields.io/github/last-commit/tlux/sftp_client.svg)](https://github.com/tlux/sftp_client/commits/master)
 
-
 An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and
 [ssh_sftp](http://erlang.org/doc/man/ssh_sftp.html).
@@ -41,6 +40,22 @@ To open a new connection to an SFTP server:
 
 ```elixir
 {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
+```
+
+:warning: Due to a [change in OTP
+24](https://github.com/erlang/otp/commit/59285df73841273adb111996cdb590ae1b86742b)
+that removed automatic public key lookup in the sftp module you may need to
+define the `modify_algorithms` option to avoid "Key exchange failed" errors:
+
+```elixir
+{:ok, conn} = SFTPClient.connect(
+  host: "ftp.myhost.com",
+  modify_algorithms: [
+    append: [
+      public_key: [:"ssh-rsa"]
+    ]
+  ]
+)
 ```
 
 Refer to the docs for `SFTPClient.Operations.Connect.connect/1` to find out

@@ -2,7 +2,7 @@ defmodule SFTPClient.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/tlux/sftp_client"
-  @version "1.4.6"
+  @version "1.4.7"
 
   def project do
     [
@@ -37,9 +37,9 @@ defmodule SFTPClient.MixProject do
 
   defp deps do
     [
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.13", only: :test},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.14", only: :test},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:mox, "~> 1.0", only: :test},
       {:temp, "~> 0.4", only: :test}

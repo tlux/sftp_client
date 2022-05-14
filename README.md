@@ -42,7 +42,7 @@ To open a new connection to an SFTP server:
 {:ok, conn} = SFTPClient.connect(host: "ftp.myhost.com")
 ```
 
-:warning: Due to a [change in OTP
+Due to a [change in OTP
 24](https://github.com/erlang/otp/commit/59285df73841273adb111996cdb590ae1b86742b)
 that removed automatic public key lookup in the sftp module you may need to
 define the `modify_algorithms` option to avoid "Key exchange failed" errors:

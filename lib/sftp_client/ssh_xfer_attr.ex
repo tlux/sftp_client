@@ -18,14 +18,14 @@ defmodule SFTPClient.SSHXferAttr do
 
   @type t :: %__MODULE__{
           acl: term,
-          atime: non_neg_integer,
+          atime: term,
           atime_nseconds: term,
           attrib_bits: term,
           createtime: term,
           createtime_nseconds: term,
           extensions: term,
           group: term,
-          mtime: non_neg_integer,
+          mtime: term,
           mtime_nseconds: term,
           owner: term,
           permissions: term,

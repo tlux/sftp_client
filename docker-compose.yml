@@ -1,17 +1,20 @@
-sftp_password:
-  image: atmoz/sftp
-  volumes:
-      - ./test/sftp_files:/home/foo/files
-  ports:
-      - "2222:22"
-  command: foo:s3cret:1001
+version: "3.9"
 
-sftp_keys:
-  image: atmoz/sftp
-  volumes:
-      - ./test/sftp_files:/home/foo/files
-      - ./test/fixtures/ssh_keys/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro
-      - ./test/fixtures/ssh_keys/id_ed25519.pub:/home/foo/.ssh/keys/id_ed25519.pub:ro
-  ports:
-      - "2223:22"
-  command: foo::1001
+services:
+  sftp_password:
+    image: atmoz/sftp
+    volumes:
+        - ./test/sftp_files:/home/foo/files
+    ports:
+        - "2222:22"
+    command: foo:s3cret:1001
+
+  sftp_keys:
+    image: atmoz/sftp
+    volumes:
+        - ./test/sftp_files:/home/foo/files
+        - ./test/fixtures/ssh_keys/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro
+        - ./test/fixtures/ssh_keys/id_ed25519.pub:/home/foo/.ssh/keys/id_ed25519.pub:ro
+    ports:
+        - "2223:22"
+    command: foo::1001

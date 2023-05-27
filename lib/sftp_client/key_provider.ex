@@ -31,38 +31,81 @@ defmodule SFTPClient.KeyProvider do
         :ssh_file.user_key(algorithm, opts)
 
       path ->
-        decode_private_key(path, provider_opts[:private_key_pass_phrase])
+        decode_private_key(
+          path,
+          provider_opts[:private_key_pass_phrase],
+          algorithm
+        )
     end
   end
 
-  defp decode_private_key(path, pass_phrase) do
+  defp decode_private_key(path, pass_phrase, algorithm) do
     full_path = Path.expand(path)
 
     case File.read(full_path) do
       {:ok, key_contents} ->
-        key_contents
-        |> :public_key.pem_decode()
-        |> List.first()
-        |> case do
-          nil ->
+        case decode_private_key_contents(key_contents, pass_phrase, algorithm) do
+          {:error, 'Unable to decode key'} = error ->
             Logger.error("Unable to decode key: #{path}")
-            {:error, 'Unable to decode key'}
+            error
 
-          {_type, _key, :not_encrypted} = entry ->
-            {:ok, :public_key.pem_entry_decode(entry)}
-
-          _entry when is_nil(pass_phrase) ->
+          {:error, 'Passphrase required'} = error ->
             Logger.error("Passphrase required for key: #{path}")
-            {:error, 'Passphrase required'}
+            error
 
-          entry ->
-            pass_phrase = String.to_charlist(pass_phrase)
-            {:ok, :public_key.pem_entry_decode(entry, pass_phrase)}
+          result ->
+            result
         end
 
       _ ->
         Logger.error("Specified key not found: #{full_path}")
         {:error, 'Key not found'}
+    end
+  end
+
+  defp decode_private_key_contents(key_contents, pass_phrase, algorithm) do
+    key_contents
+    |> :public_key.pem_decode()
+    |> List.first()
+    |> case do
+      nil ->
+        {:error, 'Unable to decode key'}
+
+      {{_, :new_openssh}, _key, _} ->
+        decode_new_openssh_private_key_contents(
+          key_contents,
+          pass_phrase,
+          algorithm
+        )
+
+      {_type, _key, :not_encrypted} = entry ->
+        {:ok, :public_key.pem_entry_decode(entry)}
+
+      _entry when is_nil(pass_phrase) ->
+        {:error, 'Passphrase required'}
+
+      entry ->
+        pass_phrase = String.to_charlist(pass_phrase)
+        {:ok, :public_key.pem_entry_decode(entry, pass_phrase)}
+    end
+  end
+
+  defp decode_new_openssh_private_key_contents(
+         key_contents,
+         pass_phrase,
+         algorithm
+       ) do
+    with {:ok, decoded_keys} <-
+           :ssh_file.decode_ssh_file(
+             :private,
+             algorithm,
+             key_contents,
+             pass_phrase
+           ),
+         {decoded_key, _} <- List.first(decoded_keys) do
+      {:ok, decoded_key}
+    else
+      _result -> {:error, 'Unable to decode key'}
     end
   end
 end

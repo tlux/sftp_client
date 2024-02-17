@@ -29,7 +29,7 @@ defmodule SFTPClient.Operations.UploadFile do
   """
   @spec upload_file!(Conn.t(), Path.t(), Path.t()) :: Path.t() | no_return
   def upload_file!(%Conn{} = conn, local_path, remote_path) do
-    source_stream = File.stream!(local_path, [], @chunk_size)
+    source_stream = file_stream!(local_path)
     target_stream = StreamFile.stream_file!(conn, remote_path)
 
     source_stream
@@ -37,5 +37,11 @@ defmodule SFTPClient.Operations.UploadFile do
     |> Stream.run()
 
     remote_path
+  end
+
+  if Version.compare(System.version(), "1.16.0") in [:gt, :eq] do
+    defp file_stream!(local_path), do: File.stream!(local_path, @chunk_size)
+  else
+    defp file_stream!(local_path), do: File.stream!(local_path, [], @chunk_size)
   end
 end

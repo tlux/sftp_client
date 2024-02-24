@@ -27,13 +27,13 @@ jobs:
       # and running the workflow steps.
       matrix:
         include:
-          - otp: "22.x"
+          - otp: "24.x"
             elixir: "1.9.x"
-          - otp: "22.x"
+          - otp: "24.x"
             elixir: "1.10.x"
-          - otp: "23.x"
+          - otp: "24.x"
             elixir: "1.10.x"
-          - otp: "23.x"
+          - otp: "24.x"
             elixir: "1.11.x"
           - otp: "24.x"
             elixir: "1.12.x"

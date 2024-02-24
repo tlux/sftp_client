@@ -6,9 +6,9 @@ name: build
 # different name for the main branch like "master" or "production".
 on:
   push:
-    branches: ["actions"] # adapt branch for project
+    branches: ["main"] # adapt branch for project
   pull_request:
-    branches: ["actions"] # adapt branch for project
+    branches: ["main"] # adapt branch for project
 
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:

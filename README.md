@@ -25,7 +25,7 @@ dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:sftp_client, "~> 1.4"}
+    {:sftp_client, "~> 1.5"}
   ]
 end
 ```

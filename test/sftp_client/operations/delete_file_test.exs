@@ -15,7 +15,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
   describe "delete_file/2" do
     test "success" do
       expect(SFTPMock, :delete, fn :channel_pid_stub,
-                                   'my/test/path',
+                                   ~c"my/test/path",
                                    :infinity ->
         :ok
       end)
@@ -27,7 +27,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
       reason = :error_stub
 
       expect(SFTPMock, :delete, fn :channel_pid_stub,
-                                   'my/test/path',
+                                   ~c"my/test/path",
                                    :infinity ->
         {:error, reason}
       end)
@@ -40,7 +40,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
   describe "delete_file!/2" do
     test "success" do
       expect(SFTPMock, :delete, fn :channel_pid_stub,
-                                   'my/test/path',
+                                   ~c"my/test/path",
                                    :infinity ->
         :ok
       end)
@@ -52,7 +52,7 @@ defmodule SFTPClient.Operations.DeleteFileTest do
       reason = :error_stub
 
       expect(SFTPMock, :delete, fn :channel_pid_stub,
-                                   'my/test/path',
+                                   ~c"my/test/path",
                                    :infinity ->
         {:error, reason}
       end)

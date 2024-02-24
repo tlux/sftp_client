@@ -15,15 +15,15 @@ defmodule SFTPClient.Operations.ListDirTest do
   describe "list_dir/2" do
     test "success" do
       expect(SFTPMock, :list_dir, fn :channel_pid_stub,
-                                     'my/remote/path',
+                                     ~c"my/remote/path",
                                      :infinity ->
         {:ok,
          [
-           '..',
-           '.',
-           'my/remote/path/file3.txt',
-           'my/remote/path/file1.txt',
-           'my/remote/path/file2.txt'
+           ~c"..",
+           ~c".",
+           ~c"my/remote/path/file3.txt",
+           ~c"my/remote/path/file1.txt",
+           ~c"my/remote/path/file2.txt"
          ]}
       end)
 
@@ -40,7 +40,7 @@ defmodule SFTPClient.Operations.ListDirTest do
       reason = :enoent
 
       expect(SFTPMock, :list_dir, fn :channel_pid_stub,
-                                     'my/remote/path',
+                                     ~c"my/remote/path",
                                      :infinity ->
         {:error, reason}
       end)
@@ -53,15 +53,15 @@ defmodule SFTPClient.Operations.ListDirTest do
   describe "list_dir!/2" do
     test "success" do
       expect(SFTPMock, :list_dir, fn :channel_pid_stub,
-                                     'my/remote/path',
+                                     ~c"my/remote/path",
                                      :infinity ->
         {:ok,
          [
-           '..',
-           '.',
-           'my/remote/path/file3.txt',
-           'my/remote/path/file1.txt',
-           'my/remote/path/file2.txt'
+           ~c"..",
+           ~c".",
+           ~c"my/remote/path/file3.txt",
+           ~c"my/remote/path/file1.txt",
+           ~c"my/remote/path/file2.txt"
          ]}
       end)
 
@@ -77,7 +77,7 @@ defmodule SFTPClient.Operations.ListDirTest do
       reason = :enoent
 
       expect(SFTPMock, :list_dir, fn :channel_pid_stub,
-                                     'my/remote/path',
+                                     ~c"my/remote/path",
                                      :infinity ->
         {:error, reason}
       end)

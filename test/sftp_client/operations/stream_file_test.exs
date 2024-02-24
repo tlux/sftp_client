@@ -18,7 +18,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
   describe "stream_file/2" do
     test "build stream" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:ok, FileStat.to_record(%FileStat{type: :regular})}
       end)
@@ -29,7 +29,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
 
     test "error when file not found" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:error, :no_such_file}
       end)
@@ -40,7 +40,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
 
     test "error for directory" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:ok, FileStat.to_record(%FileStat{type: :directory})}
       end)
@@ -53,7 +53,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
   describe "stream_file/3" do
     test "build stream" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:ok, FileStat.to_record(%FileStat{type: :regular})}
       end)
@@ -64,7 +64,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
 
     test "error when file not found" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:error, :no_such_file}
       end)
@@ -75,7 +75,7 @@ defmodule SFTPClient.Operations.StreamFileTest do
 
     test "error for directory" do
       expect(SFTPMock, :read_file_info, fn :channel_pid_stub,
-                                           'my/remote/path',
+                                           ~c"my/remote/path",
                                            :infinity ->
         {:ok, FileStat.to_record(%FileStat{type: :directory})}
       end)

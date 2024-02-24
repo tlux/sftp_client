@@ -20,7 +20,7 @@ defmodule SFTPClient.Operations.LinkInfoTest do
   describe "link_info/2" do
     test "success" do
       expect(SFTPMock, :read_link_info, fn :channel_pid_stub,
-                                           'my/remote/file',
+                                           ~c"my/remote/file",
                                            :infinity ->
         {:ok, @record}
       end)
@@ -33,7 +33,7 @@ defmodule SFTPClient.Operations.LinkInfoTest do
       reason = :enoent
 
       expect(SFTPMock, :read_link_info, fn :channel_pid_stub,
-                                           'my/remote/file',
+                                           ~c"my/remote/file",
                                            :infinity ->
         {:error, reason}
       end)
@@ -46,7 +46,7 @@ defmodule SFTPClient.Operations.LinkInfoTest do
   describe "link_info!/2" do
     test "success" do
       expect(SFTPMock, :read_link_info, fn :channel_pid_stub,
-                                           'my/remote/file',
+                                           ~c"my/remote/file",
                                            :infinity ->
         {:ok, @record}
       end)
@@ -59,7 +59,7 @@ defmodule SFTPClient.Operations.LinkInfoTest do
       reason = :enoent
 
       expect(SFTPMock, :read_link_info, fn :channel_pid_stub,
-                                           'my/remote/file',
+                                           ~c"my/remote/file",
                                            :infinity ->
         {:error, reason}
       end)

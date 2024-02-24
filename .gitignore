@@ -36,3 +36,6 @@ sftp_client-*.tar
 
 # Visual Studio Code.
 /.vscode/
+
+# Ignore generated PLTs
+/priv/plts/*

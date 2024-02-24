@@ -45,11 +45,11 @@ defmodule SFTPClient.KeyProvider do
     case File.read(full_path) do
       {:ok, key_contents} ->
         case decode_private_key_contents(key_contents, pass_phrase, algorithm) do
-          {:error, 'Unable to decode key'} = error ->
+          {:error, ~c"Unable to decode key"} = error ->
             Logger.error("Unable to decode key: #{path}")
             error
 
-          {:error, 'Passphrase required'} = error ->
+          {:error, ~c"Passphrase required"} = error ->
             Logger.error("Passphrase required for key: #{path}")
             error
 
@@ -59,7 +59,7 @@ defmodule SFTPClient.KeyProvider do
 
       _ ->
         Logger.error("Specified key not found: #{full_path}")
-        {:error, 'Key not found'}
+        {:error, ~c"Key not found"}
     end
   end
 
@@ -69,7 +69,7 @@ defmodule SFTPClient.KeyProvider do
     |> List.first()
     |> case do
       nil ->
-        {:error, 'Unable to decode key'}
+        {:error, ~c"Unable to decode key"}
 
       {{_, :new_openssh}, _key, _} ->
         decode_new_openssh_private_key_contents(
@@ -82,7 +82,7 @@ defmodule SFTPClient.KeyProvider do
         {:ok, :public_key.pem_entry_decode(entry)}
 
       _entry when is_nil(pass_phrase) ->
-        {:error, 'Passphrase required'}
+        {:error, ~c"Passphrase required"}
 
       entry ->
         pass_phrase = String.to_charlist(pass_phrase)
@@ -105,7 +105,7 @@ defmodule SFTPClient.KeyProvider do
          {decoded_key, _} <- List.first(decoded_keys) do
       {:ok, decoded_key}
     else
-      _result -> {:error, 'Unable to decode key'}
+      _result -> {:error, ~c"Unable to decode key"}
     end
   end
 end

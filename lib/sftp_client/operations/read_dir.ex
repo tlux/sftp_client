@@ -39,7 +39,7 @@ defmodule SFTPClient.Operations.ReadDir do
 
   defp process_entries(entries, dir_path) do
     entries
-    |> Stream.reject(fn {filename, _} -> filename in ['.', '..'] end)
+    |> Stream.reject(fn {filename, _} -> filename in [~c".", ~c".."] end)
     |> Stream.map(fn {filename, xfer_attr} ->
       filename = to_string(filename)
 

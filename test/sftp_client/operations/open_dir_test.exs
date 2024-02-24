@@ -17,7 +17,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
   describe "open_dir/2" do
     test "success" do
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:ok, :handle_id_stub}
       end)
@@ -30,7 +30,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
       reason = :enoent
 
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:error, reason}
       end)
@@ -43,7 +43,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
   describe "open_dir/3" do
     test "success" do
       SFTPMock
-      |> expect(:opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      |> expect(:opendir, fn :channel_pid_stub, ~c"my/remote/path", :infinity ->
         {:ok, :handle_id_stub}
       end)
       |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
@@ -60,7 +60,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
       reason = :enoent
 
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:error, reason}
       end)
@@ -73,7 +73,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
   describe "open_dir!/2" do
     test "success" do
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:ok, :handle_id_stub}
       end)
@@ -86,7 +86,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
       reason = :enoent
 
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:error, reason}
       end)
@@ -100,7 +100,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
   describe "open_dir!/3" do
     test "success" do
       SFTPMock
-      |> expect(:opendir, fn :channel_pid_stub, 'my/remote/path', :infinity ->
+      |> expect(:opendir, fn :channel_pid_stub, ~c"my/remote/path", :infinity ->
         {:ok, :handle_id_stub}
       end)
       |> expect(:close, fn :channel_pid_stub, :handle_id_stub, :infinity ->
@@ -117,7 +117,7 @@ defmodule SFTPClient.Operations.OpenDirTest do
       reason = :enoent
 
       expect(SFTPMock, :opendir, fn :channel_pid_stub,
-                                    'my/remote/path',
+                                    ~c"my/remote/path",
                                     :infinity ->
         {:error, reason}
       end)

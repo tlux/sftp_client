@@ -1,6 +1,6 @@
 # SFTP Client
 
-[![Build Status](https://travis-ci.com/tlux/sftp_client.svg?branch=main)](https://travis-ci.com/tlux/sftp_client)
+[![Build](https://github.com/tlux/sftp_client/actions/workflows/elixir.yml/badge.svg)](https://github.com/tlux/sftp_client/actions/workflows/elixir.yml)
 [![Coverage Status](https://coveralls.io/repos/github/tlux/sftp_client/badge.svg?branch=main)](https://coveralls.io/github/tlux/sftp_client?branch=main)
 [![Module Version](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/sftp_client/)
@@ -14,8 +14,8 @@ An Elixir SFTP Client that wraps Erlang's
 
 ## Prerequisites
 
-- Erlang 20 or greater
-- Elixir 1.8 or greater
+- Erlang 24 or greater
+- Elixir 1.11 or greater
 
 ## Installation
 

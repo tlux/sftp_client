@@ -42,12 +42,12 @@ defmodule SFTPClient.Operations.ConnectTest do
          {KeyProvider,
           private_key_path: @config.private_key_path,
           private_key_pass_phrase: @config.private_key_pass_phrase},
-       password: 'test-password',
+       password: ~c"test-password",
        quiet_mode: true,
        sftp_vsn: 2,
        silently_accept_hosts: true,
        system_dir: @config.system_dir |> Path.expand() |> String.to_charlist(),
-       user: 'test-user',
+       user: ~c"test-user",
        user_dir: @config.user_dir |> Path.expand() |> String.to_charlist(),
        user_interaction: false
      ]}
@@ -55,7 +55,7 @@ defmodule SFTPClient.Operations.ConnectTest do
 
   describe "connect/1" do
     test "connect with SFTPClient.Config", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -69,7 +69,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connect with map options", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -85,7 +85,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connect with keyword options", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -103,7 +103,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     test "omit option when nil", %{opts: opts} do
       opts = Keyword.delete(opts, :user_dir)
 
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -119,9 +119,9 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connection error", %{opts: opts} do
-      message = 'Unable to connect using the available authentication methods'
+      message = ~c"Unable to connect using the available authentication methods"
 
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:error, message}
       end)
 
@@ -130,8 +130,8 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "invalid option error", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:error, {:eoptions, {{:user_dir, 'my/key/path'}, :enoent}}}
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
+        {:error, {:eoptions, {{:user_dir, ~c"my/key/path"}, :enoent}}}
       end)
 
       assert Connect.connect(@config) ==
@@ -159,7 +159,7 @@ defmodule SFTPClient.Operations.ConnectTest do
   describe "connect/2" do
     test "success", %{opts: opts} do
       SFTPMock
-      |> expect(:start_channel, fn 'test-host', 23, ^opts ->
+      |> expect(:start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
       |> expect(:stop_channel, fn :channel_pid_stub -> :ok end)
@@ -177,9 +177,9 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connection error", %{opts: opts} do
-      message = 'Unable to connect using the available authentication methods'
+      message = ~c"Unable to connect using the available authentication methods"
 
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:error, message}
       end)
 
@@ -194,7 +194,7 @@ defmodule SFTPClient.Operations.ConnectTest do
 
   describe "connect!/1" do
     test "connect with SFTPClient.Config", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -207,7 +207,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connect with map options", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -222,7 +222,7 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connect with keyword options", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
 
@@ -237,9 +237,9 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connection error", %{opts: opts} do
-      message = 'Unable to connect using the available authentication methods'
+      message = ~c"Unable to connect using the available authentication methods"
 
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:error, message}
       end)
 
@@ -249,8 +249,8 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "invalid option error", %{opts: opts} do
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
-        {:error, {:eoptions, {{:user_dir, 'my/key/path'}, :enoent}}}
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
+        {:error, {:eoptions, {{:user_dir, ~c"my/key/path"}, :enoent}}}
       end)
 
       assert_raise InvalidOptionError,
@@ -271,7 +271,7 @@ defmodule SFTPClient.Operations.ConnectTest do
   describe "connect!/2" do
     test "success", %{opts: opts} do
       SFTPMock
-      |> expect(:start_channel, fn 'test-host', 23, ^opts ->
+      |> expect(:start_channel, fn ~c"test-host", 23, ^opts ->
         {:ok, :channel_pid_stub, :conn_ref_stub}
       end)
       |> expect(:stop_channel, fn :channel_pid_stub -> :ok end)
@@ -289,9 +289,9 @@ defmodule SFTPClient.Operations.ConnectTest do
     end
 
     test "connection error", %{opts: opts} do
-      message = 'Unable to connect using the available authentication methods'
+      message = ~c"Unable to connect using the available authentication methods"
 
-      expect(SFTPMock, :start_channel, fn 'test-host', 23, ^opts ->
+      expect(SFTPMock, :start_channel, fn ~c"test-host", 23, ^opts ->
         {:error, message}
       end)
 

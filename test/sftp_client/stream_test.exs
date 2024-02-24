@@ -38,7 +38,7 @@ defmodule SFTPClient.StreamTest do
     test "error" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:read, :binary],
                           _ ->
         {:ok, :handle_id_stub}
@@ -81,7 +81,7 @@ defmodule SFTPClient.StreamTest do
     test "is true when item is member" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:read, :binary],
                           _ ->
         {:ok, :handle_id_stub}
@@ -117,7 +117,7 @@ defmodule SFTPClient.StreamTest do
     test "upload into stream" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:write, :creat, :binary],
                           _ ->
         {:ok, :handle_id_stub}
@@ -138,7 +138,7 @@ defmodule SFTPClient.StreamTest do
     test "halt on error" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:write, :creat, :binary],
                           _ ->
         {:ok, :handle_id_stub}
@@ -161,7 +161,7 @@ defmodule SFTPClient.StreamTest do
     test "halt on exception" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:write, :creat, :binary],
                           _ ->
         {:ok, :handle_id_stub}
@@ -185,7 +185,7 @@ defmodule SFTPClient.StreamTest do
   defp setup_success_mocks do
     SFTPMock
     |> expect(:open, fn :channel_pid_stub,
-                        'my/remote/path',
+                        ~c"my/remote/path",
                         [:read, :binary],
                         _ ->
       {:ok, :handle_id_stub}

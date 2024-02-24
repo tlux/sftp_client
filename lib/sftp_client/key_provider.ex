@@ -66,7 +66,7 @@ defmodule SFTPClient.KeyProvider do
   defp decode_private_key_contents(key_contents, pass_phrase, algorithm) do
     key_contents
     |> :public_key.pem_decode()
-    |> List.first()
+    |> hd()
     |> case do
       nil ->
         {:error, ~c"Unable to decode key"}

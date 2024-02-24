@@ -1,12 +1,12 @@
 # SFTP Client
 
-[![Build Status](https://travis-ci.com/tlux/sftp_client.svg?branch=master)](https://travis-ci.com/tlux/sftp_client)
-[![Coverage Status](https://coveralls.io/repos/github/tlux/sftp_client/badge.svg?branch=master)](https://coveralls.io/github/tlux/sftp_client?branch=master)
+[![Build Status](https://travis-ci.com/tlux/sftp_client.svg?branch=main)](https://travis-ci.com/tlux/sftp_client)
+[![Coverage Status](https://coveralls.io/repos/github/tlux/sftp_client/badge.svg?branch=main)](https://coveralls.io/github/tlux/sftp_client?branch=main)
 [![Module Version](https://img.shields.io/hexpm/v/sftp_client.svg)](https://hex.pm/packages/sftp_client)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/sftp_client/)
 [![Total Download](https://img.shields.io/hexpm/dt/sftp_client.svg)](https://hex.pm/packages/sftp_client)
-[![License](https://img.shields.io/hexpm/l/sftp_client.svg)](https://github.com/tlux/sftp_client/blob/master/LICENSE.md)
-[![Last Updated](https://img.shields.io/github/last-commit/tlux/sftp_client.svg)](https://github.com/tlux/sftp_client/commits/master)
+[![License](https://img.shields.io/hexpm/l/sftp_client.svg)](https://github.com/tlux/sftp_client/blob/main/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/tlux/sftp_client.svg)](https://github.com/tlux/sftp_client/commits/main)
 
 An Elixir SFTP Client that wraps Erlang's
 [ssh](http://erlang.org/doc/man/ssh.html) and

@@ -18,7 +18,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
   describe "open_file/3" do
     test "success" do
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:ok, :handle_id_stub}
@@ -32,7 +32,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
       reason = :enoent
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:error, reason}
@@ -47,7 +47,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
     test "success" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/file.png',
+                          ~c"my/remote/file.png",
                           @modes,
                           :infinity ->
         {:ok, :handle_id_stub}
@@ -67,7 +67,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
       reason = :enoent
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:error, reason}
@@ -82,7 +82,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
   describe "open_file!/3" do
     test "success" do
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:ok, :handle_id_stub}
@@ -96,7 +96,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
       reason = :enoent
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:error, reason}
@@ -112,7 +112,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
     test "success" do
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/file.png',
+                          ~c"my/remote/file.png",
                           @modes,
                           :infinity ->
         {:ok, :handle_id_stub}
@@ -132,7 +132,7 @@ defmodule SFTPClient.Operations.OpenFileTest do
       reason = :enoent
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.png',
+                                 ~c"my/remote/file.png",
                                  @modes,
                                  :infinity ->
         {:error, reason}

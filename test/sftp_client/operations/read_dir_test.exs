@@ -20,15 +20,15 @@ defmodule SFTPClient.Operations.ReadDirTest do
   }
 
   @encoded_entries [
-    {'ARTICLES_20181130142502.jsonl.gz',
+    {~c"ARTICLES_20181130142502.jsonl.gz",
      {:ssh_xfer_attr, :regular, 1_896_997, 12084, 12084, 33188, 1_557_265_538,
       :undefined, :undefined, :undefined, 1_543_587_908, :undefined, :undefined,
       :undefined, :undefined}},
-    {'ARTICLES_20180724143001.jsonl.gz',
+    {~c"ARTICLES_20180724143001.jsonl.gz",
      {:ssh_xfer_attr, :regular, 99477, 12084, 12084, 33188, 1_557_265_538,
       :undefined, :undefined, :undefined, 1_532_442_606, :undefined, :undefined,
       :undefined, :undefined}},
-    {'ARTICLES_20181109155001.jsonl.gz',
+    {~c"ARTICLES_20181109155001.jsonl.gz",
      {:ssh_xfer_attr, :regular, 1_437_723, 12084, 12084, 33188, 1_557_265_539,
       :undefined, :undefined, :undefined, 1_541_778_608, :undefined, :undefined,
       :undefined, :undefined}}

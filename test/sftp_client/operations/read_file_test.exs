@@ -17,7 +17,7 @@ defmodule SFTPClient.Operations.ReadFileTest do
       file_content = "file content stub"
 
       expect(SFTPMock, :read_file, fn :channel_pid_stub,
-                                      'my/remote/path',
+                                      ~c"my/remote/path",
                                       :infinity ->
         {:ok, file_content}
       end)
@@ -29,7 +29,7 @@ defmodule SFTPClient.Operations.ReadFileTest do
       reason = :enoent
 
       expect(SFTPMock, :read_file, fn :channel_pid_stub,
-                                      'my/remote/path',
+                                      ~c"my/remote/path",
                                       :infinity ->
         {:error, reason}
       end)
@@ -44,7 +44,7 @@ defmodule SFTPClient.Operations.ReadFileTest do
       file_content = "file content stub"
 
       expect(SFTPMock, :read_file, fn :channel_pid_stub,
-                                      'my/remote/path',
+                                      ~c"my/remote/path",
                                       :infinity ->
         {:ok, file_content}
       end)
@@ -56,7 +56,7 @@ defmodule SFTPClient.Operations.ReadFileTest do
       reason = :enoent
 
       expect(SFTPMock, :read_file, fn :channel_pid_stub,
-                                      'my/remote/path',
+                                      ~c"my/remote/path",
                                       :infinity ->
         {:error, reason}
       end)

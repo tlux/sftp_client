@@ -26,7 +26,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:read, :binary],
                           :infinity ->
         {:ok, :handle_id_stub}
@@ -53,7 +53,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path-to-file.json',
+                          ~c"my/remote/path-to-file.json",
                           [:read, :binary],
                           :infinity ->
         {:ok, :handle_id_stub}
@@ -78,10 +78,10 @@ defmodule SFTPClient.Operations.DownloadFileTest do
     end
 
     test "conn error", %{local_path: local_path} do
-      message = 'Something went wrong'
+      message = ~c"Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         {:error, message}
@@ -95,7 +95,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       reason = :something_went_wrong
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         {:error, reason}
@@ -109,7 +109,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       message = "Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         raise RuntimeError, message
@@ -127,7 +127,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
 
       SFTPMock
       |> expect(:open, fn :channel_pid_stub,
-                          'my/remote/path',
+                          ~c"my/remote/path",
                           [:read, :binary],
                           :infinity ->
         {:ok, :handle_id_stub}
@@ -149,10 +149,10 @@ defmodule SFTPClient.Operations.DownloadFileTest do
     end
 
     test "conn error", %{local_path: local_path} do
-      message = 'Something went wrong'
+      message = ~c"Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         {:error, message}
@@ -167,7 +167,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       reason = :something_went_wrong
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         {:error, reason}
@@ -182,7 +182,7 @@ defmodule SFTPClient.Operations.DownloadFileTest do
       message = "Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/path',
+                                 ~c"my/remote/path",
                                  [:read, :binary],
                                  :infinity ->
         raise RuntimeError, message

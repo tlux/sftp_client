@@ -16,7 +16,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
   describe "write_file/2" do
     test "success with IO list" do
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
-                                       'my/remote/path',
+                                       ~c"my/remote/path",
                                        @file_content,
                                        :infinity ->
         :ok
@@ -29,7 +29,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
       [file_content] = @file_content
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
-                                       'my/remote/path',
+                                       ~c"my/remote/path",
                                        @file_content,
                                        :infinity ->
         :ok
@@ -42,7 +42,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
       reason = :error_stub
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
-                                       'my/remote/path',
+                                       ~c"my/remote/path",
                                        @file_content,
                                        :infinity ->
         {:error, reason}
@@ -56,7 +56,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
   describe "write_file!/2" do
     test "success" do
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
-                                       'my/remote/path',
+                                       ~c"my/remote/path",
                                        @file_content,
                                        :infinity ->
         :ok
@@ -70,7 +70,7 @@ defmodule SFTPClient.Operations.WriteFileTest do
       reason = :error_stub
 
       expect(SFTPMock, :write_file, fn :channel_pid_stub,
-                                       'my/remote/path',
+                                       ~c"my/remote/path",
                                        @file_content,
                                        :infinity ->
         {:error, reason}

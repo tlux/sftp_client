@@ -36,7 +36,7 @@ defmodule SFTPClient.OperationUtilTest do
 
   describe "handle_error/1" do
     test "invalid option error" do
-      error = {:eoptions, {{:user_dir, 'my/key/path'}, :enoent}}
+      error = {:eoptions, {{:user_dir, ~c"my/key/path"}, :enoent}}
 
       assert OperationUtil.handle_error(error) == %InvalidOptionError{
                key: :user_dir,
@@ -64,7 +64,7 @@ defmodule SFTPClient.OperationUtilTest do
     end
 
     test "conn error" do
-      message = 'Something went wrong'
+      message = ~c"Something went wrong"
 
       assert OperationUtil.handle_error(message) == %ConnError{
                message: to_string(message)

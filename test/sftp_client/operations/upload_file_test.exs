@@ -20,7 +20,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       chunks = @local_path |> File.stream!([], 32_768) |> Enum.to_list()
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:ok, :handle_id_stub}
@@ -46,10 +46,10 @@ defmodule SFTPClient.Operations.UploadFileTest do
     end
 
     test "conn error" do
-      message = 'Something went wrong'
+      message = ~c"Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:error, message}
@@ -63,7 +63,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       reason = :something_went_wrong
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:error, reason}
@@ -77,7 +77,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       message = "Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         raise RuntimeError, message
@@ -94,7 +94,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       chunks = @local_path |> File.stream!([], 32_768) |> Enum.to_list()
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:ok, :handle_id_stub}
@@ -120,10 +120,10 @@ defmodule SFTPClient.Operations.UploadFileTest do
     end
 
     test "conn error" do
-      message = 'Something went wrong'
+      message = ~c"Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:error, message}
@@ -138,7 +138,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       reason = :something_went_wrong
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         {:error, reason}
@@ -153,7 +153,7 @@ defmodule SFTPClient.Operations.UploadFileTest do
       message = "Something went wrong"
 
       expect(SFTPMock, :open, fn :channel_pid_stub,
-                                 'my/remote/file.txt',
+                                 ~c"my/remote/file.txt",
                                  [:write, :creat, :binary],
                                  :infinity ->
         raise RuntimeError, message

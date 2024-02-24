@@ -15,8 +15,8 @@ defmodule SFTPClient.Operations.RenameTest do
   describe "rename/2" do
     test "success" do
       expect(SFTPMock, :rename, fn :channel_pid_stub,
-                                   'my/old/path',
-                                   'my/new/path',
+                                   ~c"my/old/path",
+                                   ~c"my/new/path",
                                    :infinity ->
         :ok
       end)
@@ -32,8 +32,8 @@ defmodule SFTPClient.Operations.RenameTest do
       reason = :error_stub
 
       expect(SFTPMock, :rename, fn :channel_pid_stub,
-                                   'my/old/path',
-                                   'my/new/path',
+                                   ~c"my/old/path",
+                                   ~c"my/new/path",
                                    :infinity ->
         {:error, reason}
       end)
@@ -50,8 +50,8 @@ defmodule SFTPClient.Operations.RenameTest do
   describe "rename!/2" do
     test "success" do
       expect(SFTPMock, :rename, fn :channel_pid_stub,
-                                   'my/old/path',
-                                   'my/new/path',
+                                   ~c"my/old/path",
+                                   ~c"my/new/path",
                                    :infinity ->
         :ok
       end)
@@ -67,8 +67,8 @@ defmodule SFTPClient.Operations.RenameTest do
       reason = :error_stub
 
       expect(SFTPMock, :rename, fn :channel_pid_stub,
-                                   'my/old/path',
-                                   'my/new/path',
+                                   ~c"my/old/path",
+                                   ~c"my/new/path",
                                    :infinity ->
         {:error, reason}
       end)

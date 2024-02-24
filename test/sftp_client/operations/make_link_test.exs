@@ -15,8 +15,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
   describe "make_link/2" do
     test "success" do
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
-                                      'my/symlink/path',
-                                      'my/target/path',
+                                      ~c"my/symlink/path",
+                                      ~c"my/target/path",
                                       :infinity ->
         :ok
       end)
@@ -32,8 +32,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
       reason = :error_stub
 
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
-                                      'my/symlink/path',
-                                      'my/target/path',
+                                      ~c"my/symlink/path",
+                                      ~c"my/target/path",
                                       :infinity ->
         {:error, reason}
       end)
@@ -50,8 +50,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
   describe "make_link!/2" do
     test "success" do
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
-                                      'my/symlink/path',
-                                      'my/target/path',
+                                      ~c"my/symlink/path",
+                                      ~c"my/target/path",
                                       :infinity ->
         :ok
       end)
@@ -67,8 +67,8 @@ defmodule SFTPClient.Operations.MakeLinkTest do
       reason = :error_stub
 
       expect(SFTPMock, :make_link, fn :channel_pid_stub,
-                                      'my/symlink/path',
-                                      'my/target/path',
+                                      ~c"my/symlink/path",
+                                      ~c"my/target/path",
                                       :infinity ->
         {:error, reason}
       end)

@@ -63,10 +63,14 @@ defmodule SFTPClient.KeyProvider do
     end
   end
 
+  defp decode_private_key_contents(_key_contents, nil, _algorithm) do
+    {:error, ~c"Passphrase required"}
+  end
+
   defp decode_private_key_contents(key_contents, pass_phrase, algorithm) do
     key_contents
     |> :public_key.pem_decode()
-    |> hd()
+    |> List.first()
     |> case do
       nil ->
         {:error, ~c"Unable to decode key"}
@@ -80,9 +84,6 @@ defmodule SFTPClient.KeyProvider do
 
       {_type, _key, :not_encrypted} = entry ->
         {:ok, :public_key.pem_entry_decode(entry)}
-
-      _entry when is_nil(pass_phrase) ->
-        {:error, ~c"Passphrase required"}
 
       entry ->
         pass_phrase = String.to_charlist(pass_phrase)

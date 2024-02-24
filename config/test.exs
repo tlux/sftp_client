@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :sftp_client,
   sftp_adapter: SFTPClient.Adapter.SFTP.Mock,

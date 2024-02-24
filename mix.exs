@@ -2,24 +2,27 @@ defmodule SFTPClient.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/tlux/sftp_client"
-  @version "1.4.8"
+  @version "1.5.0"
 
   def project do
     [
       app: :sftp_client,
       version: @version,
-      elixir: "~> 1.8",
+      elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        coveralls: :test,
         "coveralls.detail": :test,
-        "coveralls.post": :test,
+        "coveralls.github": :test,
         "coveralls.html": :test,
-        "coveralls.travis": :test
+        "coveralls.post": :test,
+        coveralls: :test,
+        credo: :test,
+        dialyzer: :test,
+        test: :test
       ],
-      dialyzer: [plt_add_apps: [:ex_unit, :mix]],
+      dialyzer: dialyzer(),
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
 
@@ -37,12 +40,23 @@ defmodule SFTPClient.MixProject do
 
   defp deps do
     [
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.14", only: :test},
+      {:castore, "~> 1.0", only: :test},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18", only: :test},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:mox, "~> 1.0", only: :test},
+      {:mix_audit, "~> 2.1", only: [:dev, :test]},
+      {:mox, "~> 1.1", only: :test},
+      {:ssl_verify_fun, "~> 1.1.7"},
       {:temp, "~> 0.4", only: :test}
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_add_apps: [:ex_unit, :mix],
+      plt_add_deps: :app_tree,
+      plt_file: {:no_warn, "priv/plts/sftp_client.plt"}
     ]
   end
 

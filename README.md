@@ -15,7 +15,7 @@ An Elixir SFTP Client that wraps Erlang's
 ## Prerequisites
 
 - Erlang 24 or greater
-- Elixir 1.9 or greater
+- Elixir 1.11 or greater
 
 ## Installation
 

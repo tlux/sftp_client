@@ -28,12 +28,6 @@ jobs:
       matrix:
         include:
           - otp: "24.x"
-            elixir: "1.9.x"
-          - otp: "24.x"
-            elixir: "1.10.x"
-          - otp: "24.x"
-            elixir: "1.10.x"
-          - otp: "24.x"
             elixir: "1.11.x"
           - otp: "24.x"
             elixir: "1.12.x"

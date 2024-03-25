@@ -47,7 +47,6 @@ defmodule SFTPClient.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:mix_audit, "~> 2.1", only: [:dev, :test]},
       {:mox, "~> 1.1", only: :test},
-      {:ssl_verify_fun, "~> 1.1.7"},
       {:temp, "~> 0.4", only: :test}
     ]
   end

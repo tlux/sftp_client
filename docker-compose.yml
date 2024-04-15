@@ -2,16 +2,18 @@ version: "3.9"
 
 services:
   sftp_password:
+    container_name: sftp_client_password_server
     image: atmoz/sftp
     ports:
       - "2222:22"
-    command: foo:s3cret:1001
+    command: foo:s3cret:::files
 
-  sftp_keys:
+  sftp_key:
+    container_name: sftp_client_key_server
     image: atmoz/sftp
     volumes:
       - ./test/fixtures/ssh_keys/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro
       - ./test/fixtures/ssh_keys/id_ed25519.pub:/home/foo/.ssh/keys/id_ed25519.pub:ro
     ports:
       - "2223:22"
-    command: foo::1001
+    command: foo::::files

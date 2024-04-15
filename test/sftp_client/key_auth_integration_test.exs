@@ -19,16 +19,16 @@ defmodule SFTPClient.KeyAuthIntegrationTest do
     assert {:ok, conn} = SFTPClient.connect(config)
     assert :ok = SFTPClient.make_dir(conn, store_dir)
 
-    # assert {:ok, _} =
-    #          SFTPClient.upload_file(
-    #            conn,
-    #            "test/fixtures/lorem_ipsum.txt",
-    #            "#{store_dir}/lorem-ipsum.txt"
-    #          )
+    assert {:ok, _} =
+             SFTPClient.upload_file(
+               conn,
+               "test/fixtures/lorem_ipsum.txt",
+               "#{store_dir}/lorem-ipsum.txt"
+             )
 
-    # assert {:ok, ["lorem-ipsum.txt"]} = SFTPClient.list_dir(conn, store_dir)
-    # assert :ok = SFTPClient.delete_file(conn, "#{store_dir}/lorem-ipsum.txt")
-    # assert :ok = SFTPClient.delete_dir(conn, store_dir)
+    assert {:ok, ["lorem-ipsum.txt"]} = SFTPClient.list_dir(conn, store_dir)
+    assert :ok = SFTPClient.delete_file(conn, "#{store_dir}/lorem-ipsum.txt")
+    assert :ok = SFTPClient.delete_dir(conn, store_dir)
     assert :ok = SFTPClient.disconnect(conn)
   end
 end

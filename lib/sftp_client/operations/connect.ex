@@ -43,8 +43,8 @@ defmodule SFTPClient.Operations.Connect do
     implementation to support non-OTP default encryption algorithms. To
     re-enable `diffie-hellman-group1-sha1`, removed in OTP 23, pass:
     `modify_algorithms: [append: [kex: [:"diffie-hellman-group1-sha1"]]]`
-  * `:preferred_algorithms` - Replace the default set of algorithms
-  * `:packet_size` - Modify the tcp layer packet size
+  * `:preferred_algorithms` - Replace the default set of algorithms.
+  * `:packet_size` - Modify the TCP layer packet size.
   """
   @spec connect(Config.t() | Keyword.t() | %{optional(atom) => any}) ::
           {:ok, Conn.t()} | {:error, term}

@@ -26,7 +26,9 @@ defmodule SFTPClient.ConfigTest do
             private_key_path: :path, private_key_pass_phrase: :phrase},
          modify_algorithms: [
            {:append, [{:kex, [:"diffie-hellman-group1-sha1"]}]}
-         ]
+         ],
+         preferred_algorithms: [{:kex, [:"diffie-hellman-group1-sha1"]}],
+         packet_size: 32_000
        }}
     end
 
@@ -48,6 +50,8 @@ defmodule SFTPClient.ConfigTest do
       assert config.rsa_pass_phrase == nil
       assert config.ecdsa_pass_phrase == nil
       assert config.modify_algorithms == nil
+      assert config.preferred_algorithms == nil
+      assert config.packet_size == nil
     end
 
     test "ensures key_cb is set to the expected default" do

@@ -20,7 +20,9 @@ defmodule SFTPClient.Config do
     {:connect_timeout, 5000},
     {:operation_timeout, :infinity},
     :key_cb,
-    :modify_algorithms
+    :modify_algorithms,
+    :preferred_algorithms,
+    :packet_size
   ]
 
   @type t :: %__MODULE__{
@@ -40,7 +42,9 @@ defmodule SFTPClient.Config do
           connect_timeout: timeout,
           operation_timeout: timeout,
           key_cb: nil | {module, term},
-          modify_algorithms: nil | Keyword.t()
+          modify_algorithms: nil | Keyword.t(),
+          preferred_algorithms: nil | Keyword.t(),
+          packet_size: non_neg_integer
         }
 
   @doc """

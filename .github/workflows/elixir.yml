@@ -114,3 +114,11 @@ jobs:
         run: mix coveralls.github
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Step: Make sure the project compiles against an OTP installation that
+      # does not ship source files (e.g. Livebook Desktop). This step removes
+      # the OTP ssh sources, so it must run after all other steps.
+      - name: Compiles without OTP ssh sources
+        run: |
+          rm -rf "$(erl -noshell -eval 'io:format("~s", [code:lib_dir(ssh)]), halt().')/src"
+          mix compile --force --warnings-as-errors

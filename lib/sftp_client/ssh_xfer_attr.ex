@@ -3,10 +3,27 @@ defmodule SFTPClient.SSHXferAttr do
   A struct that contains file and directory meta data.
   """
 
-  require Record
+  # Fields of the `#ssh_xfer_attr{}` record, in the order defined in OTP's
+  # `ssh/src/ssh_xfer.hrl`. They are declared here instead of being read with
+  # `Record.extract/2` because OTP's `src` directories are not always shipped
+  # (e.g. Livebook Desktop or stripped releases), which breaks compilation.
+  keys = [
+    :type,
+    :size,
+    :owner,
+    :group,
+    :permissions,
+    :atime,
+    :atime_nseconds,
+    :createtime,
+    :createtime_nseconds,
+    :mtime,
+    :mtime_nseconds,
+    :acl,
+    :attrib_bits,
+    :extensions
+  ]
 
-  record = Record.extract(:ssh_xfer_attr, from_lib: "ssh/src/ssh_xfer.hrl")
-  keys = :lists.map(&elem(&1, 0), record)
   values = :lists.map(&{&1, [], nil}, keys)
   pairs = :lists.zip(keys, values)
 

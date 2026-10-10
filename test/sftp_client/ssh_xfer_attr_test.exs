@@ -27,5 +27,34 @@ defmodule SFTPClient.SSHXferAttrTest do
                mtime_nseconds: nil
              }
     end
+
+    @ssh_xfer_hrl Path.join(:code.lib_dir(:ssh), "src/ssh_xfer.hrl")
+
+    @tag skip:
+           not File.exists?(@ssh_xfer_hrl) &&
+             "OTP ssh sources are not available"
+    test "matches the field order of the OTP record" do
+      fields =
+        :ssh_xfer_attr
+        |> Record.extract(from_lib: "ssh/src/ssh_xfer.hrl")
+        |> Keyword.keys()
+
+      values = Enum.to_list(1..length(fields))
+      record = List.to_tuple([:ssh_xfer_attr | values])
+
+      expected =
+        fields
+        |> Enum.zip(values)
+        |> Map.new(fn
+          {field, value} when field in [:atime, :createtime, :mtime] ->
+            {field, value |> DateTime.from_unix!() |> NaiveDateTime.to_erl()}
+
+          pair ->
+            pair
+        end)
+
+      assert SSHXferAttr.from_record(record) ==
+               struct!(SSHXferAttr, expected)
+    end
   end
 end
